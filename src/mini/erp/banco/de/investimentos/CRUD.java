@@ -30,6 +30,9 @@ public class CRUD {
                 case 1:
                     cadastrarNovoCliente();
                     break;
+                case 2:
+                    System.out.println(clienteDAO.listarTodosClientes());
+                    break;
                 default: 
                     System.out.println("Opção inválida.");
                     break;
@@ -48,6 +51,7 @@ public class CRUD {
         int opcao;
         String menu = "-- Menu de opções -- " + "\n";
         menu += "1. Cadastrar novo cliente" + "\n";
+        menu += "2. Listar todos os clientes" + "\n";
         menu += "Escolha uma opção: ";
         System.out.println(menu);
         opcao = Integer.parseInt(scan.nextLine());
@@ -69,4 +73,6 @@ public class CRUD {
         }
             
     }
+    
+    
 }

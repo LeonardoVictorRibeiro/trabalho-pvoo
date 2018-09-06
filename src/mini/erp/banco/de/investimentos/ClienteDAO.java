@@ -5,6 +5,8 @@
  */
 package mini.erp.banco.de.investimentos;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Leonardo
@@ -17,10 +19,9 @@ public class ClienteDAO {
       Cliente c1 = new Cliente("Leonardo", "123456789");
       Cliente c2 = new Cliente("Pedro", "123456789");
       Cliente c3 = new Cliente("Maria", "123456789");
-      
-  
-    // System.out.println("Clientes cadastrados: " + contador);
-
+      this.insereCliente(c1);
+      this.insereCliente(c2);
+      this.insereCliente(c3);
     }
     
     public int verificaPosicao(){
@@ -44,6 +45,18 @@ public class ClienteDAO {
         this.clientes[posicao] = novoCliente;
         return true;
        
+    }
+    
+    public String listarTodosClientes(){
+        
+        String listaClientes = "-- Clientes -- " + "\n";
+        
+        for ( int i = 0; clientes[i] != null; i++) {
+            listaClientes += clientes[i].toString();
+
+        }
+        
+        return listaClientes;
     }
     
     
