@@ -11,11 +11,11 @@ import java.util.Scanner;
  *
  * @author Leonardo
  */
-public class CRUD {
+public class ClienteCRUD {
     ClienteDAO clienteDAO = new ClienteDAO();
     Scanner scan = new Scanner(System.in);
     
-    CRUD(){
+    ClienteCRUD(){
         
         
         
@@ -33,6 +33,12 @@ public class CRUD {
                 case 2:
                     System.out.println(clienteDAO.listarTodosClientes());
                     break;
+                case 3:
+                    deletarCliente();
+                    break;
+                case 4: 
+                    buscarCliente();
+                    break;
                 default: 
                     System.out.println("Opção inválida.");
                     break;
@@ -44,15 +50,19 @@ public class CRUD {
     
     
     public static void main(String[] args) {
-        new CRUD();
+        new ClienteCRUD();
     }
     
     int menu(){
         int opcao;
-        String menu = "-- Menu de opções -- " + "\n";
-        menu += "1. Cadastrar novo cliente" + "\n";
-        menu += "2. Listar todos os clientes" + "\n";
-        menu += "Escolha uma opção: ";
+        StringBuilder menu = new StringBuilder();
+        menu.append("-- Menu de opções -- " + "\n");
+        menu.append("1. Cadastrar novo cliente" + "\n");
+        menu.append("2. Listar todos os clientes" + "\n");
+        menu.append("3. Deletar um cliente: " + "\n");
+        menu.append("4. Listar um cliente: " + "\n");
+        menu.append("Escolha uma opção: ");
+        
         System.out.println(menu);
         opcao = Integer.parseInt(scan.nextLine());
         
@@ -73,6 +83,33 @@ public class CRUD {
         }
             
     }
+    
+    void deletarCliente(){
+        StringBuilder submenu = new StringBuilder();
+        submenu.append("-- Excluir cliente --" + "\n");
+        submenu.append("CPF: ");
+        System.out.print(submenu);
+        String cpf = scan.nextLine();
+        Cliente clienteASerExluido = new Cliente(cpf);
+        if(clienteDAO.deletaCliente(clienteASerExluido)){
+            System.out.println("Cliente excluído com sucesso!");
+        }else{
+            System.out.println("Cliente não encontrado!");
+        }
+        
+    }
+    
+    void buscarCliente(){
+        StringBuilder submenu = new StringBuilder();
+        submenu.append("-- Buscar cliente --" + "\n");
+        submenu.append("CPF: ");
+        System.out.print(submenu);
+        Cliente c = new Cliente(scan.nextLine());
+        
+        System.out.println(clienteDAO.listarCliente(c));
+    }
+    
+    
     
     
 }

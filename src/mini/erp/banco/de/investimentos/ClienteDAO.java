@@ -17,13 +17,13 @@ public class ClienteDAO {
     
     ClienteDAO(){
       Cliente c1 = new Cliente("Leonardo", "123456789");
-      Cliente c2 = new Cliente("Pedro", "123456789");
-      Cliente c3 = new Cliente("Maria", "123456789");
+      Cliente c2 = new Cliente("Pedro", "123456787");
+      Cliente c3 = new Cliente("Maria", "123456788");
       this.insereCliente(c1);
       this.insereCliente(c2);
       this.insereCliente(c3);
     }
-    
+    //Funcional
     public int verificaPosicao(){
         
         for ( int i = 0; i < clientes.length; i++){
@@ -35,7 +35,7 @@ public class ClienteDAO {
         
         return -1;
     }
-    
+    //Funcional
     public boolean insereCliente(Cliente novoCliente){
         
         int posicao = verificaPosicao();
@@ -46,14 +46,43 @@ public class ClienteDAO {
         return true;
        
     }
+    //Funcional
+    public int encontraCliente(Cliente clienteASerExcluido){
+        for( int i = 0; clientes.length > i; i++){
+            if(clientes[i] != null && clientes[i].equals(clienteASerExcluido)){
+                return i;
+            }
+        }
+        return -1;
+    }
     
+    //Funcional
+    public boolean deletaCliente(Cliente clienteASerExcluido){
+        int posicaoCliente = encontraCliente(clienteASerExcluido);
+        if(posicaoCliente == -1){
+            return false;
+        }
+        clientes[posicaoCliente] = null;
+        return true;
+    }
+    
+    public String listarCliente(Cliente c){
+        return clientes[encontraCliente(c)].toString();
+    }
+    
+    
+    //Funcional
     public String listarTodosClientes(){
         
         String listaClientes = "-- Clientes -- " + "\n";
         
-        for ( int i = 0; clientes[i] != null; i++) {
-            listaClientes += clientes[i].toString();
-
+        for ( int i = 0; clientes.length > i; i++) {
+            if(clientes[i] != null){
+                listaClientes += clientes[i].toString();
+            }
+        }
+        if(listaClientes.contentEquals("-- Clientes -- " + "\n")){
+            listaClientes = "Nenhum cliente cadastrado.";
         }
         
         return listaClientes;
