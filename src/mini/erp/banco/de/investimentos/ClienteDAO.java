@@ -67,7 +67,10 @@ public class ClienteDAO {
     }
     
     public String listarCliente(Cliente c){
-        return clientes[encontraCliente(c)].toString();
+        if(encontraCliente(c) != -1){
+            return clientes[encontraCliente(c)].toString();
+        }
+        return "Não encontrado.";
     }
     
     
@@ -87,6 +90,8 @@ public class ClienteDAO {
         
         return listaClientes;
     }
+    
+    
     
     
 }

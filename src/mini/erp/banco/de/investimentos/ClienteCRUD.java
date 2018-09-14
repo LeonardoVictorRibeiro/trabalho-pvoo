@@ -12,18 +12,41 @@ import java.util.Scanner;
  * @author Leonardo
  */
 public class ClienteCRUD {
+
     ClienteDAO clienteDAO = new ClienteDAO();
     Scanner scan = new Scanner(System.in);
+
+    ClienteCRUD() {
+        menuPrincipal();
+        
+    }
+
+    public static void main(String[] args) {
+        new ClienteCRUD();
+    }
+
+    int menu() {
+        int opcao;
+        StringBuilder menu = new StringBuilder();
+        menu.append("-- CRUD DE CLIENTES -- " + "\n");
+        menu.append("1. Cadastrar novo cliente" + "\n");
+        menu.append("2. Listar todos os clientes" + "\n");
+        menu.append("3. Deletar um cliente: " + "\n");
+        menu.append("4. Listar um cliente: " + "\n");
+        menu.append("5. Alterar um cliente: " + "\n");
+        menu.append("Digite uma opção: ");
+
+        System.out.println(menu);
+        opcao = Integer.parseInt(scan.nextLine());
+
+        return opcao;
+    }
     
-    ClienteCRUD(){
-        
-        
-        
-        
+    void menuPrincipal(){
         int opcaoEscolhida;
-        do{
+        do {
             opcaoEscolhida = menu();
-            switch(opcaoEscolhida){
+            switch (opcaoEscolhida) {
                 case 0:
                     System.out.println("Programa encerrado.");
                     break;
@@ -36,80 +59,110 @@ public class ClienteCRUD {
                 case 3:
                     deletarCliente();
                     break;
-                case 4: 
+                case 4:
                     buscarCliente();
                     break;
-                default: 
+                case 5:
+                    alterarCliente();
+                    break;
+                default:
                     System.out.println("Opção inválida.");
                     break;
             }
-            
-        }while(opcaoEscolhida != 0);
-        
+
+        } while (opcaoEscolhida != 0);
+
     }
-    
-    
-    public static void main(String[] args) {
-        new ClienteCRUD();
-    }
-    
-    int menu(){
-        int opcao;
-        StringBuilder menu = new StringBuilder();
-        menu.append("-- Menu de opções -- " + "\n");
-        menu.append("1. Cadastrar novo cliente" + "\n");
-        menu.append("2. Listar todos os clientes" + "\n");
-        menu.append("3. Deletar um cliente: " + "\n");
-        menu.append("4. Listar um cliente: " + "\n");
-        menu.append("Escolha uma opção: ");
-        
-        System.out.println(menu);
-        opcao = Integer.parseInt(scan.nextLine());
-        
-        return opcao;
-    }
-    
-    void cadastrarNovoCliente(){
+
+    void cadastrarNovoCliente() {
         System.out.print("Digite o nome do novo cliente: ");
         String nome = scan.nextLine();
         System.out.print("Digite o CPF do novo cliente: ");
         String cpf = scan.nextLine();
-        
+
         Cliente novoCliente = new Cliente(nome, cpf);
-        if(clienteDAO.insereCliente(novoCliente)){
+        if (clienteDAO.insereCliente(novoCliente)) {
             System.out.println("Cliente cadastrado com sucesso.");
-        }else{
+        } else {
             System.out.println("Falha ao cadastrar novo cliente.");
         }
-            
+
     }
-    
-    void deletarCliente(){
+
+    void deletarCliente() {
         StringBuilder submenu = new StringBuilder();
         submenu.append("-- Excluir cliente --" + "\n");
         submenu.append("CPF: ");
         System.out.print(submenu);
         String cpf = scan.nextLine();
         Cliente clienteASerExluido = new Cliente(cpf);
-        if(clienteDAO.deletaCliente(clienteASerExluido)){
+        if (clienteDAO.deletaCliente(clienteASerExluido)) {
             System.out.println("Cliente excluído com sucesso!");
-        }else{
+        } else {
             System.out.println("Cliente não encontrado!");
         }
-        
+
     }
-    
-    void buscarCliente(){
+
+    void buscarCliente() {
         StringBuilder submenu = new StringBuilder();
         submenu.append("-- Buscar cliente --" + "\n");
         submenu.append("CPF: ");
         System.out.print(submenu);
         Cliente c = new Cliente(scan.nextLine());
-        
+
         System.out.println(clienteDAO.listarCliente(c));
     }
-    
-    
-    
-    
+
+    void alterarCliente() {
+        StringBuilder submenu = new StringBuilder();
+        submenu.append("-- Alterar cliente --" + "\n");
+        submenu.append("CPF: ");
+        System.out.print(submenu);
+        Cliente c = new Cliente(scan.nextLine());
+        if (clienteDAO.encontraCliente(c) != -1) {
+            int opcao;
+            do {
+                opcao = menuAlteracao();
+                switch (opcao) {
+                    case 1:
+                        System.out.println("Nome:");
+                        clienteDAO.clientes[clienteDAO.encontraCliente(c)].setNome(scan.nextLine());
+                        break;
+                    case 2:
+                        System.out.println("CPF:");
+                        clienteDAO.clientes[clienteDAO.encontraCliente(c)].setCpf(scan.nextLine());
+                        break;
+                    case 3:
+                        System.out.println("Senha:");
+                        clienteDAO.clientes[clienteDAO.encontraCliente(c)].setSenha(scan.nextLine());
+                        break;
+                    case 4:
+                        System.out.println("Retornando ao menu principal.");
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+
+                }
+            } while (opcao != 4);
+        }else{
+            System.out.println("Cliente não encontrado.");
+        }
+        
+
+    }
+
+    int menuAlteracao() {
+        StringBuilder menuAlteracao = new StringBuilder();
+        menuAlteracao.append("Quais dados deseja alterar?" + "\n");
+        menuAlteracao.append("1.Nome" + "\n");
+        menuAlteracao.append("2.CPF" + "\n");
+        menuAlteracao.append("3.Senha" + "\n");
+        menuAlteracao.append("4. Finalizar" + "\n");
+        menuAlteracao.append("Digite uma opção:");
+        System.out.println(menuAlteracao);
+
+        return Integer.parseInt(scan.nextLine());
+    }
+
 }

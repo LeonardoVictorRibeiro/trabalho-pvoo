@@ -12,7 +12,6 @@ package mini.erp.banco.de.investimentos;
 public class Teste {
     
     public static void main(String[] args) {
-        
-        
+        ClienteCRUD c = new ClienteCRUD();
     }
 }
