@@ -9,6 +9,6 @@ package mini.erp.banco.de.investimentos;
  *
  * @author leonardo
  */
-public class Administrador extends Usuario{
+abstract public class Conta {
     
 }

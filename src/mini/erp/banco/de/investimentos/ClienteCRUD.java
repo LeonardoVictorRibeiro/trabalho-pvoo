@@ -17,32 +17,6 @@ public class ClienteCRUD {
     Scanner scan = new Scanner(System.in);
 
     ClienteCRUD() {
-        menuPrincipal();
-        
-    }
-
-    public static void main(String[] args) {
-        new ClienteCRUD();
-    }
-
-    int menu() {
-        int opcao;
-        StringBuilder menu = new StringBuilder();
-        menu.append("-- CRUD DE CLIENTES -- " + "\n");
-        menu.append("1. Cadastrar novo cliente" + "\n");
-        menu.append("2. Listar todos os clientes" + "\n");
-        menu.append("3. Deletar um cliente: " + "\n");
-        menu.append("4. Listar um cliente: " + "\n");
-        menu.append("5. Alterar um cliente: " + "\n");
-        menu.append("Digite uma opção: ");
-
-        System.out.println(menu);
-        opcao = Integer.parseInt(scan.nextLine());
-
-        return opcao;
-    }
-    
-    void menuPrincipal(){
         int opcaoEscolhida;
         do {
             opcaoEscolhida = menu();
@@ -74,7 +48,26 @@ public class ClienteCRUD {
 
     }
 
+    int menu() {
+        int opcao;
+        StringBuilder menu = new StringBuilder();
+        menu.append("-- CRUD DE CLIENTES -- " + "\n");
+        menu.append("1. Cadastrar novo cliente" + "\n");
+        menu.append("2. Listar todos os clientes" + "\n");
+        menu.append("3. Deletar um cliente: " + "\n");
+        menu.append("4. Listar um cliente: " + "\n");
+        menu.append("5. Alterar um cliente: " + "\n");
+        menu.append("Digite uma opção: ");
+
+        System.out.println(menu);
+        opcao = Integer.parseInt(scan.nextLine());
+
+        return opcao;
+    }
+
     void cadastrarNovoCliente() {
+        System.out.println("\n");
+        System.out.println("-- 1. Cadastrar novo cliente --");
         System.out.print("Digite o nome do novo cliente: ");
         String nome = scan.nextLine();
         System.out.print("Digite o CPF do novo cliente: ");
@@ -86,6 +79,7 @@ public class ClienteCRUD {
         } else {
             System.out.println("Falha ao cadastrar novo cliente.");
         }
+        System.out.println("\n");
 
     }
 
@@ -145,10 +139,9 @@ public class ClienteCRUD {
 
                 }
             } while (opcao != 4);
-        }else{
+        } else {
             System.out.println("Cliente não encontrado.");
         }
-        
 
     }
 

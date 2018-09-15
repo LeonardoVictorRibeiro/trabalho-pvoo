@@ -16,14 +16,14 @@ public class ClienteDAO {
     int contador;
     
     ClienteDAO(){
-      Cliente c1 = new Cliente("Leonardo", "123456789");
-      Cliente c2 = new Cliente("Pedro", "123456787");
-      Cliente c3 = new Cliente("Maria", "123456788");
-      this.insereCliente(c1);
+      Cliente adm = new Cliente("Leonardo", "123456789", "12345");
+      Cliente c2 = new Cliente("Pedro", "123456787", "12346");
+      Cliente c3 = new Cliente("Maria", "123456788", "12347");
+      this.insereAdministrador(adm);
       this.insereCliente(c2);
       this.insereCliente(c3);
     }
-    //Funcional
+    //Encontra uma posição está vazia
     public int verificaPosicao(){
         
         for ( int i = 0; i < clientes.length; i++){
@@ -35,7 +35,10 @@ public class ClienteDAO {
         
         return -1;
     }
-    //Funcional
+    public void insereAdministrador(Cliente novoCliente){
+        this.clientes[0] = novoCliente;
+    }
+    //Insere um novo cliente. Se existe um espaço vazio entre 2 clientes, então o novo cliente será criado nessa posição
     public boolean insereCliente(Cliente novoCliente){
         
         int posicao = verificaPosicao();
@@ -46,7 +49,7 @@ public class ClienteDAO {
         return true;
        
     }
-    //Funcional
+    //Encontra a posição do cliente
     public int encontraCliente(Cliente clienteASerExcluido){
         for( int i = 0; clientes.length > i; i++){
             if(clientes[i] != null && clientes[i].equals(clienteASerExcluido)){
@@ -56,12 +59,14 @@ public class ClienteDAO {
         return -1;
     }
     
-    //Funcional
+    //Recebe um cliente como parâmetro e "exclui" - null
     public boolean deletaCliente(Cliente clienteASerExcluido){
         int posicaoCliente = encontraCliente(clienteASerExcluido);
-        if(posicaoCliente == -1){
+        
+        if(posicaoCliente == -1 || posicaoCliente == 0){
             return false;
         }
+       
         clientes[posicaoCliente] = null;
         return true;
     }

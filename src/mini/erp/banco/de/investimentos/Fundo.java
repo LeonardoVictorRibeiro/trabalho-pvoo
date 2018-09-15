@@ -5,16 +5,10 @@
  */
 package mini.erp.banco.de.investimentos;
 
-import java.util.Objects;
-
 /**
  *
  * @author leonardo
  */
-public class Usuario {
-    
-        
-     
-    
+public class Fundo {
     
 }
