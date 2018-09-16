@@ -19,9 +19,13 @@ public class ClienteDAO {
       Cliente adm = new Cliente("Leonardo", "123456789", "12345");
       Cliente c2 = new Cliente("Pedro", "123456787", "12346");
       Cliente c3 = new Cliente("Maria", "123456788", "12347");
+      Cliente c4 = new Cliente("Raissa", "123456783", "12347");
+      Cliente c5 = new Cliente("Maria", "123456781", "12347");
       this.insereAdministrador(adm);
       this.insereCliente(c2);
       this.insereCliente(c3);
+      this.insereCliente(c4);
+      this.insereCliente(c5);
     }
     //Encontra uma posição está vazia
     public int verificaPosicao(){

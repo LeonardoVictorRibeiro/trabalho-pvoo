@@ -17,35 +17,7 @@ public class ClienteCRUD {
     Scanner scan = new Scanner(System.in);
 
     ClienteCRUD() {
-        int opcaoEscolhida;
-        do {
-            opcaoEscolhida = menu();
-            switch (opcaoEscolhida) {
-                case 0:
-                    System.out.println("Programa encerrado.");
-                    break;
-                case 1:
-                    cadastrarNovoCliente();
-                    break;
-                case 2:
-                    System.out.println(clienteDAO.listarTodosClientes());
-                    break;
-                case 3:
-                    deletarCliente();
-                    break;
-                case 4:
-                    buscarCliente();
-                    break;
-                case 5:
-                    alterarCliente();
-                    break;
-                default:
-                    System.out.println("Opção inválida.");
-                    break;
-            }
-
-        } while (opcaoEscolhida != 0);
-
+        iniciarCRUD();
     }
 
     int menu() {
@@ -57,9 +29,10 @@ public class ClienteCRUD {
         menu.append("3. Deletar um cliente: " + "\n");
         menu.append("4. Listar um cliente: " + "\n");
         menu.append("5. Alterar um cliente: " + "\n");
+        menu.append("5. Sair " + "\n");
         menu.append("Digite uma opção: ");
 
-        System.out.println(menu);
+        System.out.print(menu);
         opcao = Integer.parseInt(scan.nextLine());
 
         return opcao;
@@ -72,8 +45,10 @@ public class ClienteCRUD {
         String nome = scan.nextLine();
         System.out.print("Digite o CPF do novo cliente: ");
         String cpf = scan.nextLine();
+        System.out.print("Digite a senha do novo cliente: ");
+        String senha = scan.nextLine();
 
-        Cliente novoCliente = new Cliente(nome, cpf);
+        Cliente novoCliente = new Cliente(nome, cpf, senha);
         if (clienteDAO.insereCliente(novoCliente)) {
             System.out.println("Cliente cadastrado com sucesso.");
         } else {
@@ -84,12 +59,12 @@ public class ClienteCRUD {
     }
 
     void deletarCliente() {
-        StringBuilder submenu = new StringBuilder();
-        submenu.append("-- Excluir cliente --" + "\n");
-        submenu.append("CPF: ");
-        System.out.print(submenu);
+        System.out.println("-- Excluir cliente --" + "\n");
+        System.out.print("CPF: ");
         String cpf = scan.nextLine();
-        Cliente clienteASerExluido = new Cliente(cpf);
+        System.out.print("SENHA: ");
+        String senha = scan.nextLine();
+        Cliente clienteASerExluido = new Cliente(cpf, senha);
         if (clienteDAO.deletaCliente(clienteASerExluido)) {
             System.out.println("Cliente excluído com sucesso!");
         } else {
@@ -99,21 +74,23 @@ public class ClienteCRUD {
     }
 
     void buscarCliente() {
-        StringBuilder submenu = new StringBuilder();
-        submenu.append("-- Buscar cliente --" + "\n");
-        submenu.append("CPF: ");
-        System.out.print(submenu);
-        Cliente c = new Cliente(scan.nextLine());
+        System.out.println("-- Buscar cliente --" + "\n");
+        System.out.print("CPF: ");
+        String cpf = scan.nextLine();
+        System.out.print("SENHA: ");
+        String senha = scan.nextLine();
+        Cliente c = new Cliente(cpf, senha);
 
         System.out.println(clienteDAO.listarCliente(c));
     }
 
     void alterarCliente() {
-        StringBuilder submenu = new StringBuilder();
-        submenu.append("-- Alterar cliente --" + "\n");
-        submenu.append("CPF: ");
-        System.out.print(submenu);
-        Cliente c = new Cliente(scan.nextLine());
+        System.out.println("-- Alterar cliente --" + "\n");
+        System.out.print("CPF: ");
+        String cpf = scan.nextLine();
+        System.out.print("SENHA: ");
+        String senha = scan.nextLine();
+        Cliente c = new Cliente(cpf, senha);
         if (clienteDAO.encontraCliente(c) != -1) {
             int opcao;
             do {
@@ -156,6 +133,38 @@ public class ClienteCRUD {
         System.out.println(menuAlteracao);
 
         return Integer.parseInt(scan.nextLine());
+    }
+
+    private void iniciarCRUD() {
+        int opcaoEscolhida;
+        do {
+            opcaoEscolhida = menu();
+            switch (opcaoEscolhida) {
+                case 0:
+                    System.out.println("Programa encerrado.");
+                    break;
+                case 1:
+                    cadastrarNovoCliente();
+                    break;
+                case 2:
+                    System.out.println(clienteDAO.listarTodosClientes());
+                    break;
+                case 3:
+                    deletarCliente();
+                    break;
+                case 4:
+                    buscarCliente();
+                    break;
+                case 5:
+                    alterarCliente();
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+
+        } while (opcaoEscolhida != 0);
+
     }
 
 }

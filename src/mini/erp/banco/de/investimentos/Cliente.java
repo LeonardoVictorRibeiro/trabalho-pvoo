@@ -24,11 +24,6 @@ public class Cliente extends Usuario{
         this.setCpf(cpf);
         this.setSenha(senha);
     }
-
-    // Construtor usado para criar uma classe que será comparada com outra
-    Cliente(String cpf){
-        this.setCpf(cpf);
-    }    
     
     Cliente(String cpf, String senha){
         this.setCpf(cpf);
