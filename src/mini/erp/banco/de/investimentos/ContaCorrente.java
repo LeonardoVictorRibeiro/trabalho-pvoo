@@ -10,5 +10,21 @@ package mini.erp.banco.de.investimentos;
  * @author leonardo
  */
 public class ContaCorrente extends Conta{
+
+    ContaCorrente(String nome) {
+    this.setTitular(nome);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    public ContaCorrente criaCCorrente(String nome){
+        ContaCorrente novaConta = new ContaCorrente(nome);
+        return novaConta;
+    }
     
 }

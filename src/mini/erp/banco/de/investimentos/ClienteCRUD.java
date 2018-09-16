@@ -29,7 +29,7 @@ public class ClienteCRUD {
         menu.append("3. Deletar um cliente: " + "\n");
         menu.append("4. Listar um cliente: " + "\n");
         menu.append("5. Alterar um cliente: " + "\n");
-        menu.append("5. Sair " + "\n");
+        menu.append("0. Sair " + "\n");
         menu.append("Digite uma opção: ");
 
         System.out.print(menu);

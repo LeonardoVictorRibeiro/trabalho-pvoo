@@ -18,9 +18,17 @@ public class ClienteDAO {
     ClienteDAO(){
       Cliente adm = new Cliente("Leonardo", "123456789", "12345");
       Cliente c2 = new Cliente("Pedro", "123456787", "12346");
+      ContaCorrente c2Conta = new ContaCorrente(c2.getNome());
+      c2.setCorrente(c2Conta);
       Cliente c3 = new Cliente("Maria", "123456788", "12347");
+      ContaCorrente c3Conta = new ContaCorrente(c3.getNome());
+      c2.setCorrente(c3Conta);
       Cliente c4 = new Cliente("Raissa", "123456783", "12347");
+      ContaCorrente c4Conta = new ContaCorrente(c4.getNome());
+      c2.setCorrente(c4Conta);
       Cliente c5 = new Cliente("Maria", "123456781", "12347");
+      ContaCorrente c5Conta = new ContaCorrente(c5.getNome());
+      c2.setCorrente(c5Conta);
       this.insereAdministrador(adm);
       this.insereCliente(c2);
       this.insereCliente(c3);

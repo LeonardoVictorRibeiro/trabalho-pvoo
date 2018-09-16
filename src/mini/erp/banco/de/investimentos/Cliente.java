@@ -17,6 +17,8 @@ public class Cliente extends Usuario{
     private String senha;
     private String nome;
     private String cpf;
+    private ContaCorrente corrente;
+    private ContaPoupanca poupanca;
     
     Cliente(String nome, String cpf, String senha){
         this.id= ++serial;
@@ -57,6 +59,23 @@ public class Cliente extends Usuario{
         this.senha = senha;
     }
 
+    public ContaCorrente getCorrente() {
+        return corrente;
+    }
+
+    public void setCorrente(ContaCorrente corrente) {
+        this.corrente = corrente;
+    }
+
+    public ContaPoupanca getPoupanca() {
+        return poupanca;
+    }
+
+    public void setPoupanca(ContaPoupanca poupanca) {
+        this.poupanca = poupanca;
+    }
+
+    
     @Override
     public String toString() {
         return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + '}' + "\n";
