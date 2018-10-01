@@ -15,11 +15,12 @@ import javax.swing.JOptionPane;
  */
 public class ContaCorrenteCRUD {
     
-    ContaCorrenteDAO dao = new ContaCorrenteDAO();
-    LocalDate hoje = LocalDate.now();
+    ContaCorrenteDAO dao;
+    LocalDate hoje;
     Cliente cliente = new Cliente("Leonardo", "1111111", 1234567);
     
-    public ContaCorrenteCRUD(){
+    public ContaCorrenteCRUD(LocalDate hoje){
+        this.hoje = hoje;
         int opcao;
         do{
             opcao = menuPrincipal();
@@ -40,9 +41,14 @@ public class ContaCorrenteCRUD {
                     dao.listar();
                     break;
                 case 3:
-
+                    alterarDadosDaConta();
                     break;
                 case 4:
+                    if(excluir()){
+                        System.out.println("Conta excluída com sucesso.");
+                    }else{
+                        System.out.println("Não foi possível excluir a conta.");
+                    }
                     break;
                 default:
                     break;
@@ -53,12 +59,8 @@ public class ContaCorrenteCRUD {
         
     }
     
-    public static void main(String[] args) {
-        new ContaCorrenteCRUD();
-    }
-    
     public int menuPrincipal(){
-        StringBuilder menu = new StringBuilder("Conta Corrente\n");
+        StringBuilder menu = new StringBuilder("-- Conta Corrente --\n");
         menu.append("0. Sair").append("\n");
         menu.append("1. Inserir").append("\n");
         menu.append("2. Listar").append("\n");
@@ -81,17 +83,74 @@ public class ContaCorrenteCRUD {
             return false;
     }
     
-    public int alterarDadosDaConta(){
+    public void alterarDadosDaConta(){
+
         StringBuilder menu = new StringBuilder("Alterar Conta Corrente\n");
         System.out.println(menu);
         
-        long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: R$"));
-        String saldo = JOptionPane.showInputDialog("Entre com saldo: R$");
-        BigDecimal saldoBig = new BigDecimal(saldo);
+        long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: "));
+        ContaCorrente buscaCC = new ContaCorrente(null , new BigDecimal(-1), new BigDecimal(-1), null);
+        buscaCC.setNumero(numero);
         
-        ContaCorrente novaCC = new ContaCorrente(null, null, null, null);
-        //novaCC.setNumero(numero);
-        return -1;
+        int opcao;
+        
+        if(dao.encontrarConta(buscaCC) != null){
+           do{
+            
+            StringBuilder subMenu = new StringBuilder("\n");
+            subMenu.append("0. Voltar").append("\n");
+            subMenu.append("1. Saldo").append("\n");
+            subMenu.append("2. Limite").append("\n");
+            subMenu.append("3. Titular").append("\n");
+            System.out.println(subMenu);
+            opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite a opção desejada: "));
+            
+            switch(opcao){
+                case 0:
+                    System.out.println("Retornando ao menu principal...");
+                    break;
+                case 1:
+                    BigDecimal quantia = new BigDecimal(JOptionPane.showInputDialog("Entre o novo saldo: "));
+                    buscaCC.setSaldo(quantia);
+                    if(dao.atualizar(buscaCC)){
+                        System.out.println("Saldo atualizado com sucesso.");
+                    }else{
+                        System.out.println("Não foi possível atualizar o saldo.");
+                    }
+                    break;
+                case 2:
+                    BigDecimal limite = new BigDecimal(JOptionPane.showInputDialog("Entre com o novo limite: "));
+                    buscaCC.setSaldo(limite);
+                    if(dao.atualizar(buscaCC)){
+                        System.out.println("Limite atualizado com sucesso.");
+                    }else{
+                        System.out.println("Não foi possível atualizar o limite.");
+                    }
+                    break;
+                case 3:
+                    //Lembrar de procurar clientes
+                    buscaCC.setTitular(cliente);
+                    if(dao.atualizar(buscaCC)){
+                        System.out.println("Limite atualizado com sucesso.");
+                    }else{
+                        System.out.println("Não foi possível atualizar o limite.");
+                    }
+                    break;
+                default: System.out.println("Opção inválida.");
+                    break;
+            }
+           }while(opcao != 0);
+            
+        }
+  
+    }
+    
+    public boolean excluir(){
+        System.out.println("-- Excluir --\n");
+        long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: "));
+        ContaCorrente ccExcluir = new ContaCorrente(null, new BigDecimal("0"), new BigDecimal("0"), null);
+        ccExcluir.setNumero(numero);
+        return dao.deletar(ccExcluir);
     }
 
     

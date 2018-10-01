@@ -12,12 +12,12 @@ import java.time.LocalDate;
  *
  * @author Leonardo
  */
-public class Extrato {
+public class Movimentacoes {
     private LocalDate data;
     private int operacao;
     private BigDecimal valor = new BigDecimal("0");
     
-    public Extrato(LocalDate data, int operacao, BigDecimal valor){
+    public Movimentacoes(LocalDate data, int operacao, BigDecimal valor){
         this.data = data;
         this.operacao = operacao;
         this.valor = this.valor.add(valor);

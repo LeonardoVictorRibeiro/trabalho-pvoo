@@ -19,14 +19,14 @@ public class ContaPoupanca {
     private BigDecimal saldo = new BigDecimal("0");
     private BigDecimal limite = new BigDecimal("0");
     private Cliente titular;
-    private Extrato[] extrato = new Extrato[50];
+    private Movimentacoes[] extrato = new Movimentacoes[50];
     
     public ContaPoupanca(Cliente titular, BigDecimal limite, LocalDate hoje){
         this.numero = serial++;
         this.titular = titular;
         this.dataAbertura = hoje;
         this.limite = this.limite.add(limite);
-        Extrato novoExtrato = new Extrato(hoje, 4, new BigDecimal("0"));
+        Movimentacoes novoExtrato = new Movimentacoes(hoje, 4, new BigDecimal("0"));
         setExtrato(novoExtrato);
     }
 
@@ -55,7 +55,7 @@ public class ContaPoupanca {
     public void depositar(BigDecimal valor, LocalDate hoje, ContaCorrente cc) {
         cc.transferirCP(this, valor, hoje);
         this.saldo = saldo.add(valor);
-        Extrato novoExtrato = new Extrato(hoje, 1, valor);
+        Movimentacoes novoExtrato = new Movimentacoes(hoje, 1, valor);
         setExtrato(novoExtrato);
     }
     /**
@@ -66,7 +66,7 @@ public class ContaPoupanca {
     public void sacar(BigDecimal valor, LocalDate hoje, ContaCorrente cc){
         this.saldo = saldo.subtract(valor);
         cc.depositar(valor, hoje);
-        Extrato novoExtrato = new Extrato(hoje, 2, valor);
+        Movimentacoes novoExtrato = new Movimentacoes(hoje, 2, valor);
         setExtrato(novoExtrato);
     }
     
@@ -96,7 +96,7 @@ public class ContaPoupanca {
         return info.append("\n").append("Saldo atual: ").append(this.saldo);
     }
     
-    public void setExtrato(Extrato novoExtrato){
+    public void setExtrato(Movimentacoes novoExtrato){
         int i;
         for( i = 0; extrato[i] != null && i < extrato.length; i++){}
         extrato[i] = novoExtrato;
