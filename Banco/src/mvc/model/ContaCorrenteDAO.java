@@ -28,13 +28,14 @@ public class ContaCorrenteDAO {
         ContaCorrente c5 = new ContaCorrente(cliente1, new BigDecimal("700"), new BigDecimal("1050"), hoje);
         
         
-        System.out.println("Inserir");
-        System.out.println(this.inserir(c1));
-        System.out.println(this.inserir(c2));
-        System.out.println(this.inserir(c3));
-        System.out.println(this.inserir(c4));
-        System.out.println(this.inserir(c5));
+        //System.out.println("Inserir");
+        this.inserir(c1);
+        this.inserir(c2);
+        this.inserir(c3);
+        this.inserir(c4);
+        this.inserir(c5);
         
+        /*
         ContaCorrente c6 = new ContaCorrente(cliente2, new BigDecimal("930"), new BigDecimal("2000"), hoje);
         c6.setNumero(0);
         
@@ -49,6 +50,7 @@ public class ContaCorrenteDAO {
         System.out.println(this.atualizar(c6));
         
         listar();
+        */
         
     }
 

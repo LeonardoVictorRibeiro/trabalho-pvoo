@@ -10,9 +10,9 @@ package mvc.model;
  * @author leonardo
  */
 public class ClienteDAO {
-    Cliente[] clientes = new Cliente[50];
+    private Cliente[] clientes = new Cliente[50];
     
-    ClienteDAO(){
+    public ClienteDAO(){
         Cliente c1 = new Cliente("Leonardo", "111111", 12345);
         Cliente c2 = new Cliente("Pedro", "222222", 12342);
         Cliente c3 = new Cliente("Caio", "333333", 12343);
@@ -72,5 +72,14 @@ public class ClienteDAO {
             }
         }
         return false;
+    }
+    
+    public Cliente buscar(Cliente busca){
+        for( int i = 0; i < clientes.length; i++){
+            if(clientes[i] != null && clientes[i].equals(busca)){
+                return clientes[i];
+            }
+        }
+        return null;
     }
 }
