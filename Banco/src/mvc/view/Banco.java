@@ -12,6 +12,7 @@ import mvc.model.Calendario;
 import mvc.model.Cliente;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
+import mvc.model.ContaCorrenteCRUD;
 import mvc.model.ContaCorrenteDAO;
 
 /**
@@ -22,9 +23,10 @@ public class Banco {
     // É o calendário que manipula a data do sistema
     Calendario calendario = new Calendario();
     // Manipula o vetor de contas
-    public ContaCorrenteDAO ccDAO;
+    public ContaCorrenteDAO ccDAO = new ContaCorrenteDAO(calendario.getData());
     // Manipula o vetor de clientes
     public ClienteDAO clienteDAO = new ClienteDAO();
+    
     
     Banco(){
         int opcao;
@@ -36,13 +38,14 @@ public class Banco {
           
             login = clienteDAO.buscar(new Cliente(null, cpfLogin, senhaLogin ));
             if( login != null){
+                System.out.println("Usuário conectado com sucesso!");
                 if(login.getSenha() == 12345){
                     menuAdm();
                 }else{
                     menuCliente();
                 }
             }else{
-                System.out.println("Senha e/ou usuário incorreto(s).");
+                System.out.println("Senha e/ou usuário incorreto(s).\n");
             }
         }while(login == null);
         
@@ -53,7 +56,7 @@ public class Banco {
         new Banco();
     }
     
-    public int menuCliente(){
+    public void menuCliente(){
         int opcao;
         
         StringBuilder menu = new StringBuilder("-- Menu do cliente --\n");
@@ -63,10 +66,10 @@ public class Banco {
         menu.append("4. Fundos de investimento").append("\n");
         System.out.println(menu);
         opcao = Integer.parseInt(JOptionPane.showInputDialog("Entre uma opção: "));
-        return opcao;
+
     }
     
-     public int menuAdm(){
+     public void menuAdm(){
         int opcao;
         
         do{
@@ -77,8 +80,23 @@ public class Banco {
         menu.append("4. Avançar o dia").append("\n");
         System.out.println(menu);
         opcao = Integer.parseInt(JOptionPane.showInputDialog("Entre uma opção: "));
+        
+        switch(opcao){
+            case 1:
+                
+                break;
+            case 2:
+                ContaCorrenteCRUD ccCRUD = new ContaCorrenteCRUD(calendario.getData(), ccDAO, clienteDAO);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default: System.out.println("Opção inválida.");
+                break;
+        }
+        
         }while(opcao != 0);
-        return opcao;
     }
      
     

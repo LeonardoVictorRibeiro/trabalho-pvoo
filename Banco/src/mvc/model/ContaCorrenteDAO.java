@@ -93,10 +93,10 @@ public class ContaCorrenteDAO {
     public boolean atualizar(ContaCorrente conta){
         ContaCorrente posicao = encontrarConta(conta);
         if(posicao != null){
-            if(conta.getSaldo() != null){
+            if(conta.getSaldo() != new BigDecimal("-1")){
                 posicao.setSaldo(conta.getSaldo());
             }
-            if(conta.getLimite() != null){
+            if(conta.getLimite() != new BigDecimal("-1")){
                 posicao.setLimite(conta.getLimite());
             }
             if(conta.getTitular() != null){
