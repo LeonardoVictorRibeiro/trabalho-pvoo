@@ -52,12 +52,12 @@ public class ClienteDAO {
         return listar;
     }
             
-    public boolean atualizar(Cliente comparar){
+    public boolean atualizar(Cliente alterar, Cliente novosDados){
         for (Cliente cliente : clientes) {
-            if(cliente != null && cliente.equals(comparar)){
-                cliente.setNome(comparar.getNome());
-                cliente.setCpf(comparar.getCpf());
-                cliente.setSenha(comparar.getSenha());
+            if(cliente != null && cliente.equals(alterar)){
+                cliente.setNome(novosDados.getNome());
+                cliente.setCpf(novosDados.getCpf());
+                cliente.setSenha(novosDados.getSenha());
                 return true;
             }
         }

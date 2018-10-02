@@ -10,6 +10,7 @@ import java.time.Month;
 import javax.swing.JOptionPane;
 import mvc.model.Calendario;
 import mvc.model.Cliente;
+import mvc.model.ClienteCRUD;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteCRUD;
@@ -22,10 +23,12 @@ import mvc.model.ContaCorrenteDAO;
 public class Banco {
     // É o calendário que manipula a data do sistema
     Calendario calendario = new Calendario();
-    // Manipula o vetor de contas
-    public ContaCorrenteDAO ccDAO = new ContaCorrenteDAO(calendario.getData());
+    
     // Manipula o vetor de clientes
     public ClienteDAO clienteDAO = new ClienteDAO();
+    
+    // Manipula o vetor de contas
+    public ContaCorrenteDAO ccDAO = new ContaCorrenteDAO(calendario.getData(), clienteDAO);
     
     
     Banco(){
@@ -82,8 +85,12 @@ public class Banco {
         opcao = Integer.parseInt(JOptionPane.showInputDialog("Entre uma opção: "));
         
         switch(opcao){
-            case 1:
+            case 0:
+                System.out.println("Deslogado.");
+                break;
                 
+            case 1:
+                ClienteCRUD clienteCRUD = new ClienteCRUD(clienteDAO);
                 break;
             case 2:
                 ContaCorrenteCRUD ccCRUD = new ContaCorrenteCRUD(calendario.getData(), ccDAO, clienteDAO);

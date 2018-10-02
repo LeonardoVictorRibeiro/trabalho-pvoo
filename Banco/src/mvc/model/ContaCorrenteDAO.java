@@ -16,20 +16,21 @@ public class ContaCorrenteDAO {
     private ContaCorrente[] dao  = new  ContaCorrente[50];
     private LocalDate hoje;
     
-    public ContaCorrenteDAO(LocalDate hoje){
+    public ContaCorrenteDAO(LocalDate hoje, ClienteDAO clienteDAO){
         this.hoje = hoje;
-        Cliente cliente1 = new Cliente("Leonardo", "123131", 12345);
-        Cliente cliente2 = new Cliente("Pedro", "123456", 111111);
+
+        Cliente cliente2 = clienteDAO.buscar(new Cliente(null, "222222", 0));
+        Cliente cliente3 = clienteDAO.buscar(new Cliente(null, "333333", 0));
+        Cliente cliente4 = clienteDAO.buscar(new Cliente(null, "444444", 0));
+        Cliente cliente5 = clienteDAO.buscar(new Cliente(null, "555555", 0));
         
-        ContaCorrente c1 = new ContaCorrente(cliente1, new BigDecimal("900"), new BigDecimal("1000"), hoje);
-        ContaCorrente c2 = new ContaCorrente(cliente1, new BigDecimal("400"), new BigDecimal("5000"), hoje);
-        ContaCorrente c3 = new ContaCorrente(cliente1, new BigDecimal("800"), new BigDecimal("7000"), hoje);
-        ContaCorrente c4 = new ContaCorrente(cliente1, new BigDecimal("1200"), new BigDecimal("1200"), hoje);
-        ContaCorrente c5 = new ContaCorrente(cliente1, new BigDecimal("700"), new BigDecimal("1050"), hoje);
+        ContaCorrente c2 = new ContaCorrente(cliente2, new BigDecimal("400"), new BigDecimal("5000"), hoje);
+        ContaCorrente c3 = new ContaCorrente(cliente3, new BigDecimal("800"), new BigDecimal("7000"), hoje);
+        ContaCorrente c4 = new ContaCorrente(cliente4, new BigDecimal("1200"), new BigDecimal("1200"), hoje);
+        ContaCorrente c5 = new ContaCorrente(cliente5, new BigDecimal("700"), new BigDecimal("1050"), hoje);
         
         
         //System.out.println("Inserir");
-        this.inserir(c1);
         this.inserir(c2);
         this.inserir(c3);
         this.inserir(c4);
