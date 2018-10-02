@@ -76,9 +76,9 @@ public class Banco {
         int opcao;
         
         do{
-        StringBuilder menu = new StringBuilder("-- Menu do adm --\n");
+        StringBuilder menu = new StringBuilder("-- Menu do adm --").append(" Hoje é ").append(calendario.getData()).append("\n");
         menu.append("1. CRUD de clientes").append("\n");
-        menu.append("2. CRUD de contas").append("\n");
+        menu.append("2. CRUD de Conta Corrente").append("\n");
         menu.append("3. CRUD de Investimentos").append("\n");
         menu.append("4. Avançar o dia").append("\n");
         System.out.println(menu);
@@ -98,6 +98,7 @@ public class Banco {
             case 3:
                 break;
             case 4:
+                alterarData();
                 break;
             default: System.out.println("Opção inválida.");
                 break;
@@ -106,6 +107,9 @@ public class Banco {
         }while(opcao != 0);
     }
      
-    
-    
+     public void alterarData(){
+         System.out.println("-- Avançar o dia --");
+         long novaData = Long.parseLong(JOptionPane.showInputDialog("Entre com a quantidade de dias: ")) ;
+         calendario.setData(novaData);
+     }
 }
