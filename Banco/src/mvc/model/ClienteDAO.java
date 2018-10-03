@@ -27,10 +27,7 @@ public class ClienteDAO {
 
        
     } 
-    
-    public static void main(String[] args) {
-        new ClienteDAO();
-    }
+
     
     public boolean inserir(Cliente novo){
         for(int i = 0; i < clientes.length; i++){

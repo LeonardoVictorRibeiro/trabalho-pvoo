@@ -45,6 +45,9 @@ public class Movimentacoes {
         if(this.operacao == 4){
             op.append("Abertura da conta.");
         }
+        if(this.operacao == 5){
+            op.append("Pagamento da manutenção");
+        }
         
         return op;
     }

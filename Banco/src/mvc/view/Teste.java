@@ -16,25 +16,20 @@ import mvc.model.ContaPoupanca;
  * @author Leonardo
  */
 public class Teste {
-    public static void main(String[] args) {
-        LocalDate hoje = LocalDate.now();
-        
-        
-        Cliente c1 = new Cliente("Leonardo", "111111", 123456);
-        Cliente c2 = new Cliente("Rogerio", "123131", 112312);
-        
-        ContaCorrente cc1 = new ContaCorrente(c1, new BigDecimal("2000"), new BigDecimal("6000"), hoje);
-        
-        ContaCorrente cc2 = new ContaCorrente(c2, new BigDecimal("1000"), new BigDecimal("2000"), hoje);
-        cc2.depositar(new BigDecimal("1000"), hoje);
-        cc2.depositar(new BigDecimal("3000"), hoje.plusDays(30));
-        
-        System.out.println("Conta Poupança");
-        ContaPoupanca cp1 = new ContaPoupanca(c2, new BigDecimal("60000"), hoje);
-        cp1.depositar(new BigDecimal("3000"), hoje, cc2);
-        System.out.println(cp1.getExtrato());
-        
-        System.out.println("Conta Corrente");
-        System.out.println(cc2.getExtrato());
+
+    private BigDecimal[] selicDoMes = new BigDecimal[12];
+    private BigDecimal juros = new BigDecimal("0");
+
+    public void calculaJuros() {
+        int i = 0;
+        if (selicDoMes[i].compareTo(new BigDecimal("0.085")) > 0) {
+            this.juros = new BigDecimal("0.5");
         }
+        if (selicDoMes[i].compareTo(new BigDecimal("0.085")) <= 0) {
+            
+            this.juros = selicDoMes[i].multiply(new BigDecimal("0.7"));
+        }
+
+    }
+
 }

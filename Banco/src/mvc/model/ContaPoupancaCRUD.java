@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
  *
  * @author leonardo
  */
-public class ContaCorrenteCRUD {
+public class ContaPoupancaCRUD {
     
-    private ContaCorrenteDAO dao;
     private ClienteDAO daoCliente;
     private LocalDate hoje;
+    private ContaPoupancaDAO dao;
     
-    public ContaCorrenteCRUD(LocalDate hoje, ContaCorrenteDAO dao, ClienteDAO daoCliente){
+    public ContaPoupancaCRUD(LocalDate hoje, ContaPoupancaDAO dao, ClienteDAO daoCliente){
         this.dao = dao;
         this.daoCliente = daoCliente;
         this.hoje = hoje;
@@ -39,18 +39,20 @@ public class ContaCorrenteCRUD {
                     }
                     break;
                 case 2:
-                    System.out.println("Lista de Contas Corrente");
+                    System.out.println("Lista de Contas Poupança");
                     this.dao.listar();
                     break;
                 case 3:
                     alterarDadosDaConta();
                     break;
                 case 4:
+                    
                     if(excluir()){
                         System.out.println("Conta excluída com sucesso.");
                     }else{
                         System.out.println("Não foi possível excluir a conta.");
                     }
+                   
                     break;
                 default:
                     break;
@@ -60,9 +62,9 @@ public class ContaCorrenteCRUD {
         
         
     }
-    
+
     public int menuPrincipal(){
-        StringBuilder menu = new StringBuilder("-- Conta Corrente --\n");
+        StringBuilder menu = new StringBuilder("-- Conta Poupança --\n");
         menu.append("0. Sair").append("\n");
         menu.append("1. Inserir").append("\n");
         menu.append("2. Listar").append("\n");
@@ -70,7 +72,7 @@ public class ContaCorrenteCRUD {
         menu.append("4. Deletar").append("\n");
         menu.append("").append("\n");
         System.out.println(menu);
-        int opcao = Integer.parseInt(JOptionPane.showInputDialog("Entre com a sua opção: "));
+        int opcao = Integer.parseInt(JOptionPane.showInputDialog("Entre uma das opções: "));
         return opcao;
 
     }
@@ -79,9 +81,9 @@ public class ContaCorrenteCRUD {
         String cpfBusca = JOptionPane.showInputDialog("Entre com o cpf do titular");
         Cliente buscaCliente = daoCliente.buscar(new Cliente(null, cpfBusca, 0));
         if( buscaCliente != null){
-            String valor = JOptionPane.showInputDialog("Entre com o deposito inicial: R$");
+            
             String limite = JOptionPane.showInputDialog("Entre com o limite inicial: R$");
-            if(this.dao.inserir(new ContaCorrente(buscaCliente, new BigDecimal(valor), new BigDecimal(limite), hoje ))){
+            if(this.dao.inserir(new ContaPoupanca(buscaCliente, new BigDecimal(limite), hoje ))){
                 return true;
             }
         }
@@ -90,12 +92,11 @@ public class ContaCorrenteCRUD {
     
     public void alterarDadosDaConta(){
 
-        StringBuilder menu = new StringBuilder("Alterar Conta Corrente\n");
+        StringBuilder menu = new StringBuilder("-- Alterar Conta Poupança --\n");
         System.out.println(menu);
         
-        long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: "));
-        ContaCorrente buscaCC = new ContaCorrente(null , new BigDecimal(-1), new BigDecimal(-1), null);
-        buscaCC.setNumero(numero);
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Entre com o número da conta: "));
+        ContaPoupanca buscaCC = new ContaPoupanca(numero);
         
         if(dao.encontrarConta(buscaCC) != null){
             BigDecimal quantia = new BigDecimal(JOptionPane.showInputDialog("Entre o novo saldo: "));
@@ -108,7 +109,7 @@ public class ContaCorrenteCRUD {
             if( buscaCliente != null){
                 buscaCC.setTitular(buscaCliente);
                 if(dao.atualizar(buscaCC)){
-                    System.out.println("Conta Corrente atualizada com sucesso.");
+                    System.out.println("Conta Poupança atualizada com sucesso.");
                 }else{
                         System.out.println("Não foi possível atualizar a conta.");
                     }        
@@ -117,17 +118,15 @@ public class ContaCorrenteCRUD {
             }
   
     }else{
-            System.out.println("Não foi possível encontrar a Conta Corrente.");
+            System.out.println("Não foi possível encontrar a Conta Poupança.");
         }
  }
-    
     public boolean excluir(){
         System.out.println("-- Excluir --\n");
-        long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: "));
-        ContaCorrente ccExcluir = new ContaCorrente(null, new BigDecimal("0"), new BigDecimal("0"), null);
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Entre com o número da conta: "));
+        ContaPoupanca ccExcluir = new ContaPoupanca(numero);
         ccExcluir.setNumero(numero);
         return dao.deletar(ccExcluir);
     }
 
-    
 }

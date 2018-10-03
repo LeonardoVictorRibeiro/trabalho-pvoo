@@ -7,6 +7,7 @@ package mvc.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 
 /**
@@ -63,6 +64,23 @@ public class ContaCorrente {
         this.saldo = saldo.add(valor);
         Movimentacoes novoExtrato = new Movimentacoes(hoje, 1, valor);
         setExtrato(novoExtrato);
+    }
+    
+    public boolean adicionaJuros(){
+        
+        return false;
+    }
+    
+    public boolean pagarManutencao(LocalDate dataAtual){
+        
+        if(dataAtual.getDayOfMonth() == 15){
+            BigDecimal taxaManutencao = new BigDecimal("20");
+            this.saldo = saldo.subtract(taxaManutencao);
+            Movimentacoes novoExtrato = new Movimentacoes(dataAtual, 5, taxaManutencao);
+            setExtrato(novoExtrato);
+            return true;
+        }
+        return false;
     }
     
     /**

@@ -50,6 +50,11 @@ public class ContaPoupanca {
         return saldo;
     }
     
+    public boolean setSaldo(BigDecimal quantia){
+        this.saldo = quantia;
+        return true;
+    }
+    
     /**
      * Saca um valor da Conta Corrente e transfere para a Conta Poupança
      * @param BigDecimal valor
