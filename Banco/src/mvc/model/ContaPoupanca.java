@@ -29,6 +29,10 @@ public class ContaPoupanca {
         Movimentacoes novoExtrato = new Movimentacoes(hoje, 4, new BigDecimal("0"));
         setExtrato(novoExtrato);
     }
+    
+    public ContaPoupanca(int numero){
+        this.numero = numero;
+    }
 
     public static int getSerial() {
         return serial;

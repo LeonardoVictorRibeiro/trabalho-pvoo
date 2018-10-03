@@ -117,4 +117,13 @@ public class ContaCorrenteDAO {
         return false;
     }
     
+    public ContaCorrente procurarContaCliente(Cliente c){
+        for (ContaCorrente contaCorrente : dao) {
+            if(contaCorrente != null && contaCorrente.getTitular().equals(c)){
+                return contaCorrente;
+            }
+        }
+        return null;
+    }
+    
 }
