@@ -35,7 +35,28 @@ public class Banco {
 
     Banco() {
         int opcao;
+        do {
+            StringBuilder menuLogin = new StringBuilder("");
+            menuLogin.append("1. Logar").append("\n");
+            menuLogin.append("2. Fechar o programa").append("\n");
+            System.out.println(menuLogin);
+            opcao = Integer.parseInt(JOptionPane.showInputDialog("Entre com a sua opção: "));
 
+            switch (opcao) {
+                case 1:
+                    login();
+                    break;
+
+                default:
+                    System.out.println("Programa encerrado.");
+                    break;
+            }
+
+        } while (opcao == 1);
+
+    }
+
+    public void login() {
         do {
             System.out.println("-- Tela de Login --");
             String cpfLogin = JOptionPane.showInputDialog("CPF: ");
@@ -53,7 +74,6 @@ public class Banco {
                 System.out.println("Senha e/ou usuário incorreto(s).\n");
             }
         } while (login == null);
-
     }
 
     public static void main(String[] args) {
@@ -63,7 +83,7 @@ public class Banco {
     public void menuCliente() {
         int opcao;
 
-        do{
+        do {
             StringBuilder menu = new StringBuilder("-- Menu do cliente --\n");
             menu.append("1. Conta Corrente").append("\n");
             menu.append("2. Conta Poupança").append("\n");
@@ -87,7 +107,7 @@ public class Banco {
                 default:
                     break;
             }
-        }while(opcao != 0);
+        } while (opcao != 0);
 
     }
 
