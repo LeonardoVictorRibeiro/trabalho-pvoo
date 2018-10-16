@@ -19,9 +19,7 @@ public class Calendario {
     private BigDecimal[] jurosMes = new BigDecimal[12];
     
     public Calendario(){
-        jurosMes[0].add(new BigDecimal("0.0925")); 
-        jurosMes[1].add(new BigDecimal("0.0925"));
-        jurosMes[2].add(new BigDecimal("0.0925")); 
+        
     }
     
     public LocalDate getData(){
