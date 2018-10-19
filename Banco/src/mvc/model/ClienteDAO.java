@@ -5,78 +5,121 @@
  */
 package mvc.model;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author leonardo
  */
 public class ClienteDAO {
-    private Cliente[] clientes = new Cliente[50];
+    private static final String INSERIR = "insert into clientes" + "(nome, cpf, dataNasc, senha)" + "values(?,?,?,?)";
+    private static final String SELECIONAR_TODOS = "select * from clientes";
+    private static final String DELETAR = "delete from clientes where idCliente = ?";
+    private static final String SELECIONAR_UM = "select * from clientes where idCliente = ?";
+
+    public void inserir(Cliente novo) {
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(INSERIR)) {
+
+            stmt.setString(1, novo.getNome());
+            stmt.setString(2, novo.getCpf());
+            stmt.setDate(3, Date.valueOf(novo.getDataNasc()));
+            stmt.setInt(4, novo.getSenha());
+
+            stmt.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public List<Cliente> listar() {
+ 
+        List<Cliente> clientes = new ArrayList();
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECIONAR_TODOS)){
+            
+           try(ResultSet rs = stmt.executeQuery()){
+               while(rs.next()){
+                   Long id = rs.getLong("idCliente");
+                   String nome = rs.getString("nome");
+                   String cpf = rs.getString("cpf");
+                   LocalDate dataNasc = rs.getDate("dataNasc").toLocalDate();
+                   int senha = rs.getInt("senha");
+                   
+                   Cliente cliente = new Cliente(id, nome, cpf, dataNasc, senha);
+                   
+                   clientes.add(cliente);
+               }
+           }
+            
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        } 
+
+        return clientes;
+    }
+            
     
-    public ClienteDAO(){
-        Cliente c1 = new Cliente("Leonardo", "111111", 12345);
-        Cliente c2 = new Cliente("Pedro", "222222", 12342);
-        Cliente c3 = new Cliente("Caio", "333333", 12343);
-        Cliente c4 = new Cliente("Ana", "444444", 12344);
-        Cliente c5 = new Cliente("Paula", "555555", 12346);
+
+    public boolean atualizar(Cliente alterar, Cliente novosDados) {
+        String sql = "update clientes set nome = ? where idCliente = ?";
         
-        this.inserir(c1);
-        this.inserir(c2);
-        this.inserir(c3);
-        this.inserir(c4);
-        this.inserir(c5);
+        
+        return false;
+    }
 
+    public boolean deletar(Cliente clienteASerExcluido) {
+        
+        
+        try(Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(DELETAR)){
+            stmt.setLong(1, clienteASerExcluido.getId());
+            
+            stmt.execute();
+            
+            
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        
        
-    } 
+        return false;
+    }
 
-    
-    public boolean inserir(Cliente novo){
-        for(int i = 0; i < clientes.length; i++){
-            if(clientes[i] == null){
-                clientes[i] = novo;
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public StringBuilder listar(){
-        StringBuilder listar = new StringBuilder("\n");
-        for (Cliente cliente : clientes) {
-            if(cliente != null){
-                listar.append(cliente.toString());
-            }
-        }
-        return listar;
-    }
+    public Cliente buscar(Cliente busca) {
+        
+        try(Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECIONAR_UM)){
+            stmt.setLong(1, busca.getId());
             
-    public boolean atualizar(Cliente alterar, Cliente novosDados){
-        for (Cliente cliente : clientes) {
-            if(cliente != null && cliente.equals(alterar)){
-                cliente.setNome(novosDados.getNome());
-                cliente.setCpf(novosDados.getCpf());
-                cliente.setSenha(novosDados.getSenha());
-                return true;
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()){
+                    Long id = rs.getLong("idCliente");
+                    String nome = rs.getString("nome");
+                    String cpf = rs.getString("cpf");
+                    LocalDate dataNasc = rs.getDate("dataNasc").toLocalDate();
+                    int senha = rs.getInt("senha");
+                    
+                    Cliente cliente = new Cliente(id, nome, cpf, dataNasc, senha);
+                    return cliente;
+                }
             }
-        }
-        return false;
-    } 
             
-    public boolean deletar(Cliente compara){
-        for(int i = 0; i < clientes.length; i++){
-            if(clientes[i] != null && clientes[i].equals(compara)){
-                clientes[i] = null;
-                return true;
-            }
+        }catch(SQLException e){
+            throw new RuntimeException(e);
         }
-        return false;
-    }
-    
-    public Cliente buscar(Cliente busca){
-        for( int i = 0; i < clientes.length; i++){
-            if(clientes[i] != null && clientes[i].equals(busca)){
-                return clientes[i];
-            }
-        }
+        
         return null;
     }
 }

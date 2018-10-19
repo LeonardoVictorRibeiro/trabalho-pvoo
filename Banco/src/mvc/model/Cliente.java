@@ -5,6 +5,7 @@
  */
 package mvc.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -12,14 +13,28 @@ import java.util.Objects;
  * @author Leonardo
  */
 public class Cliente {
-    private static long serial;
     private long id;
     private String nome;
     private String cpf;
+    private LocalDate dataNasc;
     private int senha;
 
+    public Cliente(String nome, String cpf, LocalDate dataNasc, int senha){
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNasc = dataNasc;
+        this.senha = senha;
+    }
+    
+    public Cliente(Long id, String nome, String cpf, LocalDate dataNasc, int senha){
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNasc = dataNasc;
+        this.senha = senha;
+    }
     public Cliente(String nome, String cpf, int senha){
-        this.id = serial++;
+        
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
@@ -52,6 +67,24 @@ public class Cliente {
     public void setSenha(int senha) {
         this.senha = senha;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDataNasc() {
+        return dataNasc;
+    }
+
+    public void setDataNasc(LocalDate dataNasc) {
+        this.dataNasc = dataNasc;
+    }
+    
+    
 
     @Override
     public String toString() {
