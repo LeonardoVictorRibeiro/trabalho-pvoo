@@ -23,6 +23,7 @@ public class ClienteDAO {
     private static final String SELECIONAR_TODOS = "select * from clientes";
     private static final String DELETAR = "delete from clientes where idCliente = ?";
     private static final String SELECIONAR_UM = "select * from clientes where idCliente = ?";
+    private static final String UPDATE = "update clientes set nome = ?, cpf = ?, dataNasc = ?, senha = ? where idCliente = ?";
 
     public void inserir(Cliente novo) {
 
@@ -71,13 +72,25 @@ public class ClienteDAO {
     }
             
     
-
-    public boolean atualizar(Cliente alterar, Cliente novosDados) {
-        String sql = "update clientes set nome = ? where idCliente = ?";
+    public Cliente atualizar(Cliente clienteASerAlterado){
         
+        try(Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(UPDATE)) {
+                stmt.setString(1, clienteASerAlterado.getNome());
+                stmt.setString(2, clienteASerAlterado.getCpf());
+                stmt.setDate(3, Date.valueOf(clienteASerAlterado.getDataNasc()));
+                stmt.setInt(4, clienteASerAlterado.getSenha());
+                stmt.setLong(5, clienteASerAlterado.getId());
+                
+                stmt.execute();
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         
-        return false;
+        return clienteASerAlterado;
     }
+    
 
     public boolean deletar(Cliente clienteASerExcluido) {
         
