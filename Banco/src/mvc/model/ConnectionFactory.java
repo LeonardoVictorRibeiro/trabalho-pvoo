@@ -14,17 +14,18 @@ import java.sql.SQLException;
  * @author Leonardo
  */
 public class ConnectionFactory {
+
     private final String stringConexao = "jdbc:mysql://localhost/bancodeinvestimentos";
     private final String usuario = "root";
     private final String senha = "root";
-    
-    public Connection getConnection(){
-        
-        try{
-            return DriverManager.getConnection(stringConexao,usuario, senha);
-        }catch(SQLException e){
+
+    public Connection getConnection() {
+
+        try {
+            return DriverManager.getConnection(stringConexao, usuario, senha);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
+
     }
 }

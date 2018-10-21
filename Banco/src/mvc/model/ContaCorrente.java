@@ -15,40 +15,31 @@ import java.time.temporal.ChronoUnit;
  * @author Leonardo
  */
 public class ContaCorrente {
-    private static int serial;
-    private long numero;
-    private LocalDate dataAbertura;
+    private long id;
     private BigDecimal saldo = new BigDecimal("0");
-    private BigDecimal limite = new BigDecimal("0");
     private Cliente titular;
-    private Movimentacoes[] extrato = new Movimentacoes[50];
-    /**
-     * Cria uma nova CC e seta o extrato inicíal
-     * @param Cliente titular
-     * @param BigDecimal valor
-     * @param BigDecimal limite
-     * @param BigDecimal hoje 
-     */
-    public ContaCorrente(Cliente titular,BigDecimal valor, BigDecimal limite, LocalDate hoje){
-        this.numero = serial++;
+   
+    public ContaCorrente(long id, Cliente titular, BigDecimal valor){
+        this.id = id;
         this.titular = titular;
-        this.dataAbertura = hoje;
         this.saldo = saldo.add(valor);
-        this.limite = this.limite.add(limite);
-        Movimentacoes novoExtrato = new Movimentacoes(hoje, 1, valor);
-        setExtrato(novoExtrato);
-    }
-
-    public static int getSerial() {
-        return serial;
     }
     
-    public long getNumero() {
-        return numero;
+    public ContaCorrente(Cliente titular, BigDecimal valor){
+        this.titular = titular;
+        this.saldo = saldo.add(valor);
+    }
+    
+    public ContaCorrente(long id){
+        this.id = id;
+    }
+    
+    public long getId() {
+        return id;
     }
 
-    public void setNumero(long numero) {
-        this.numero = numero;
+    public void setId(long id) {
+        this.id = id;
     }
     
     public boolean setSaldo(BigDecimal quantia){
@@ -62,8 +53,6 @@ public class ContaCorrente {
 
     public void depositar(BigDecimal valor, LocalDate hoje) {
         this.saldo = saldo.add(valor);
-        Movimentacoes novoExtrato = new Movimentacoes(hoje, 1, valor);
-        setExtrato(novoExtrato);
     }
     
     public boolean adicionaJuros(){
@@ -76,8 +65,6 @@ public class ContaCorrente {
         if(dataAtual.getDayOfMonth() == 15){
             BigDecimal taxaManutencao = new BigDecimal("20");
             this.saldo = saldo.subtract(taxaManutencao);
-            Movimentacoes novoExtrato = new Movimentacoes(dataAtual, 5, taxaManutencao);
-            setExtrato(novoExtrato);
             return true;
         }
         return false;
@@ -91,21 +78,9 @@ public class ContaCorrente {
     public void sacar(BigDecimal valor, LocalDate hoje){
         
         this.saldo = saldo.subtract(valor);
-        Movimentacoes novoExtrato = new Movimentacoes(hoje, 2, valor);
-        setExtrato(novoExtrato);
     }
     public void transferirCP(ContaPoupanca cp, BigDecimal valor, LocalDate hoje){
         this.saldo = saldo.subtract(valor);
-        Movimentacoes novoExtrato = new Movimentacoes(hoje, 3, valor);
-        setExtrato(novoExtrato);
-    }
-    
-    public BigDecimal getLimite() {
-        return limite;
-    }
-
-    public void setLimite(BigDecimal limite) {
-        this.limite = limite;
     }
 
     public Cliente getTitular() {
@@ -115,27 +90,12 @@ public class ContaCorrente {
     public void setTitular(Cliente titular) {
         this.titular = titular;
     }
-   
-    public StringBuilder getExtrato(){
-        StringBuilder info = new StringBuilder();
-        for(int i = 0; i < extrato.length; i++){
-            if(extrato[i] != null){
-                info.append(extrato[i].toString());
-            }
-        }
-        return info.append("\n").append("Saldo atual: ").append(this.saldo);
-    }
-    
-    public void setExtrato(Movimentacoes novoExtrato){
-        int i;
-        for( i = 0; extrato[i] != null && i < extrato.length; i++){}
-        extrato[i] = novoExtrato;
-    }
+
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 59 * hash + (int) (this.numero ^ (this.numero >>> 32));
+        hash = 59 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -158,7 +118,7 @@ public class ContaCorrente {
             return false;
         }
         final ContaCorrente other = (ContaCorrente) obj;
-        if (this.numero != other.numero) {
+        if (this.id != other.id) {
             return false;
         }
         return true;
@@ -167,10 +127,8 @@ public class ContaCorrente {
     @Override
     public String toString() {
         StringBuilder cc = new StringBuilder("\n");
-        cc.append("Número: ").append(numero).append("\n");
-        cc.append("Aniversário: ").append(dataAbertura).append("\n");
+        cc.append("Número: ").append(id).append("\n");
         cc.append("Saldo: ").append(saldo.toString()).append("\n");
-        cc.append("Limite: ").append(limite.toString()).append("\n");
         cc.append("Títular: ").append(titular.toString()).append("\n");
         
         return cc.toString();

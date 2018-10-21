@@ -33,6 +33,10 @@ public class Cliente {
         this.dataNasc = dataNasc;
         this.senha = senha;
     }
+    
+    public Cliente(Long id){
+        this.id = id;
+    }
     public Cliente(String nome, String cpf, int senha){
         
         this.nome = nome;
