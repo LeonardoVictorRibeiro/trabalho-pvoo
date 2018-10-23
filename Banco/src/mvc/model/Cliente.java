@@ -87,21 +87,13 @@ public class Cliente {
     public void setDataNasc(LocalDate dataNasc) {
         this.dataNasc = dataNasc;
     }
-    
-    
 
     @Override
     public String toString() {
-        StringBuilder info = new StringBuilder("\n");
-        info.append("Id: ").append(id).append("\n");
-        info.append("Nome: ").append(nome).append("\n");
-        info.append("Cpf: ").append(cpf).append("\n");
-        info.append("Senha: ").append(senha).append("\n");
-        return info.toString();
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dataNasc=" + dataNasc + ", senha=" + senha + '}';
     }
-
     
-
+   
     @Override
     public int hashCode() {
         int hash = 7;

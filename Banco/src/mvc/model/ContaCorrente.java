@@ -7,7 +7,6 @@ package mvc.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 
 /**
@@ -126,13 +125,10 @@ public class ContaCorrente {
 
     @Override
     public String toString() {
-        StringBuilder cc = new StringBuilder("\n");
-        cc.append("Número: ").append(id).append("\n");
-        cc.append("Saldo: ").append(saldo.toString()).append("\n");
-        cc.append("Títular: ").append(titular.toString()).append("\n");
-        
-        return cc.toString();
+        return "ContaCorrente{" + "id=" + id + ", saldo=" + saldo + ", titular=" + titular + '}';
     }
+
+  
 
     
     
