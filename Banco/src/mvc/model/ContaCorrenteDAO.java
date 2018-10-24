@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ContaCorrenteDAO {
     
-    private static final String INSERT = "insert into conta_corrente" + "(idContaCorrente, saldo, idCliente)" + "values(?,?,?)";
+    private static final String INSERT = "insert into conta_corrente" + "(saldo, idCliente)" + "values(?,?)";
     private static final String SELECT_ALL = "select * from conta_corrente";
     private static final String UPDATE = "update conta_corrente set idCliente = ?, saldo = ? where idContaCorrente = ?";
     private static final String SELECT_ONE = "select * from conta_corrente where idContaCorrente = ?";
@@ -36,9 +36,8 @@ public class ContaCorrenteDAO {
         
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(INSERT)){
-            stmt.setLong(1, nova.getId());
-            stmt.setBigDecimal(2, nova.getSaldo());
-            stmt.setLong(3, nova.getTitular().getId());
+            stmt.setBigDecimal(1, nova.getSaldo());
+            stmt.setLong(2, nova.getTitular().getId());
             
             stmt.execute();
             

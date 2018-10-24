@@ -1,7 +1,7 @@
 ### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+Banco/nbproject/private/
+Banco/build/
+Banco/nbbuild/
+Banco/dist/
+Banco/nbdist/
+Banco/.nb-gradle/

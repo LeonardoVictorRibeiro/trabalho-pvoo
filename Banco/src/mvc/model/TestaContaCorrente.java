@@ -8,6 +8,7 @@ package mvc.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 
@@ -29,19 +30,23 @@ public class TestaContaCorrente {
         ContaCorrente cc2 = new ContaCorrente(c2, new BigDecimal("2000"));
         ContaCorrente cc3 = new ContaCorrente(c3, new BigDecimal("3000"));
         
-        ccdao.inserir(cc1);
-        ccdao.inserir(cc2);
-        ccdao.inserir(cc3);
+        //ccdao.inserir(cc1);
+        //ccdao.inserir(cc2);
+        //ccdao.inserir(cc3);
         
         
-         System.out.println(ccdao.listar(clidao));
+         //System.out.println(ccdao.listar(clidao));
          //cc3.setId(3);
          //System.out.println(ccdao.encontrarConta(cc3, clidao));
          
          //System.out.println(ccdao.deletar(new ContaCorrente(4)));
          
          //ccdao.atualizar(new ContaCorrente(2, null,new BigDecimal("3000")));
-        System.out.println(ccdao.listar(clidao));
+        List<ContaCorrente> contas = ccdao.listar(clidao);
+        
+        for (ContaCorrente conta : contas) {
+            System.out.println(conta);
+        }
         
         
     }
