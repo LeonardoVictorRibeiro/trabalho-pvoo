@@ -74,7 +74,7 @@ public class ContaCorrente {
      * @param BigDecimal valor
      * @param LocalDate hoje 
      */
-    public void sacar(BigDecimal valor, LocalDate hoje){
+    public void sacar(BigDecimal valor){
         
         this.saldo = saldo.subtract(valor);
     }
