@@ -23,6 +23,7 @@ public class ContaPoupancaTransaction {
 
     private static final String ATUALIZAR_POUPANCA = "update conta_poupanca set saldo = ? where idConta_Poupanca = ?";
     private static final String ATUALIZAR_CORRENTE = "update conta_corrente set saldo = ? where idContaCorrente = ?";
+    private static final String ATUALIZAR_DEPOSITO = "update conta_poupanca_deposito set status = ? where idDeposito = ?";
     private static final String INSERIR = "insert into conta_poupanca_deposito" + "(idContaPoupanca, saldo, dataInicio, dataTermino, aniversario, status)" + "values(?,?,?,?,?,?)";
     private static final String LISTAR_POR_CONTA = "select * from conta_poupanca_deposito where idContaPoupanca = ?";
     private static final String LISTAR_TUDO = "select * from conta_poupanca_deposito";
@@ -127,7 +128,39 @@ public class ContaPoupancaTransaction {
 
         return depositos;
     }
-    
-    
+
+    public void resgatar(ContaPoupanca contaPoupanca, ClienteDAO clienteDAO, ContaCorrente contaCorrente, ContaPoupancaDeposito deposito) {
+
+        try (Connection connection = new ConnectionFactory().getConnection()){
+            connection.setAutoCommit(false);
+            
+        try (PreparedStatement correnteUPDATE = connection.prepareStatement(ATUALIZAR_CORRENTE);
+                PreparedStatement poupancaUPDATE = connection.prepareStatement(ATUALIZAR_POUPANCA);
+                    PreparedStatement depositoUPDATE = connection.prepareStatement(INSERIR)) {
+
+                correnteUPDATE.setBigDecimal(1, contaCorrente.getSaldo());
+                correnteUPDATE.setLong(2, contaCorrente.getId());
+                
+                correnteUPDATE.execute();
+                
+                poupancaUPDATE.setBigDecimal(1, contaPoupanca.getSaldo());
+                poupancaUPDATE.setLong(2, contaPoupanca.getId());
+                
+                poupancaUPDATE.execute();
+                
+                depositoUPDATE.setBoolean(1, false);
+                depositoUPDATE.setLong(2, deposito.getId());
+                
+                connection.commit();
+
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 }
