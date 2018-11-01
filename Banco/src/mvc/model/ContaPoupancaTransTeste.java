@@ -16,9 +16,12 @@ import java.util.List;
  */
 public class ContaPoupancaTransTeste {
     
+    
+    
     public static void main(String[] args) {
         ContaPoupancaDAO cpdao = new ContaPoupancaDAO();
         ContaCorrenteDAO ccdao = new ContaCorrenteDAO();
+        ContaPoupancaDepositoDAO cpdDAO = new ContaPoupancaDepositoDAO();
         ContaPoupancaTransaction cptrans = new ContaPoupancaTransaction();
         ClienteDAO clidao = new ClienteDAO();
         
@@ -73,7 +76,7 @@ public class ContaPoupancaTransTeste {
         ContaPoupancaDeposito cpd3 = new ContaPoupancaDeposito(cp8, valor3, LocalDate.now(), LocalDate.now().plusDays(40));
         ContaPoupancaDeposito cpd4 = new ContaPoupancaDeposito(cp9, valor4, LocalDate.now(), LocalDate.now().plusDays(32));
         
-         List<ContaPoupancaDeposito> contas = cptrans.listar(cpdao, clidao);
+        List<ContaPoupancaDeposito> contas = cpdDAO.listar(cpdao, clidao);
         System.out.println("POUPANÇA");
         for (ContaPoupancaDeposito conta : contas) {
             System.out.println(conta);
@@ -85,9 +88,9 @@ public class ContaPoupancaTransTeste {
         }
         
         
-        cptrans.depositar(cpd1, cc6);
-        cptrans.depositar(cpd2, cc7);
-        cptrans.depositar(cpd3, cc8);
+        //cptrans.depositar(cpd1, cc6);
+        //cptrans.depositar(cpd2, cc7);
+        //cptrans.depositar(cpd3, cc8);
         //cptrans.depositar(cpd4);
         
    

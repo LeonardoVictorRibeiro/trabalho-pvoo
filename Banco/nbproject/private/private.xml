@@ -5,8 +5,8 @@
         <group>
             <file>file:/C:/Users/Leonardo/Desktop/Projetos/mini-erp-banco-de-investimentos/Banco/src/mvc/model/ContaPoupancaTransaction.java</file>
             <file>file:/C:/Users/Leonardo/Desktop/Projetos/mini-erp-banco-de-investimentos/Banco/src/mvc/model/ContaPoupancaDeposito.java</file>
-            <file>file:/C:/Users/Leonardo/Desktop/Projetos/mini-erp-banco-de-investimentos/Banco/src/mvc/model/ContaPoupancaDAO.java</file>
-            <file>file:/C:/Users/Leonardo/Desktop/Projetos/mini-erp-banco-de-investimentos/Banco/src/mvc/model/ContaPoupancaDepositoTeste.java</file>
+            <file>file:/C:/Users/Leonardo/Desktop/Projetos/mini-erp-banco-de-investimentos/Banco/src/mvc/model/ContaPoupancaTransTeste.java</file>
+            <file>file:/C:/Users/Leonardo/Desktop/Projetos/mini-erp-banco-de-investimentos/Banco/src/mvc/model/ContaPoupancaDepositoDAO.java</file>
         </group>
     </open-files>
 </project-private>
