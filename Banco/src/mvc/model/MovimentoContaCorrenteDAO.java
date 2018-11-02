@@ -67,7 +67,6 @@ public class MovimentoContaCorrenteDAO {
             try(ResultSet rs = preparedSelect.executeQuery()){
                 while(rs.next()){
                     long idMovimentacao = rs.getLong("idMovimento_Conta");
-                    long idContaCorrente = rs.getLong("idContaCorrente");
                     int tipo = rs.getInt("tipo_movimento");
                     String descricao = rs.getString("descricao");
                     BigDecimal valor = rs.getBigDecimal("valor");

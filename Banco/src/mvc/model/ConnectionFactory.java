@@ -17,8 +17,13 @@ import java.util.Properties;
 public class ConnectionFactory {
 
     private final String stringConexao = "jdbc:mysql://localhost/bancodeinvestimentos";
+    
+    //Acesso em casa
     private final String usuario = "root";
-    private final String senha = "root";
+    //private final String senha = "root";
+    
+    //Acesso na faculdade
+    private final String senha = "12345";
 
     public Connection getConnection() {
 

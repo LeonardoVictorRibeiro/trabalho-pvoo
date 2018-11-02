@@ -25,38 +25,47 @@ public class ContaPoupancaTransaction {
     private static final String ATUALIZAR_CORRENTE = "update conta_corrente set saldo = ? where idContaCorrente = ?";
     private static final String ATUALIZAR_DEPOSITO = "update conta_poupanca_deposito set status = ? where idDeposito = ?";
     private static final String INSERIR = "insert into conta_poupanca_deposito" + "(idContaPoupanca, saldo, dataInicio, dataTermino, aniversario, status)" + "values(?,?,?,?,?,?)";
+    private static final String INSERIR_MOVIMENTACAO = "insert into movimento_conta" + "(idContaCorrente, tipo_movimento, descricao, valor, data)" + "values(?,?,?,?,?)";
     
 
-    public void depositar(ContaPoupancaDeposito deposito, ContaCorrente contaCorrente) {
+    public void depositar(ContaPoupancaDeposito deposito, ContaCorrente contaCorrente, MovimentoContaCorrente movimento) {
 
         try (Connection connection = new ConnectionFactory().getConnection()) {
             connection.setAutoCommit(false);
 
             try (PreparedStatement poupancaUPDATE = connection.prepareStatement(ATUALIZAR_POUPANCA);
                     PreparedStatement correnteUPDATE = connection.prepareStatement(ATUALIZAR_CORRENTE);
-                    PreparedStatement preparedInsert = connection.prepareStatement(INSERIR)) {
-
+                    PreparedStatement preparedInsert = connection.prepareStatement(INSERIR);
+                    PreparedStatement movimentacaoInsert = connection.prepareStatement(INSERIR_MOVIMENTACAO)) {
+                
+                // Atualiza o saldo na conta corrente
                 correnteUPDATE.setBigDecimal(1, contaCorrente.getSaldo());
                 correnteUPDATE.setLong(2, contaCorrente.getId());
-
                 correnteUPDATE.execute();
-
+                
+                // Insere uma nova movimentação da conta corrente
+                movimentacaoInsert.setLong(1, contaCorrente.getId());
+                movimentacaoInsert.setInt(2, movimento.getTipo());
+                movimentacaoInsert.setString(3, movimento.getDescricao());
+                movimentacaoInsert.setBigDecimal(4, movimento.getValor());
+                movimentacaoInsert.setDate(5, Date.valueOf(movimento.getData()));
+                movimentacaoInsert.execute();
+                
+                // Atualiza o saldo na conta poupança
                 poupancaUPDATE.setBigDecimal(1, deposito.getConta().getSaldo());
                 poupancaUPDATE.setLong(2, deposito.getConta().getId());
-
                 poupancaUPDATE.execute();
-
+                
+                // Insere um novo registro de depósito na conta poupanca
                 preparedInsert.setLong(1, deposito.getConta().getId());
                 preparedInsert.setBigDecimal(2, deposito.getSaldo());
                 preparedInsert.setDate(3, Date.valueOf(deposito.getDataInicio()));
                 preparedInsert.setDate(4, Date.valueOf(deposito.getDataTermino()));
                 preparedInsert.setDate(5, Date.valueOf(deposito.getAniversario()));
                 preparedInsert.setBoolean(6, true);
-
                 preparedInsert.execute();
 
                 connection.commit();
-
             } catch (SQLException e) {
                 connection.rollback();
                 throw new RuntimeException(e);
