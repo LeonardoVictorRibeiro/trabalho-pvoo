@@ -110,6 +110,26 @@ INSERT INTO conta_poupanca(IDCLIENTE, SALDO) VALUES(3, 0);
 INSERT INTO conta_poupanca(IDCLIENTE, SALDO) VALUES(4, 0);
 INSERT INTO conta_poupanca(IDCLIENTE, SALDO) VALUES(5, 0);
 
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB ADS', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EC', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EM', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EAD', 0.00);
 
+
+
+update conta_corrente set saldo = 1000.00 where idContaCorrente = 1;
+insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(1,1,"Deposito",1000.00,"2018/11/1");
+
+update conta_corrente set saldo = 5000.00 where idContaCorrente = 2;
+insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(2,1,"Deposito",5000.00,"2018/11/1");
+
+update conta_corrente set saldo = 7000.00 where idContaCorrente = 3;
+insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(3,1,"Deposito",7000.00,"2018/11/1");
+
+update conta_corrente set saldo = 10000.00 where idContaCorrente = 4;
+insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(4,1,"Deposito",10000.00,"2018/11/1");
+
+update conta_corrente set saldo = 12000.00 where idContaCorrente = 5;
+insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(5,1,"Deposito",12000.00,"2018/11/1");
 
 

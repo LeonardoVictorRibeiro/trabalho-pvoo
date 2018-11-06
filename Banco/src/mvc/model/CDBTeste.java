@@ -17,14 +17,15 @@ public class CDBTeste {
     
     public static void main(String[] args) {
         CDBDAO cdbDAO = new CDBDAO();
+        CDBTransaction cdbTransaction = new CDBTransaction();
         ContaCorrenteDAO ccdao = new ContaCorrenteDAO();
         ClienteDAO cliDAO = new ClienteDAO();
         
-        
+        /*
         CDB cdb2 = new CDB("EC");
         CDB cdb3 = new CDB("EM");
         CDB cdb4 = new CDB("EAD");
-        
+        */
         /*
         cdbDAO.inserir(cdb2);
         cdbDAO.inserir(cdb3);
@@ -62,13 +63,31 @@ public class CDBTeste {
         clienteBusca4 = cliDAO.buscar(clienteBusca4);
         
         //ContaCorrente
-        //ContaCorrente cc4 = ccdao.encontrarConta(conta, cliDAO);
+        ContaCorrente cc4 = ccdao.encontrarConta(clienteBusca4, cliDAO);
         
-        //Valor
-        BigDecimal valor = new BigDecimal("1.000");
+        /*
+        System.out.println(clienteBusca4);
+        System.out.println(cc4);
+        */
+        
+        //Valor que será depositado no CDB e subtraido da conta corrente
+        BigDecimal valor = new BigDecimal("1000.00");
+        
+        cc4.sacar(valor);
+        
+        //Atualiza o movimento na conta corrente. Ex: No dia de 01/02/2018 foi depositado R$100,00 na conta 1
+        MovimentoContaCorrente movimento1 = new MovimentoContaCorrente(cc4, 0, "Investimento CDB", valor, LocalDate.now());
+        
+        //Atualiza o saldo no CDB
+        cdbBusca4.setSaldoTotal(valor);
         
         //CDBMovimento
         CDBMovimento cdbMov1 = new CDBMovimento(cdbBusca4, clienteBusca4, valor, LocalDate.now(), LocalDate.now().plusDays(30));
+        
+        //CDBTransaction é quem realiza a atualização em todas as tabelas relacionadas
+        cdbTransaction.inserir(cdbBusca4, cc4, cdbMov1, movimento1);
+        
+        
 
         
         

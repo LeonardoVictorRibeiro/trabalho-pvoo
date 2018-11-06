@@ -30,7 +30,9 @@ public class CDB {
         this.saldoTotal = saldo;
     }
     
-    
+    public void sacar(BigDecimal valor){
+        this.saldoTotal = saldoTotal.subtract(valor);
+    }
     
 
     public long getId() {
@@ -54,7 +56,7 @@ public class CDB {
     }
 
     public void setSaldoTotal(BigDecimal saldo) {
-        this.saldoTotal.add(saldo);
+        this.saldoTotal = saldoTotal.add(saldo);
     }
 
     @Override

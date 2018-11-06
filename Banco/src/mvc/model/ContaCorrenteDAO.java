@@ -24,6 +24,7 @@ public class ContaCorrenteDAO {
     private static final String SELECT_ALL = "select * from conta_corrente";
     private static final String UPDATE = "update conta_corrente set idCliente = ?, saldo = ? where idContaCorrente = ?";
     private static final String SELECT_ONE = "select * from conta_corrente where idContaCorrente = ?";
+    private static final String SELECT_ONE_ID = "select * from conta_corrente where idCliente = ?";
     private static final String DELETE = "delete from conta_corrente where idContaCorrente = ?";
 
 
@@ -89,6 +90,30 @@ public class ContaCorrenteDAO {
                     Cliente cliente = new Cliente(idCliente);
                     cliente = clienteDAO.buscar(cliente);
                     conta = new ContaCorrente(id, cliente, saldo);
+                    
+                    return conta;
+                }
+            } 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+ 
+        return null;
+    }
+    
+    public ContaCorrente encontrarConta(Cliente procura, ClienteDAO clienteDAO) {
+        
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ONE_ID)){
+            stmt.setLong(1, procura.getId());
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    long id = rs.getLong("idContaCorrente");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    ContaCorrente conta = new ContaCorrente(id, procura, saldo);
                     
                     return conta;
                 }
