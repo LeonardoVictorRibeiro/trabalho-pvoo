@@ -21,7 +21,7 @@ public class CDBTransaction {
     private static final String INSERIR_MOV_COR = "insert into movimento_conta" + "(idContaCorrente, tipo_movimento, descricao, valor, data)" + "values(?,?,?,?,?)";
     private static final String INSERT_MOV = "insert into cdb_movimento" + "(idCDB, idCliente, saldo, dataInicio, dataTermino, status)" + "values(?,?,?,?,?,?)";
 
-    public boolean inserir(CDB cdb, ContaCorrente contaCorrente, CDBMovimento movimento, MovimentoContaCorrente movCorrente) {
+    public boolean atualizar(CDB cdb, ContaCorrente contaCorrente, CDBMovimento movimento, MovimentoContaCorrente movCorrente) {
 
         try (Connection connection = new ConnectionFactory().getConnection()) {
             
@@ -67,6 +67,6 @@ public class CDBTransaction {
         }
 
     }
- 
+
 
 }

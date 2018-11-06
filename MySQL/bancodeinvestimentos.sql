@@ -91,6 +91,34 @@ CREATE TABLE `bancodeinvestimentos`.`cdb_movimento` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE TABLE `bancodeinvestimentos`.`fundo` (
+  `idFundo` BIGINT(9) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `saldoTotal` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`idFundo`));
+
+CREATE TABLE `bancodeinvestimentos`.`fundo_movimento` (
+  `idFundoMovimento` BIGINT(9) NOT NULL AUTO_INCREMENT,
+  `idFundo` BIGINT(9) NOT NULL,
+  `idCliente` BIGINT(9) NOT NULL,
+  `saldo` DECIMAL(10,2) NOT NULL,
+  `dataInicio` DATE NOT NULL,
+  `status` TINYINT NOT NULL,
+  PRIMARY KEY (`idFundoMovimento`),
+  INDEX `fk_fundo_movimento_fundo_idx` (`idFundo` ASC) VISIBLE,
+  INDEX `fk_fundo_movimento_cliente_idx` (`idCliente` ASC) VISIBLE,
+  CONSTRAINT `fk_fundo_movimento_fundo`
+    FOREIGN KEY (`idFundo`)
+    REFERENCES `bancodeinvestimentos`.`fundo` (`idFundo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_fundo_movimento_cliente`
+    FOREIGN KEY (`idCliente`)
+    REFERENCES `bancodeinvestimentos`.`clientes` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
 
 INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('LEONARDO', '11111111111', '1991/07/06', 12345);
 INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('ANDRÉ', '11111111111', '1996/01/01', 12346);

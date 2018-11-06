@@ -85,7 +85,7 @@ public class CDBTeste {
         CDBMovimento cdbMov1 = new CDBMovimento(cdbBusca4, clienteBusca4, valor, LocalDate.now(), LocalDate.now().plusDays(30));
         
         //CDBTransaction é quem realiza a atualização em todas as tabelas relacionadas
-        cdbTransaction.inserir(cdbBusca4, cc4, cdbMov1, movimento1);
+        cdbTransaction.atualizar(cdbBusca4, cc4, cdbMov1, movimento1);
         
         
 
