@@ -20,7 +20,19 @@ private Cliente cliente;
 private BigDecimal saldo;
 private LocalDate dataInicio;
 private LocalDate dataTermino;
-private int status;
+private boolean status;
+
+    public CDBMovimento(CDB cdb, Cliente cliente, BigDecimal saldo, LocalDate dataInicio,LocalDate dataTermino) {
+        this.cdb = cdb;
+        this.cliente = cliente;
+        this.saldo = saldo;
+        this.dataInicio = dataInicio;
+        this.dataTermino = dataTermino;
+        this.status = true;
+        
+    }
+
+
 
     public long getId() {
         return id;
@@ -70,11 +82,11 @@ private int status;
         this.dataTermino = dataTermino;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
