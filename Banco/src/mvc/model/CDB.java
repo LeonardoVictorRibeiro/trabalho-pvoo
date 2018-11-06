@@ -15,7 +15,23 @@ public class CDB {
     
     private long id;
     private String nome;
-    private BigDecimal saldoTotal;
+    private BigDecimal saldoTotal = new BigDecimal("0.0");
+    
+    CDB(long id){
+        this.id = id;
+    }
+    CDB(String nome){
+        this.nome = nome;
+        this.saldoTotal = new BigDecimal("0.0");
+    }
+    CDB(long id, String nome, BigDecimal saldo){
+        this.id = id;
+        this.nome = nome;
+        this.saldoTotal = saldo;
+    }
+    
+    
+    
 
     public long getId() {
         return id;
@@ -37,8 +53,8 @@ public class CDB {
         return saldoTotal;
     }
 
-    public void setSaldoTotal(BigDecimal saldoTotal) {
-        this.saldoTotal = saldoTotal;
+    public void setSaldoTotal(BigDecimal saldo) {
+        this.saldoTotal.add(saldo);
     }
 
     @Override
