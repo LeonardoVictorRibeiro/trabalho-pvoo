@@ -20,6 +20,7 @@ import java.util.List;
 public class FundoDAO {
     
     private static final String INSERIR = "insert into fundo " + "(nome, saldoTotal)" + " values(?,?)";
+    private static final String SELECT = "select * from fundo where idFundo = ?";
     private static final String SELECT_ALL = "select * from fundo";
     
     public void inserir(Fundo fundo){
@@ -61,4 +62,28 @@ public class FundoDAO {
         
     }
     
+    
+    public Fundo buscar(Fundo fundo){
+        
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT)){
+            stmt.setLong(1, fundo.getId());
+            
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    long id = rs.getLong("idFundo");
+                    String nome = rs.getString("nome");
+                    BigDecimal saldoTotal = rs.getBigDecimal("saldoTotal");
+                    Fundo encontrado = new Fundo(id, nome, saldoTotal);
+                    return encontrado;
+                }
+            } 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+        return null;
+    }
 }

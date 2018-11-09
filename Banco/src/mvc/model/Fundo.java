@@ -22,6 +22,15 @@ public class Fundo {
         this.nome = nome;
         this.saldototal = saldoTotal;
     }
+    
+    public Fundo(String nome, BigDecimal saldoTotal){
+        this.nome = nome;
+        this.saldototal = saldoTotal;
+    }
+    
+    public Fundo(long id){
+        this.id = id;
+    }
 
     public long getId() {
         return id;
