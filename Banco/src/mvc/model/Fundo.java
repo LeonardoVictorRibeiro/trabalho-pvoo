@@ -16,6 +16,12 @@ public class Fundo {
     private long id;
     private String nome;
     private BigDecimal saldototal;
+    
+    public Fundo(long id, String nome, BigDecimal saldoTotal){
+        this.id = id;
+        this.nome = nome;
+        this.saldototal = saldoTotal;
+    }
 
     public long getId() {
         return id;
