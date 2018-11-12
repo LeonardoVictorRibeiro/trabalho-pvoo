@@ -5,6 +5,7 @@
  */
 package mvc.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -12,18 +13,41 @@ import java.util.Objects;
  * @author Leonardo
  */
 public class Cliente {
-    private static long serial;
     private long id;
     private String nome;
     private String cpf;
+    private LocalDate dataNasc;
     private int senha;
 
+    public Cliente(String nome, String cpf, LocalDate dataNasc, int senha){
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNasc = dataNasc;
+        this.senha = senha;
+    }
+    
+    public Cliente(Long id, String nome, String cpf, LocalDate dataNasc, int senha){
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNasc = dataNasc;
+        this.senha = senha;
+    }
+    
+    public Cliente(Long id){
+        this.id = id;
+    }
     public Cliente(String nome, String cpf, int senha){
-        this.id = serial++;
+        
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
     }
+    
+    public Cliente(String cpf){
+        this.cpf = cpf;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -48,18 +72,28 @@ public class Cliente {
         this.senha = senha;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder info = new StringBuilder("\n");
-        info.append("Id: ").append(id).append("\n");
-        info.append("Nome: ").append(nome).append("\n");
-        info.append("Cpf: ").append(cpf).append("\n");
-        info.append("Senha: ").append(senha).append("\n");
-        return info.toString();
+    public long getId() {
+        return id;
     }
 
-    
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public LocalDate getDataNasc() {
+        return dataNasc;
+    }
+
+    public void setDataNasc(LocalDate dataNasc) {
+        this.dataNasc = dataNasc;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dataNasc=" + dataNasc + ", senha=" + senha + '}';
+    }
+    
+   
     @Override
     public int hashCode() {
         int hash = 7;

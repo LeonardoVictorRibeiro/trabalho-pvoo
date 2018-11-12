@@ -95,7 +95,7 @@ public class ContaCorrenteCRUD {
         
         long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: "));
         ContaCorrente buscaCC = new ContaCorrente(null , new BigDecimal(-1), new BigDecimal(-1), null);
-        buscaCC.setNumero(numero);
+        buscaCC.setId(numero);
         
         if(dao.encontrarConta(buscaCC) != null){
             BigDecimal quantia = new BigDecimal(JOptionPane.showInputDialog("Entre o novo saldo: "));
@@ -125,7 +125,7 @@ public class ContaCorrenteCRUD {
         System.out.println("-- Excluir --\n");
         long numero = Long.parseLong(JOptionPane.showInputDialog("Entre com o número da conta: "));
         ContaCorrente ccExcluir = new ContaCorrente(null, new BigDecimal("0"), new BigDecimal("0"), null);
-        ccExcluir.setNumero(numero);
+        ccExcluir.setId(numero);
         return dao.deletar(ccExcluir);
     }
 

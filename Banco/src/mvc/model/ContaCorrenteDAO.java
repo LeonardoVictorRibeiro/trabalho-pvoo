@@ -6,115 +6,157 @@
 package mvc.model;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Leonardo
  */
 public class ContaCorrenteDAO {
+    
+    private static final String INSERT = "insert into conta_corrente" + "(saldo, idCliente)" + "values(?,?)";
+    private static final String SELECT_ALL = "select * from conta_corrente";
+    private static final String UPDATE = "update conta_corrente set idCliente = ?, saldo = ? where idContaCorrente = ?";
+    private static final String SELECT_ONE = "select * from conta_corrente where idContaCorrente = ?";
+    private static final String SELECT_ONE_ID = "select * from conta_corrente where idCliente = ?";
+    private static final String DELETE = "delete from conta_corrente where idContaCorrente = ?";
 
-    private ContaCorrente[] dao = new ContaCorrente[50];
-    private LocalDate hoje;
 
-    public ContaCorrenteDAO(LocalDate hoje, ClienteDAO clienteDAO) {
-        this.hoje = hoje;
-
-        Cliente cliente2 = clienteDAO.buscar(new Cliente(null, "222222", 0));
-        Cliente cliente3 = clienteDAO.buscar(new Cliente(null, "333333", 0));
-        Cliente cliente4 = clienteDAO.buscar(new Cliente(null, "444444", 0));
-        Cliente cliente5 = clienteDAO.buscar(new Cliente(null, "555555", 0));
-
-        ContaCorrente c2 = new ContaCorrente(cliente2, new BigDecimal("400"), new BigDecimal("5000"), hoje);
-        ContaCorrente c3 = new ContaCorrente(cliente3, new BigDecimal("800"), new BigDecimal("7000"), hoje);
-        ContaCorrente c4 = new ContaCorrente(cliente4, new BigDecimal("1200"), new BigDecimal("1200"), hoje);
-        ContaCorrente c5 = new ContaCorrente(cliente5, new BigDecimal("700"), new BigDecimal("1050"), hoje);
-
-        this.inserir(c2);
-        this.inserir(c3);
-        this.inserir(c4);
-        this.inserir(c5);
+    public ContaCorrenteDAO() {
+        
 
     }
 
-    public boolean inserir(ContaCorrente cc) {
-        int pos = posicaoLivre();
-        if (pos != -1) {
-            dao[pos] = cc;
-            return true;
+    public boolean inserir(ContaCorrente nova) {
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(INSERT)){
+            stmt.setBigDecimal(1, nova.getSaldo());
+            stmt.setLong(2, nova.getTitular().getId());
+            
+            stmt.execute();
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);   
         }
+        
+        
         return false;
     }
+    
 
-    public int posicaoLivre() {
-        int pos;
-        for (pos = 0; dao[pos] != null && pos < dao.length; pos++) {
-        }
-        if (dao[pos] != null) {
-            return -1;
-        }
-        return pos;
-    }
-
-    public void listar() {
-        for (int i = 0; i < dao.length; i++) {
-            if (dao[i] != null) {
-                System.out.println(dao[i]);
+    public List<ContaCorrente> listar(ClienteDAO clienteDAO) {
+        List<ContaCorrente> contas = new ArrayList();
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ALL)){
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()){
+                    long id = rs.getLong("idContaCorrente");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    Cliente cliente = new Cliente(idCliente);
+                    cliente = clienteDAO.buscar(cliente);
+                    ContaCorrente conta = new ContaCorrente(rs.getLong("idContaCorrente"), cliente, saldo);
+                    contas.add(conta);
+                }
             }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        
+        return contas;
     }
+    
 
-    public ContaCorrente encontrarConta(ContaCorrente conta) {
-        for (int i = 0; i < dao.length; i++) {
-            if (dao[i] != null && dao[i].equals(conta)) {
-                return dao[i];
-            }
+    public ContaCorrente encontrarConta(ContaCorrente conta, ClienteDAO clienteDAO) {
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ONE)){
+            stmt.setLong(1, conta.getId());
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    long id = rs.getLong("idContaCorrente");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    Cliente cliente = new Cliente(idCliente);
+                    cliente = clienteDAO.buscar(cliente);
+                    conta = new ContaCorrente(id, cliente, saldo);
+                    
+                    return conta;
+                }
+            } 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+ 
         return null;
     }
-
-    public boolean atualizar(ContaCorrente conta) {
-        ContaCorrente posicao = encontrarConta(conta);
-        if (posicao != null) {
-            if (conta.getSaldo() != new BigDecimal("-1")) {
-                posicao.setSaldo(conta.getSaldo());
-            }
-            if (conta.getLimite() != new BigDecimal("-1")) {
-                posicao.setLimite(conta.getLimite());
-            }
-            if (conta.getTitular() != null) {
-                posicao.setTitular(conta.getTitular());
-            }
-            return true;
+    
+    public ContaCorrente encontrarConta(Cliente procura, ClienteDAO clienteDAO) {
+        
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ONE_ID)){
+            stmt.setLong(1, procura.getId());
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    long id = rs.getLong("idContaCorrente");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    ContaCorrente conta = new ContaCorrente(id, procura, saldo);
+                    
+                    return conta;
+                }
+            } 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
+ 
+        return null;
     }
+    
+    public boolean atualizar(ContaCorrente conta) {
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(UPDATE)){
+            stmt.setLong(1, conta.getTitular().getId());
+            stmt.setBigDecimal(2, conta.getSaldo());
+            stmt.setLong(3, conta.getId());
+            
+            stmt.execute();
+            return true;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+   
 
     public boolean deletar(ContaCorrente conta) {
-        for (int i = 0; dao[i] != null && i < dao.length; i++) {
-            if (dao[i].equals(conta)) {
-                dao[i] = null;
-                return true;
-            }
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(DELETE)){
+            stmt.setLong(1, conta.getId());
+            
+            stmt.execute();
+            return true;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 
-    public ContaCorrente procurarContaCliente(Cliente c) {
-        for (ContaCorrente contaCorrente : dao) {
-            if (contaCorrente != null && contaCorrente.getTitular().equals(c)) {
-                return contaCorrente;
-            }
-        }
-        return null;
-    }
 
-    public void pagarManutencaoDasContas(LocalDate dataAtual) {
-        for (int i = 0; i < dao.length; i++) {
-            if (dao[i] != null) {
-                dao[i].pagarManutencao(dataAtual);
-            }
-        }
-    }
 
 }

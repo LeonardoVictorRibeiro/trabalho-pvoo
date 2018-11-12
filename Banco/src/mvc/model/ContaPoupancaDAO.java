@@ -6,104 +6,123 @@
 package mvc.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author leonardo
  */
 public class ContaPoupancaDAO {
-    ContaPoupanca[] dao = new ContaPoupanca[50];
-    private LocalDate hoje;
-    
-    public ContaPoupancaDAO(ClienteDAO clienteDAO, LocalDate hoje){
-        this.hoje = hoje;
-        Cliente cliente2 = clienteDAO.buscar(new Cliente(null, "222222", 0));
-        Cliente cliente3 = clienteDAO.buscar(new Cliente(null, "333333", 0));
-        Cliente cliente4 = clienteDAO.buscar(new Cliente(null, "444444", 0));
-        Cliente cliente5 = clienteDAO.buscar(new Cliente(null, "555555", 0));
-        
-        ContaPoupanca cp1 = new ContaPoupanca(cliente2, new BigDecimal("0"), this.hoje);
-        ContaPoupanca cp2 = new ContaPoupanca(cliente3, new BigDecimal("0"), this.hoje);
-        ContaPoupanca cp3 = new ContaPoupanca(cliente4, new BigDecimal("0"), this.hoje);
-        ContaPoupanca cp4 = new ContaPoupanca(cliente5, new BigDecimal("0"), this.hoje);
-        
-        
-        this.inserir(cp1);
-        this.inserir(cp2);
-        this.inserir(cp3);
-        this.inserir(cp4);
-        
-        
+
+    private static final String INSERT = "insert into conta_poupanca" + "(idCliente, saldo)" + "values(?,?)";
+    private static final String SELECT_ALL = "select * from conta_poupanca";
+    private static final String UPDATE = "update conta_poupanca set idCliente = ?, saldo = ? where idConta_Poupanca = ?";
+    private static final String SELECT_ONE = "select * from conta_poupanca where idConta_Poupanca = ?";
+    private static final String DELETE = "delete from conta_poupanca where idConta_Poupanca = ?";
+
+    public ContaPoupancaDAO() {
+
     }
 
-     public boolean inserir(ContaPoupanca cp){
-        int pos = posicaoLivre();
-        if(pos != -1){
-            dao[pos] = cp;
+    public boolean inserir(ContaPoupanca nova) {
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(INSERT)) {
+
+            stmt.setLong(1, nova.getTitular().getId());
+            stmt.setBigDecimal(2, nova.getSaldo());
+
+            stmt.execute();
             return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
+
     }
-    
-    public int posicaoLivre(){
-        int pos;
-        for( pos  = 0; dao[pos] != null  && pos < dao.length;  pos++){}
-        if(dao[pos] != null){
-            return -1;
-        }
-        return pos;
-    }
-    
-    public void listar(){
-        for( int i = 0; i < dao.length; i++){
-            if(dao[i] != null){
-                System.out.println(dao[i]);
+
+    public List<ContaPoupanca> listar(ClienteDAO clienteDAO) {
+        List<ContaPoupanca> contas = new ArrayList();
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ALL)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    long id = rs.getLong("idConta_Poupanca");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    Cliente cliente = new Cliente(idCliente);
+                    cliente = clienteDAO.buscar(cliente);
+                    ContaPoupanca conta = new ContaPoupanca(id, cliente, saldo);
+                    contas.add(conta);
+                }
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+        return contas;
     }
-    
-    public ContaPoupanca encontrarConta(ContaPoupanca cp){
-        for(int i = 0; i < dao.length; i++){
-            if(dao[i] != null && dao[i].equals(cp)){
-               return dao[i];                
+
+    public ContaPoupanca encontrarConta(ContaPoupanca conta, ClienteDAO clienteDAO) {
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ONE)) {
+            stmt.setLong(1, conta.getId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    long id = rs.getLong("idConta_Poupanca");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    Cliente cliente = new Cliente(idCliente);
+                    cliente = clienteDAO.buscar(cliente);
+                    conta = new ContaPoupanca(id, cliente, saldo);
+
+                    return conta;
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
         return null;
     }
-    
-    public boolean atualizar(ContaPoupanca cp){
-        ContaPoupanca posicao = encontrarConta(cp);
-        if(posicao != null){
-            if(cp.getSaldo() != new BigDecimal("-1")){
-                posicao.setSaldo(cp.getSaldo());
-            }
-            if(cp.getLimite() != new BigDecimal("-1")){
-                posicao.setLimite(cp.getLimite());
-            }
-            if(cp.getTitular() != null){
-                posicao.setTitular(cp.getTitular());
-            }
+
+    public boolean atualizar(ContaPoupanca conta) {
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(UPDATE)) {
+            stmt.setLong(1, conta.getTitular().getId());
+            stmt.setBigDecimal(2, conta.getSaldo());
+            stmt.setLong(3, conta.getId());
+
+            stmt.execute();
             return true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
+
     }
-    public boolean deletar(ContaPoupanca cp){
-        for( int i = 0; dao[i] != null && i < dao.length; i++){
-            if(dao[i].equals(cp)){
-                dao[i] = null;
-                return true;
-            }
+
+    public boolean deletar(ContaPoupanca conta) {
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(DELETE)) {
+            stmt.setLong(1, conta.getId());
+
+            stmt.execute();
+            return true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
-    
-    public ContaPoupanca procurarContaCliente(Cliente c){
-        for (ContaPoupanca contaPoupanca : dao) {
-            if(contaPoupanca != null && contaPoupanca.getTitular().equals(c)){
-                return contaPoupanca;
-            }
-        }
-        return null;
-    }
+
 }

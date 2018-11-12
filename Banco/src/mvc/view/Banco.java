@@ -69,7 +69,7 @@ public class Banco {
             String cpfLogin = JOptionPane.showInputDialog("CPF: ");
             int senhaLogin = Integer.parseInt(JOptionPane.showInputDialog("Senha: "));
 
-            login = clienteDAO.buscar(new Cliente(null, cpfLogin, senhaLogin));
+            login = clienteDAO.buscar(new Cliente(cpfLogin));
             if (login != null) {
                 System.out.println("Usuário conectado com sucesso!");
                 // CPF do usuário adm é 111111 e a senha 12345

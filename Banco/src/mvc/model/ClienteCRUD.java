@@ -25,7 +25,8 @@ public class ClienteCRUD {
         String cpf = JOptionPane.showInputDialog("CPF: ");
         int senha = Integer.parseInt(JOptionPane.showInputDialog("Senha: "));
 
-        return clienteDAO.inserir(new Cliente(nome, cpf, senha));
+        return true;
+                //clienteDAO.inserir(new Cliente(nome, cpf, senha));
     }
     
     public boolean atualizar(){
