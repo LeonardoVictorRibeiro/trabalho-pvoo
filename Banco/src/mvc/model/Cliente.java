@@ -26,7 +26,7 @@ public class Cliente {
         this.senha = senha;
     }
     
-    public Cliente(Long id, String nome, String cpf, LocalDate dataNasc, int senha){
+    public Cliente(long id, String nome, String cpf, LocalDate dataNasc, int senha){
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -34,7 +34,7 @@ public class Cliente {
         this.senha = senha;
     }
     
-    public Cliente(Long id){
+    public Cliente(long id){
         this.id = id;
     }
     public Cliente(String nome, String cpf, int senha){

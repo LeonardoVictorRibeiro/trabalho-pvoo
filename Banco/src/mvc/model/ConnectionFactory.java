@@ -20,15 +20,15 @@ public class ConnectionFactory {
     
     //Acesso em casa
     private final String usuario = "root";
-    private final String senha = "root";
+    //private final String senha = "root";
     
     //Acesso na faculdade
-    //private final String senha = "12345";
+    private final String senha = "12345";
 
     public Connection getConnection() {
 
         try {
-            /*
+            
             Properties properties = new Properties();
             properties.setProperty("user", "root");
             properties.setProperty("password", "root");
@@ -36,9 +36,9 @@ public class ConnectionFactory {
             properties.setProperty("useTimezone", "true");
             properties.setProperty("serverTimezone", "UTC");
             properties.setProperty("allowPublicKeyRetrieval","true");
-            */
-            return DriverManager.getConnection(stringConexao, usuario, senha);
-            //return DriverManager.getConnection(stringConexao, properties);
+            
+            //return DriverManager.getConnection(stringConexao, usuario, senha);
+            return DriverManager.getConnection(stringConexao, properties);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
