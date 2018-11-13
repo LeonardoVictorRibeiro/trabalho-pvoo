@@ -34,6 +34,16 @@ public class ClienteTeste {
         //Mostra os dados do cliente encontrado
         System.out.println(encontradoCliente);
         
+        //Como alterar um cliente
+        //Busca no banco o cliente a ser editado
+        Cliente buscaCliente2 = new Cliente(1);
+        Cliente encontradoCliente2 = clidao.buscar(buscaCliente2);
+        //Edita o cliente encontrado
+        encontradoCliente2.setNome("Caio");
+        //Envia para ser alterado no banco
+        clidao.atualizar(encontradoCliente2);
+        
+        
         //Recebe todos os clientes encontrados no banco em uma lista
         List<Cliente> clientes = clidao.listar();
         
