@@ -3,49 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package mvc.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Leonardo Victor Ribeiro <leonardovictor@outlook.com>
  */
 public class ContaPoupancaTeste {
-    
+
     public static void main(String[] args) {
+        //DAOs necessários para manipular uma conta
         ClienteDAO clienteDAO = new ClienteDAO();
         ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
-        
-        Cliente c4 = clienteDAO.buscar(new Cliente(Long.parseLong("4")));
-        Cliente c3 = clienteDAO.buscar(new Cliente(Long.parseLong("3")));
-        Cliente c2 = clienteDAO.buscar(new Cliente(Long.parseLong("2")));
-        
-        ContaPoupanca cp1 = new ContaPoupanca(c4, new BigDecimal("200"));
-        //contaPoupancaDAO.inserir(cp1);
-        ContaPoupanca cp2 = new ContaPoupanca(c3, new BigDecimal("500"));
-        ContaPoupanca cp3 = new ContaPoupanca(c2, new BigDecimal("2200"));
-        
-        //contaPoupancaDAO.inserir(cp2);
-        //contaPoupancaDAO.inserir(cp3);
-        
-       
-        //contaPoupancaDAO.deletar(new ContaPoupanca(3));
-        
 
+        //Busca um cliente no banco de dados para ter atrelado a conta
+        Cliente cliente1 = clienteDAO.buscar(new Cliente(1));
 
-        ContaPoupanca contaBusca = contaPoupancaDAO.encontrarConta(new ContaPoupanca(5), clienteDAO);
-        System.out.println(contaBusca);
-        contaBusca.depositar(new BigDecimal("200"));
-        
-        
-        
-        contaPoupancaDAO.atualizar(contaBusca);
-        contaBusca = contaPoupancaDAO.encontrarConta(new ContaPoupanca(5), clienteDAO);
-        System.out.println(contaBusca);
+        //Cria a conta com saldo ZERO e insere no banco
+        ContaPoupanca cp1 = new ContaPoupanca(cliente1, BigDecimal.ZERO);
+
+        //Busca a conta no banco usando o ID ( usei uma instância com o id ao invés de um variável) 
+        ContaPoupanca cpEncontrada = contaPoupancaDAO.encontrarConta(new ContaPoupanca(1), clienteDAO);
+
+        //Modificar a conta
+        //Busco a conta a ser modificada
+        ContaPoupanca contaAEditar = contaPoupancaDAO.encontrarConta(new ContaPoupanca(1), clienteDAO);
+        //Edito a conta
+        contaAEditar.setSaldo(new BigDecimal(1000)); // Coloquei 1.000 de saldo
+        //Envio para o servidor
+        contaPoupancaDAO.atualizar(contaAEditar);
+
+        //Procuro uma conta e deleto
+        ContaPoupanca cpDeleta = new ContaPoupanca(1);
+        contaPoupancaDAO.deletar(cpDeleta);
+
+        //Coloco todas as contas encontras em uma lista
+        List<ContaPoupanca> contas = contaPoupancaDAO.listar(clienteDAO);
+
+        //Lista todas as contas no banco de dados
+        for (ContaPoupanca conta : contas) {
+            System.out.println(conta);
+        }
+
     }
 
 }
