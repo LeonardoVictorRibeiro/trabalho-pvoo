@@ -8,14 +8,17 @@ package mvc.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  *
  * @author leonardo
  */
 public class Calendario {
-    private LocalDate data = LocalDate.of(2017, Month.JULY, 1);
-    private LocalDate dataFinal = LocalDate.of(2018, Month.JUNE, 30);
+    private static LocalDate data = LocalDate.of(2017, Month.JULY, 1);
+    private static LocalDate dataFinal = LocalDate.of(2018, Month.JUNE, 30);
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private BigDecimal[] jurosMes = new BigDecimal[12];
     
     public Calendario(){
@@ -24,6 +27,10 @@ public class Calendario {
     
     public LocalDate getData(){
         return this.data;
+    }
+    
+    public String getDataFormatada(){
+        return this.data.format(dtf);
     }
     
     

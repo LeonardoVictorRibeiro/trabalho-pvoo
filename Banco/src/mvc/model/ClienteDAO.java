@@ -23,6 +23,7 @@ public class ClienteDAO {
     private static final String SELECIONAR_TODOS = "select * from clientes";
     private static final String DELETAR = "delete from clientes where idCliente = ?";
     private static final String SELECIONAR_UM = "select * from clientes where idCliente = ?";
+    private static final String SELECIONAR_POR_CPF = "select * from clientes where cpf = ?";
     private static final String UPDATE = "update clientes set nome = ?, cpf = ?, dataNasc = ?, senha = ? where idCliente = ?";
 
     public void inserir(Cliente novo) {
@@ -52,7 +53,7 @@ public class ClienteDAO {
             
            try(ResultSet rs = stmt.executeQuery()){
                while(rs.next()){
-                   Long id = rs.getLong("idCliente");
+                   long id = rs.getLong("idCliente");
                    String nome = rs.getString("nome");
                    String cpf = rs.getString("cpf");
                    LocalDate dataNasc = rs.getDate("dataNasc").toLocalDate();
@@ -118,7 +119,7 @@ public class ClienteDAO {
             
             try(ResultSet rs = stmt.executeQuery()){
                 while(rs.next()){
-                    Long id = rs.getLong("idCliente");
+                    long id = rs.getLong("idCliente");
                     String nome = rs.getString("nome");
                     String cpf = rs.getString("cpf");
                     LocalDate dataNasc = rs.getDate("dataNasc").toLocalDate();
@@ -132,6 +133,33 @@ public class ClienteDAO {
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
+        
+        return null;
+    }
+    
+    public Cliente buscarPorCPF(Cliente c){
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECIONAR_POR_CPF)){
+            stmt.setString(1, c.getCpf());
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    long id = rs.getLong("idCliente");
+                    String nome = rs.getString("nome");
+                    String cpf = rs.getString("cpf");
+                    LocalDate dataNasc = rs.getDate("dataNasc").toLocalDate();
+                    int senha = rs.getInt("senha");
+                    
+                    Cliente cliente = new Cliente(id, nome, cpf, dataNasc, senha);
+                    return cliente;
+                }
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
         
         return null;
     }
