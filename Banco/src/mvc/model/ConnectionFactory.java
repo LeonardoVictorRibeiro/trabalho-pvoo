@@ -28,7 +28,7 @@ public class ConnectionFactory {
     public Connection getConnection() {
 
         try {
-            
+            /*
             Properties properties = new Properties();
             properties.setProperty("user", "root");
             properties.setProperty("password", "root");
@@ -36,9 +36,9 @@ public class ConnectionFactory {
             properties.setProperty("useTimezone", "true");
             properties.setProperty("serverTimezone", "UTC");
             properties.setProperty("allowPublicKeyRetrieval","true");
-            
-            //return DriverManager.getConnection(stringConexao, usuario, senha);
-            return DriverManager.getConnection(stringConexao, properties);
+            */
+            return DriverManager.getConnection(stringConexao, usuario, senha);
+            //return DriverManager.getConnection(stringConexao, properties);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

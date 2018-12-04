@@ -50,7 +50,7 @@ public class ContaCorrente {
         return saldo;
     }
 
-    public void depositar(BigDecimal valor, LocalDate hoje) {
+    public void depositar(BigDecimal valor) {
         this.saldo = saldo.add(valor);
     }
     

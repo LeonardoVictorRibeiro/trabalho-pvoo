@@ -45,6 +45,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCCExtrato = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        menuPoupancaSaqueDeposito = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -88,6 +89,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Investimentos");
 
         jMenu4.setText("Poupança");
+
+        menuPoupancaSaqueDeposito.setText("Saque / Deposito");
+        menuPoupancaSaqueDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPoupancaSaqueDepositoActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuPoupancaSaqueDeposito);
+
         jMenu1.add(jMenu4);
 
         jMenu5.setText("CDB");
@@ -130,6 +140,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.dispose();
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_menuArquivoSairActionPerformed
+
+    private void menuPoupancaSaqueDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPoupancaSaqueDepositoActionPerformed
+        new TelaSaqueDepositoCP().setVisible(true);
+    }//GEN-LAST:event_menuPoupancaSaqueDepositoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,5 +192,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuCC;
     private javax.swing.JMenuItem menuCCExtrato;
     private javax.swing.JMenuItem menuCCSaqueDep;
+    private javax.swing.JMenuItem menuPoupancaSaqueDeposito;
     // End of variables declaration//GEN-END:variables
 }

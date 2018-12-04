@@ -51,6 +51,16 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Poupan&#xe7;a"/>
               </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="menuPoupancaSaqueDeposito">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Saque / Deposito"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuPoupancaSaqueDepositoActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu5">
               <Properties>

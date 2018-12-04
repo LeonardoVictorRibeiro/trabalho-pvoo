@@ -23,6 +23,7 @@ public class ContaPoupancaDAO {
     private static final String SELECT_ALL = "select * from conta_poupanca";
     private static final String UPDATE = "update conta_poupanca set idCliente = ?, saldo = ? where idConta_Poupanca = ?";
     private static final String SELECT_ONE = "select * from conta_poupanca where idConta_Poupanca = ?";
+    private static final String SELECT_ONE_ID = "select * from conta_poupanca where idCliente = ?";
     private static final String DELETE = "delete from conta_poupanca where idConta_Poupanca = ?";
 
     public ContaPoupancaDAO() {
@@ -83,6 +84,31 @@ public class ContaPoupancaDAO {
                     Cliente cliente = new Cliente(idCliente);
                     cliente = clienteDAO.buscar(cliente);
                     conta = new ContaPoupanca(id, cliente, saldo);
+
+                    return conta;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+    
+    public ContaPoupanca encontrarContaCliente(Cliente pesquisa, ClienteDAO clienteDAO) {
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(SELECT_ONE_ID)) {
+            stmt.setLong(1, pesquisa.getId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    long id = rs.getLong("idConta_Poupanca");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    Cliente cliente = new Cliente(idCliente);
+                    cliente = clienteDAO.buscar(cliente);
+                    ContaPoupanca conta = new ContaPoupanca(id, cliente, saldo);
 
                     return conta;
                 }

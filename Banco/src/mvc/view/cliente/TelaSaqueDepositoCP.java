@@ -6,32 +6,32 @@
 package mvc.view.cliente;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
-import javax.swing.JOptionPane;
 import mvc.controller.Login;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
+import mvc.model.ContaPoupanca;
+import mvc.model.ContaPoupancaDAO;
 
 /**
  *
- * @author leonardo
+ * @author aluno
  */
-public class TelaSaqueDepositoCC extends javax.swing.JFrame {
+public class TelaSaqueDepositoCP extends javax.swing.JFrame {
     private Login logado = new Login();
     private ClienteDAO clienteDAO = new ClienteDAO();
-    private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
-    private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
-  
-    
+    private ContaPoupancaDAO poupancaDAO = new ContaPoupancaDAO();
+    private ContaPoupanca poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
 
     /**
-     * Creates new form TelaSaqueDeposito
+     * Creates new form TelaSaqueDepositoCP
      */
-    public TelaSaqueDepositoCC() {
+    public TelaSaqueDepositoCP() {
         initComponents();
-        this.txtNumero.setText( String.valueOf( correnteCliente.getId() ) );
-        this.txtSaldo.setText( correnteCliente.getSaldo().toString());
+        this.txtNumero.setText(String.valueOf(poupancaCliente.getId() ) );
+        this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
     }
 
     /**
@@ -51,11 +51,11 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
-        btnSaque = new javax.swing.JButton();
-        btnDeposito = new javax.swing.JButton();
+        btnSacar = new javax.swing.JButton();
+        btnDepositar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Conta Corrente - Saque Deposito");
+        setTitle("Conta Poupança - Saque e Deposito");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da conta"));
 
@@ -72,15 +72,15 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addGap(4, 4, 4)
-                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,48 +88,56 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Realizar Saque/Deposito"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Saque/Deposito"));
 
         jLabel3.setText("Valor");
+
+        txtValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        btnSaque.setText("Saque");
-        btnSaque.addActionListener(new java.awt.event.ActionListener() {
+        btnSacar.setText("Sacar");
+        btnSacar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaqueActionPerformed(evt);
+                btnSacarActionPerformed(evt);
             }
         });
 
-        btnDeposito.setText("Depósito");
-        btnDeposito.addActionListener(new java.awt.event.ActionListener() {
+        btnDepositar.setText("Depositar");
+        btnDepositar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDepositoActionPerformed(evt);
+                btnDepositarActionPerformed(evt);
             }
         });
 
@@ -143,45 +151,49 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSaque)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeposito)
+                        .addGap(6, 6, 6)
+                        .addComponent(btnSacar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDepositar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaque)
-                    .addComponent(btnDeposito))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSacar)
+                    .addComponent(btnDepositar))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaqueActionPerformed
-        BigDecimal valorSaque = new BigDecimal(txtValor.getText());
-        correnteCliente.sacar(valorSaque);
-        correnteDAO.atualizar(correnteCliente);
-        correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
-        this.txtSaldo.setText( correnteCliente.getSaldo().toString());
-    }//GEN-LAST:event_btnSaqueActionPerformed
+    private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorActionPerformed
 
-    private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
-        BigDecimal valorDeposito = new BigDecimal(txtValor.getText());
-        correnteCliente.depositar(valorDeposito);
-        correnteDAO.atualizar(correnteCliente);
-        correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
-        this.txtSaldo.setText( correnteCliente.getSaldo().toString());
-    }//GEN-LAST:event_btnDepositoActionPerformed
+    private void btnDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositarActionPerformed
+        BigDecimal valor = new BigDecimal(txtValor.getText());
+        poupancaCliente.depositar(valor);
+        poupancaDAO.atualizar(poupancaCliente);
+        poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
+        this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
+    }//GEN-LAST:event_btnDepositarActionPerformed
+
+    private void btnSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacarActionPerformed
+        BigDecimal valor = new BigDecimal(txtValor.getText());
+        poupancaCliente.sacar(valor);
+        poupancaDAO.atualizar(poupancaCliente);
+        poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
+        this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
+    }//GEN-LAST:event_btnSacarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,28 +212,27 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaSaqueDepositoCC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaqueDepositoCP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaSaqueDepositoCC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaqueDepositoCP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaSaqueDepositoCC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaqueDepositoCP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaSaqueDepositoCC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaqueDepositoCP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaSaqueDepositoCC().setVisible(true);
+                new TelaSaqueDepositoCP().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDeposito;
-    private javax.swing.JButton btnSaque;
+    private javax.swing.JButton btnDepositar;
+    private javax.swing.JButton btnSacar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

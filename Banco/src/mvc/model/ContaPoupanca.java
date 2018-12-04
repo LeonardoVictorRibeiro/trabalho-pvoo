@@ -59,7 +59,7 @@ public class ContaPoupanca {
         return false;
     }
 
-    public void sacar(BigDecimal valor, LocalDate hoje) {
+    public void sacar(BigDecimal valor) {
 
         this.saldo = saldo.subtract(valor);
     }
