@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import mvc.controller.Login;
 import mvc.model.Calendario;
 import mvc.model.Cliente;
+import mvc.view.cliente.TelaPrincipal;
 
 /**
  *
@@ -119,6 +120,7 @@ public class TelaLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -134,9 +136,9 @@ public class TelaLogin extends javax.swing.JFrame {
             dispose();
             //Chama classe adm
             if(usuarioLogado.verificaAdm()){
-                JOptionPane.showMessageDialog(rootPane, "Bem vindo ADM!");
+                new TelaPrincipalADM().setVisible(true);
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Bem vindo Cliente!");
+                new TelaPrincipal().setVisible(true);
                 
             }
             

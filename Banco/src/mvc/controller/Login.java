@@ -28,6 +28,10 @@ public class Login {
         return null;
     }
     
+    public void deslogar(){
+        this.logado = null;
+    }
+    
     public Cliente getLogado(){
         return this.logado;
     }

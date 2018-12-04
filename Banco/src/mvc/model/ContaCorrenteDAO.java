@@ -41,13 +41,11 @@ public class ContaCorrenteDAO {
             stmt.setLong(2, nova.getTitular().getId());
             
             stmt.execute();
-            
+            return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);   
+            throw new RuntimeException(e);  
         }
         
-        
-        return false;
     }
     
 
@@ -103,7 +101,7 @@ public class ContaCorrenteDAO {
     
     public ContaCorrente encontrarConta(Cliente procura, ClienteDAO clienteDAO) {
         
-        
+
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SELECT_ONE_ID)){
             stmt.setLong(1, procura.getId());
