@@ -3,19 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.view.cliente;
+package mvc.view.cliente.corrente;
+
+import mvc.controller.Login;
+import mvc.model.ClienteDAO;
+import mvc.model.ContaCorrente;
+import mvc.model.ContaCorrenteDAO;
 
 /**
  *
  * @author leonardo
  */
 public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
+    private Login logado = new Login();
+    private ClienteDAO clienteDAO = new ClienteDAO();
+    private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
+    private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
 
     /**
      * Creates new form TelaConsultarExtratoCorrente
      */
     public TelaConsultarExtratoCorrente() {
         initComponents();
+        this.txtNumero.setText(String.valueOf(correnteCliente.getId()));
+        this.txtSaldo.setText(correnteCliente.getSaldo().toString());
     }
 
     /**
@@ -33,8 +44,8 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtNumero = new javax.swing.JTextField();
+        txtSaldo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Conta Corrente - Extrato");
@@ -70,12 +81,12 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
 
         jLabel2.setText("Saldo");
 
-        jTextField1.setEditable(false);
+        txtNumero.setEditable(false);
 
-        jTextField2.setEditable(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtSaldo.setEditable(false);
+        txtSaldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtSaldoActionPerformed(evt);
             }
         });
 
@@ -87,10 +98,10 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addContainerGap(289, Short.MAX_VALUE))
         );
@@ -103,8 +114,8 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -132,9 +143,9 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaldoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtSaldoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,7 +189,7 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables
 }

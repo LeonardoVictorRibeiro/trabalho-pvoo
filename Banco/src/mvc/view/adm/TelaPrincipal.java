@@ -3,27 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.view.cliente;
+package mvc.view.adm;
 
-import mvc.view.cliente.poupanca.TelaConsultarExtratoPoupanca;
-import mvc.view.cliente.poupanca.TelaSaqueDepositoCP;
-import mvc.view.cliente.corrente.TelaConsultarExtratoCorrente;
-import mvc.view.cliente.corrente.TelaSaqueDepositoCC;
-import mvc.controller.Login;
-import mvc.model.ClienteDAO;
-import mvc.model.ContaCorrente;
-import mvc.model.ContaCorrenteDAO;
 import mvc.view.TelaLogin;
+import mvc.view.adm.cdb.TelaCDBConsultarEditar;
+import mvc.view.adm.clientes.TelaEditarClientes;
+import mvc.view.adm.corrente.TelaConsultarAlterarCorrente;
+import mvc.view.adm.fundos.TelaFundoConsultarEditar;
+import mvc.view.adm.poupanca.TelaConsultarAlterarPoupanca;
 
 /**
  *
  * @author leonardo
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-    private Login logado = new Login();
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
-    private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
 
     /**
      * Creates new form TelaPrincipal
@@ -44,20 +37,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoSair = new javax.swing.JMenuItem();
-        menuCC = new javax.swing.JMenu();
-        menuCCSaqueDep = new javax.swing.JMenuItem();
-        menuCCExtrato = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        menuClientes = new javax.swing.JMenu();
+        menuClientesEditar = new javax.swing.JMenuItem();
+        menuCorrenteEditar = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        menuPoupanca = new javax.swing.JMenu();
+        menuPoupancaAlterar = new javax.swing.JMenuItem();
+        menuCDB = new javax.swing.JMenu();
+        menuCDBEditar = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        menuPoupancaSaqueDeposito = new javax.swing.JMenuItem();
-        menuPoupancaExtrato = new javax.swing.JMenuItem();
+        menuFundosEditar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Banco de Investimentos - Cliente");
-        setResizable(false);
+        setTitle("Banco - Administrador");
 
         menuArquivo.setText("Arquivo");
 
@@ -71,58 +65,71 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuArquivo);
 
-        menuCC.setText("Conta Corrente");
+        menuClientes.setText("Clientes");
 
-        menuCCSaqueDep.setText("Saque/Deposito");
-        menuCCSaqueDep.addActionListener(new java.awt.event.ActionListener() {
+        menuClientesEditar.setText("Consultar / Editar");
+        menuClientesEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCCSaqueDepActionPerformed(evt);
+                menuClientesEditarActionPerformed(evt);
             }
         });
-        menuCC.add(menuCCSaqueDep);
+        menuClientes.add(menuClientesEditar);
 
-        menuCCExtrato.setText("Consultar extrato");
-        menuCCExtrato.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(menuClientes);
+
+        menuCorrenteEditar.setText("Contas Corrente");
+
+        jMenuItem2.setText("Consultar / Editar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCCExtratoActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        menuCC.add(menuCCExtrato);
+        menuCorrenteEditar.add(jMenuItem2);
 
-        jMenuBar1.add(menuCC);
+        jMenuBar1.add(menuCorrenteEditar);
 
-        jMenu1.setText("Investimentos");
+        menuPoupanca.setText("Contas Poupança");
 
-        jMenu4.setText("Poupança");
-
-        menuPoupancaSaqueDeposito.setText("Saque / Deposito");
-        menuPoupancaSaqueDeposito.addActionListener(new java.awt.event.ActionListener() {
+        menuPoupancaAlterar.setText("Consultar / Editar");
+        menuPoupancaAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuPoupancaSaqueDepositoActionPerformed(evt);
+                menuPoupancaAlterarActionPerformed(evt);
             }
         });
-        jMenu4.add(menuPoupancaSaqueDeposito);
+        menuPoupanca.add(menuPoupancaAlterar);
 
-        menuPoupancaExtrato.setText("Consultar Extrato");
-        menuPoupancaExtrato.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(menuPoupanca);
+
+        menuCDB.setText("CDB's");
+
+        menuCDBEditar.setText("Consultar / Editar");
+        menuCDBEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuPoupancaExtratoActionPerformed(evt);
+                menuCDBEditarActionPerformed(evt);
             }
         });
-        jMenu4.add(menuPoupancaExtrato);
+        menuCDB.add(menuCDBEditar);
 
-        jMenu1.add(jMenu4);
+        jMenuItem6.setText("Movimentações");
+        menuCDB.add(jMenuItem6);
 
-        jMenu5.setText("CDB");
-        jMenu1.add(jMenu5);
+        jMenuBar1.add(menuCDB);
 
-        jMenu6.setText("Fundos");
-        jMenu1.add(jMenu6);
+        jMenu4.setText("Fundos");
 
-        jMenuBar1.add(jMenu1);
+        menuFundosEditar.setText("Consultar / Editar");
+        menuFundosEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFundosEditarActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuFundosEditar);
 
-        jMenu3.setText("Sobre");
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Sobre");
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -130,37 +137,41 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 803, Short.MAX_VALUE)
+            .addGap(0, 746, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 327, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuCCExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCCExtratoActionPerformed
-        new TelaConsultarExtratoCorrente().setVisible(true);
-    }//GEN-LAST:event_menuCCExtratoActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        new TelaConsultarAlterarCorrente().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void menuCCSaqueDepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCCSaqueDepActionPerformed
-        new TelaSaqueDepositoCC().setVisible(true);
-    }//GEN-LAST:event_menuCCSaqueDepActionPerformed
+    private void menuPoupancaAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPoupancaAlterarActionPerformed
+        new TelaConsultarAlterarPoupanca().setVisible(true);
+    }//GEN-LAST:event_menuPoupancaAlterarActionPerformed
+
+    private void menuClientesEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClientesEditarActionPerformed
+        new TelaEditarClientes().setVisible(true);
+    }//GEN-LAST:event_menuClientesEditarActionPerformed
+
+    private void menuCDBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCDBEditarActionPerformed
+        new TelaCDBConsultarEditar().setVisible(true);
+    }//GEN-LAST:event_menuCDBEditarActionPerformed
+
+    private void menuFundosEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFundosEditarActionPerformed
+        new TelaFundoConsultarEditar().setVisible(true);
+    }//GEN-LAST:event_menuFundosEditarActionPerformed
 
     private void menuArquivoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoSairActionPerformed
         this.dispose();
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_menuArquivoSairActionPerformed
-
-    private void menuPoupancaSaqueDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPoupancaSaqueDepositoActionPerformed
-        new TelaSaqueDepositoCP().setVisible(true);
-    }//GEN-LAST:event_menuPoupancaSaqueDepositoActionPerformed
-
-    private void menuPoupancaExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPoupancaExtratoActionPerformed
-        new TelaConsultarExtratoPoupanca().setVisible(true);
-    }//GEN-LAST:event_menuPoupancaExtratoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,18 +209,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
-    private javax.swing.JMenu menuCC;
-    private javax.swing.JMenuItem menuCCExtrato;
-    private javax.swing.JMenuItem menuCCSaqueDep;
-    private javax.swing.JMenuItem menuPoupancaExtrato;
-    private javax.swing.JMenuItem menuPoupancaSaqueDeposito;
+    private javax.swing.JMenu menuCDB;
+    private javax.swing.JMenuItem menuCDBEditar;
+    private javax.swing.JMenu menuClientes;
+    private javax.swing.JMenuItem menuClientesEditar;
+    private javax.swing.JMenu menuCorrenteEditar;
+    private javax.swing.JMenuItem menuFundosEditar;
+    private javax.swing.JMenu menuPoupanca;
+    private javax.swing.JMenuItem menuPoupancaAlterar;
     // End of variables declaration//GEN-END:variables
 }
