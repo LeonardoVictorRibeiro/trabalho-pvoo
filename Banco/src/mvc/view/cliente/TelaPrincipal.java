@@ -59,8 +59,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Banco de Investimentos - Cliente");
         setResizable(false);
 
+        menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
         menuArquivo.setText("Arquivo");
 
+        menuArquivoSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disconnect.png"))); // NOI18N
         menuArquivoSair.setText("Sair");
         menuArquivoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,8 +73,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuArquivo);
 
+        menuCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money.png"))); // NOI18N
         menuCC.setText("Conta Corrente");
 
+        menuCCSaqueDep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins_add.png"))); // NOI18N
         menuCCSaqueDep.setText("Saque/Deposito");
         menuCCSaqueDep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +85,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCC.add(menuCCSaqueDep);
 
+        menuCCExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_refresh.png"))); // NOI18N
         menuCCExtrato.setText("Consultar extrato");
         menuCCExtrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,10 +96,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuCC);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins.png"))); // NOI18N
         jMenu1.setText("Investimentos");
 
         jMenu4.setText("Poupança");
 
+        menuPoupancaSaqueDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins_add.png"))); // NOI18N
         menuPoupancaSaqueDeposito.setText("Saque / Deposito");
         menuPoupancaSaqueDeposito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +110,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(menuPoupancaSaqueDeposito);
 
+        menuPoupancaExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_refresh.png"))); // NOI18N
         menuPoupancaExtrato.setText("Consultar Extrato");
         menuPoupancaExtrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +129,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png"))); // NOI18N
         jMenu3.setText("Sobre");
         jMenuBar1.add(jMenu3);
 
@@ -134,7 +143,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
 
         pack();

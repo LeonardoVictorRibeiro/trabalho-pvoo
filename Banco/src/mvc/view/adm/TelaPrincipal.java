@@ -39,8 +39,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuArquivoSair = new javax.swing.JMenuItem();
         menuClientes = new javax.swing.JMenu();
         menuClientesEditar = new javax.swing.JMenuItem();
-        menuCorrenteEditar = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuCorrente = new javax.swing.JMenu();
+        menuCorrenteEditar = new javax.swing.JMenuItem();
         menuPoupanca = new javax.swing.JMenu();
         menuPoupancaAlterar = new javax.swing.JMenuItem();
         menuCDB = new javax.swing.JMenu();
@@ -53,8 +53,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Banco - Administrador");
 
+        menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
         menuArquivo.setText("Arquivo");
 
+        menuArquivoSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disconnect.png"))); // NOI18N
         menuArquivoSair.setText("Sair");
         menuArquivoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,8 +67,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuArquivo);
 
+        menuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/group.png"))); // NOI18N
         menuClientes.setText("Clientes");
 
+        menuClientesEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/group_edit.png"))); // NOI18N
         menuClientesEditar.setText("Consultar / Editar");
         menuClientesEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,20 +81,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuClientes);
 
-        menuCorrenteEditar.setText("Contas Corrente");
+        menuCorrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money.png"))); // NOI18N
+        menuCorrente.setText("Contas Corrente");
 
-        jMenuItem2.setText("Consultar / Editar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuCorrenteEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
+        menuCorrenteEditar.setText("Consultar / Editar");
+        menuCorrenteEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuCorrenteEditarActionPerformed(evt);
             }
         });
-        menuCorrenteEditar.add(jMenuItem2);
+        menuCorrente.add(menuCorrenteEditar);
 
-        jMenuBar1.add(menuCorrenteEditar);
+        jMenuBar1.add(menuCorrente);
 
+        menuPoupanca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins.png"))); // NOI18N
         menuPoupanca.setText("Contas Poupança");
 
+        menuPoupancaAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
         menuPoupancaAlterar.setText("Consultar / Editar");
         menuPoupancaAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,8 +109,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuPoupanca);
 
+        menuCDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins.png"))); // NOI18N
         menuCDB.setText("CDB's");
 
+        menuCDBEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
         menuCDBEditar.setText("Consultar / Editar");
         menuCDBEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,13 +121,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCDB.add(menuCDBEditar);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_refresh.png"))); // NOI18N
         jMenuItem6.setText("Movimentações");
         menuCDB.add(jMenuItem6);
 
         jMenuBar1.add(menuCDB);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins.png"))); // NOI18N
         jMenu4.setText("Fundos");
 
+        menuFundosEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
         menuFundosEditar.setText("Consultar / Editar");
         menuFundosEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +141,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png"))); // NOI18N
         jMenu5.setText("Sobre");
         jMenuBar1.add(jMenu5);
 
@@ -141,16 +155,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 327, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuCorrenteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCorrenteEditarActionPerformed
         new TelaConsultarAlterarCorrente().setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuCorrenteEditarActionPerformed
 
     private void menuPoupancaAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPoupancaAlterarActionPerformed
         new TelaConsultarAlterarPoupanca().setVisible(true);
@@ -212,7 +226,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
@@ -220,7 +233,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuCDBEditar;
     private javax.swing.JMenu menuClientes;
     private javax.swing.JMenuItem menuClientesEditar;
-    private javax.swing.JMenu menuCorrenteEditar;
+    private javax.swing.JMenu menuCorrente;
+    private javax.swing.JMenuItem menuCorrenteEditar;
     private javax.swing.JMenuItem menuFundosEditar;
     private javax.swing.JMenu menuPoupanca;
     private javax.swing.JMenuItem menuPoupancaAlterar;

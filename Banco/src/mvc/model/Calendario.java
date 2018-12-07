@@ -41,4 +41,11 @@ public class Calendario {
         }
         return false;
     }
+
+    public DateTimeFormatter getDtf() {
+        return dtf;
+    }
+
+   
+    
 }
