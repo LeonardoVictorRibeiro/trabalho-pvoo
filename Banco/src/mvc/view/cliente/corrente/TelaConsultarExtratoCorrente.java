@@ -5,10 +5,15 @@
  */
 package mvc.view.cliente.corrente;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import mvc.controller.Login;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
+import mvc.model.Movimentacoes;
+import mvc.model.MovimentoContaCorrente;
+import mvc.model.MovimentoContaCorrenteDAO;
 
 /**
  *
@@ -19,6 +24,7 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
     private ClienteDAO clienteDAO = new ClienteDAO();
     private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
     private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
+    private MovimentoContaCorrenteDAO movimentoDAO = new MovimentoContaCorrenteDAO();
 
     /**
      * Creates new form TelaConsultarExtratoCorrente
@@ -27,6 +33,24 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
         initComponents();
         this.txtNumero.setText(String.valueOf(correnteCliente.getId()));
         this.txtSaldo.setText(correnteCliente.getSaldo().toString());
+        
+        atualizarTabela();
+    }
+    
+    public void atualizarTabela(){
+        DefaultTableModel dtmMovimentacoes = (DefaultTableModel)jTMovimentacoes.getModel();
+        
+        List<MovimentoContaCorrente> movimentacoes = movimentoDAO.listarMovimentosDeUmaConta(correnteCliente);
+        
+        for (MovimentoContaCorrente movimentacao : movimentacoes) {
+            dtmMovimentacoes.addRow( 
+                    new Object[]{
+                        movimentacao.getId(), movimentacao.getValor(), movimentacao.getDescricao(),
+                        movimentacao.getData()
+                    }
+            );
+        }
+        
     }
 
     /**
@@ -40,7 +64,7 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTMovimentacoes = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -51,18 +75,15 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
         setTitle("Conta Corrente - Extrato");
         setResizable(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTMovimentacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Quantia", "Descrição", "Data"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTMovimentacoes);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -188,7 +209,7 @@ public class TelaConsultarExtratoCorrente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTMovimentacoes;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables

@@ -89,8 +89,12 @@ public class ContaPoupancaDeposito {
         this.aniversario = aniversario;
     }
 
-    public boolean isStatus() {
-        return status;
+    public String getStatus() {
+        if(this.status == true){
+            return "Ativo";
+        }else{
+            return "Vencido";
+        }
     }
 
     public void setStatus(boolean status) {

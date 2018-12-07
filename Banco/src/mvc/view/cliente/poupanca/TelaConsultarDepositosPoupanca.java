@@ -5,29 +5,52 @@
  */
 package mvc.view.cliente.poupanca;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import mvc.controller.Login;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaPoupanca;
 import mvc.model.ContaPoupancaDAO;
+import mvc.model.ContaPoupancaDeposito;
+import mvc.model.ContaPoupancaDepositoDAO;
 
 /**
  *
  * @author leonardo
  */
-public class TelaConsultarExtratoPoupanca extends javax.swing.JFrame {
+public class TelaConsultarDepositosPoupanca extends javax.swing.JFrame {
     private Login logado = new Login();
     private ClienteDAO clienteDAO = new ClienteDAO();
     private ContaPoupancaDAO poupancaDAO = new ContaPoupancaDAO();
     private ContaPoupanca poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
+    private ContaPoupancaDepositoDAO depositoDAO = new ContaPoupancaDepositoDAO();
 
 
     /**
      * Creates new form TelaConsultarExtratoPoupanca
      */
-    public TelaConsultarExtratoPoupanca() {
+    public TelaConsultarDepositosPoupanca() {
         initComponents();
         this.txtNumero.setText(String.valueOf(poupancaCliente.getId()));
         this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
+        atualizaTabela();
+    }
+    
+    public void atualizaTabela(){
+        
+        DefaultTableModel dtmDepositos = (DefaultTableModel)jTDepositos.getModel();
+        
+        List<ContaPoupancaDeposito> depositos = depositoDAO.listarDepositosDeUmaConta(poupancaCliente);
+        
+        for (ContaPoupancaDeposito deposito : depositos) {
+            dtmDepositos.addRow(
+                    new Object[]{
+                        deposito.getId(), deposito.getSaldo(), deposito.getDataInicio(),
+                        deposito.getDataTermino(), deposito.getAniversario(), deposito.getStatus()
+                    }
+            );
+        }
+        
     }
 
     /**
@@ -46,7 +69,7 @@ public class TelaConsultarExtratoPoupanca extends javax.swing.JFrame {
         txtSaldo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTDepositos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Conta Poupanca - Extrato");
@@ -91,18 +114,23 @@ public class TelaConsultarExtratoPoupanca extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTDepositos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "QUANTIA", "DATA INÍCIO", "DATA FIM", "ANIVERSÁRIO", "STATUS"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTDepositos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -157,20 +185,21 @@ public class TelaConsultarExtratoPoupanca extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultarExtratoPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultarDepositosPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultarExtratoPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultarDepositosPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultarExtratoPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultarDepositosPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultarExtratoPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultarDepositosPoupanca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaConsultarExtratoPoupanca().setVisible(true);
+                new TelaConsultarDepositosPoupanca().setVisible(true);
             }
         });
     }
@@ -181,7 +210,7 @@ public class TelaConsultarExtratoPoupanca extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTDepositos;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables

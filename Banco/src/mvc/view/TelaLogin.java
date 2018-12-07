@@ -10,7 +10,6 @@ import mvc.controller.Login;
 import mvc.model.Calendario;
 import mvc.model.Cliente;
 import mvc.view.cliente.TelaPrincipal;
-
 /**
  *
  * @author leonardo
@@ -136,10 +135,9 @@ public class TelaLogin extends javax.swing.JFrame {
             dispose();
             //Chama classe adm
             if(usuarioLogado.verificaAdm()){
-                new TelaPrincipalADM().setVisible(true);
+                new mvc.view.adm.TelaPrincipal().setVisible(true);
             }else{
                 new TelaPrincipal().setVisible(true);
-                
             }
             
         }else{

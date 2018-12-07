@@ -9,8 +9,10 @@ import mvc.view.TelaLogin;
 import mvc.view.adm.cdb.TelaCDBConsultarEditar;
 import mvc.view.adm.clientes.TelaEditarClientes;
 import mvc.view.adm.corrente.TelaConsultarAlterarCorrente;
+import mvc.view.adm.corrente.TelaMovimentacoes;
 import mvc.view.adm.fundos.TelaFundoConsultarEditar;
 import mvc.view.adm.poupanca.TelaConsultarAlterarPoupanca;
+import mvc.view.adm.poupanca.TelaConsultarDepositos;
 
 /**
  *
@@ -41,8 +43,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuClientesEditar = new javax.swing.JMenuItem();
         menuCorrente = new javax.swing.JMenu();
         menuCorrenteEditar = new javax.swing.JMenuItem();
+        menuCCMovimentacoes = new javax.swing.JMenuItem();
         menuPoupanca = new javax.swing.JMenu();
         menuPoupancaAlterar = new javax.swing.JMenuItem();
+        menuCPConsultarDepositos = new javax.swing.JMenuItem();
         menuCDB = new javax.swing.JMenu();
         menuCDBEditar = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -93,6 +97,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCorrente.add(menuCorrenteEditar);
 
+        menuCCMovimentacoes.setText("Movimentações");
+        menuCCMovimentacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCCMovimentacoesActionPerformed(evt);
+            }
+        });
+        menuCorrente.add(menuCCMovimentacoes);
+
         jMenuBar1.add(menuCorrente);
 
         menuPoupanca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins.png"))); // NOI18N
@@ -106,6 +118,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         menuPoupanca.add(menuPoupancaAlterar);
+
+        menuCPConsultarDepositos.setText("Consultar depósitos");
+        menuCPConsultarDepositos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCPConsultarDepositosActionPerformed(evt);
+            }
+        });
+        menuPoupanca.add(menuCPConsultarDepositos);
 
         jMenuBar1.add(menuPoupanca);
 
@@ -187,6 +207,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_menuArquivoSairActionPerformed
 
+    private void menuCCMovimentacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCCMovimentacoesActionPerformed
+        new TelaMovimentacoes().setVisible(true);
+    }//GEN-LAST:event_menuCCMovimentacoesActionPerformed
+
+    private void menuCPConsultarDepositosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCPConsultarDepositosActionPerformed
+        new TelaConsultarDepositos().setVisible(true);
+    }//GEN-LAST:event_menuCPConsultarDepositosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -229,8 +257,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
+    private javax.swing.JMenuItem menuCCMovimentacoes;
     private javax.swing.JMenu menuCDB;
     private javax.swing.JMenuItem menuCDBEditar;
+    private javax.swing.JMenuItem menuCPConsultarDepositos;
     private javax.swing.JMenu menuClientes;
     private javax.swing.JMenuItem menuClientesEditar;
     private javax.swing.JMenu menuCorrente;

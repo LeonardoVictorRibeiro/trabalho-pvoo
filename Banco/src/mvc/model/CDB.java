@@ -17,14 +17,14 @@ public class CDB {
     private String nome;
     private BigDecimal saldoTotal = new BigDecimal("0.0");
     
-    CDB(long id){
+    public CDB(long id){
         this.id = id;
     }
-    CDB(String nome){
+    public CDB(String nome){
         this.nome = nome;
         this.saldoTotal = new BigDecimal("0.0");
     }
-    CDB(long id, String nome, BigDecimal saldo){
+    public CDB(long id, String nome, BigDecimal saldo){
         this.id = id;
         this.nome = nome;
         this.saldoTotal = saldo;

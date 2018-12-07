@@ -5,7 +5,7 @@
  */
 package mvc.view.cliente;
 
-import mvc.view.cliente.poupanca.TelaConsultarExtratoPoupanca;
+import mvc.view.cliente.poupanca.TelaConsultarDepositosPoupanca;
 import mvc.view.cliente.poupanca.TelaSaqueDepositoCP;
 import mvc.view.cliente.corrente.TelaConsultarExtratoCorrente;
 import mvc.view.cliente.corrente.TelaSaqueDepositoCC;
@@ -24,6 +24,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private ClienteDAO clienteDAO = new ClienteDAO();
     private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
     private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
+    
 
     /**
      * Creates new form TelaPrincipal
@@ -168,7 +169,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPoupancaSaqueDepositoActionPerformed
 
     private void menuPoupancaExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPoupancaExtratoActionPerformed
-        new TelaConsultarExtratoPoupanca().setVisible(true);
+        new TelaConsultarDepositosPoupanca().setVisible(true);
     }//GEN-LAST:event_menuPoupancaExtratoActionPerformed
 
     /**

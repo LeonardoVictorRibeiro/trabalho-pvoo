@@ -8,12 +8,17 @@ package mvc.view.cliente.poupanca;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 import mvc.controller.Login;
+import mvc.model.Calendario;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
 import mvc.model.ContaPoupanca;
 import mvc.model.ContaPoupancaDAO;
+import mvc.model.ContaPoupancaDeposito;
+import mvc.model.ContaPoupancaTransaction;
+import mvc.model.MovimentoContaCorrente;
 
 /**
  *
@@ -22,8 +27,11 @@ import mvc.model.ContaPoupancaDAO;
 public class TelaSaqueDepositoCP extends javax.swing.JFrame {
     private Login logado = new Login();
     private ClienteDAO clienteDAO = new ClienteDAO();
+    private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
+    private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
     private ContaPoupancaDAO poupancaDAO = new ContaPoupancaDAO();
     private ContaPoupanca poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
+    Calendario calendario = new Calendario();
 
     /**
      * Creates new form TelaSaqueDepositoCP
@@ -51,6 +59,8 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
+        txtPeriodoDias = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         btnSacar = new javax.swing.JButton();
         btnDepositar = new javax.swing.JButton();
 
@@ -106,6 +116,8 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Período");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -115,7 +127,11 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPeriodoDias, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,7 +139,9 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPeriodoDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -180,11 +198,27 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
     }//GEN-LAST:event_txtValorActionPerformed
 
     private void btnDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositarActionPerformed
-        BigDecimal valor = new BigDecimal(txtValor.getText());
-        poupancaCliente.depositar(valor);
-        poupancaDAO.atualizar(poupancaCliente);
+        
+        try {
+            BigDecimal valor = new BigDecimal(txtValor.getText());
+            int peridoInvestimento = Integer.parseInt(txtPeriodoDias.getText());
+
+            poupancaCliente.depositar(valor);
+            correnteCliente.sacar(valor);
+            ContaPoupancaTransaction transacao = new ContaPoupancaTransaction();
+            ContaPoupancaDeposito contaDeposito = new ContaPoupancaDeposito(poupancaCliente, valor, calendario.getData(), calendario.getData().plusDays(peridoInvestimento));
+            MovimentoContaCorrente movimentoCorrente = new MovimentoContaCorrente(correnteCliente, 1, "Depósito para a poupança", valor, calendario.getData());
+            transacao.depositar(contaDeposito, correnteCliente, movimentoCorrente);
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "O campo período não pode estar vazio.");
+            throw new RuntimeException(e);
+        }
+
+        
         poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
         this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
+        this.txtNumero.setText(String.valueOf(poupancaCliente.getId()));
     }//GEN-LAST:event_btnDepositarActionPerformed
 
     private void btnSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacarActionPerformed
@@ -236,9 +270,11 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtPeriodoDias;
     private javax.swing.JTextField txtSaldo;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
