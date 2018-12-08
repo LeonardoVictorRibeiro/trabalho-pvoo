@@ -33,6 +33,8 @@ public class TelaConsultarAlterarCorrente extends javax.swing.JFrame {
         atualizarTabela();
     }
     
+    
+    
     public void atualizarTabela(){
         DefaultTableModel dtmCorrente = (DefaultTableModel)jTContaCorrente.getModel();
         dtmCorrente.setNumRows(0);

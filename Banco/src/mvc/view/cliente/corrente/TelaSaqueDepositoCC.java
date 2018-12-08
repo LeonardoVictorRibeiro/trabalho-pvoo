@@ -6,12 +6,14 @@
 package mvc.view.cliente.corrente;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import mvc.controller.Login;
+import mvc.model.Calendario;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
+import mvc.model.MovimentoContaCorrente;
+import mvc.model.MovimentoContaCorrenteDAO;
 
 /**
  *
@@ -22,6 +24,7 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
     private ClienteDAO clienteDAO = new ClienteDAO();
     private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
     private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
+    Calendario calendario = new Calendario();
   
     
 
@@ -170,6 +173,11 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
     private void btnSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaqueActionPerformed
         BigDecimal valorSaque = new BigDecimal(txtValor.getText());
         correnteCliente.sacar(valorSaque);
+        
+        MovimentoContaCorrente movimento = new MovimentoContaCorrente(correnteCliente, 1, "Saque", valorSaque, calendario.getData());
+        MovimentoContaCorrenteDAO movimentoDAO = new MovimentoContaCorrenteDAO();
+        movimentoDAO.inserir(correnteCliente, movimento);
+        
         correnteDAO.atualizar(correnteCliente);
         correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
         this.txtSaldo.setText( correnteCliente.getSaldo().toString());
@@ -178,6 +186,11 @@ public class TelaSaqueDepositoCC extends javax.swing.JFrame {
     private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
         BigDecimal valorDeposito = new BigDecimal(txtValor.getText());
         correnteCliente.depositar(valorDeposito);
+        
+        MovimentoContaCorrente movimento = new MovimentoContaCorrente(correnteCliente, 3, "Depósito", valorDeposito, calendario.getData());
+        MovimentoContaCorrenteDAO movimentoDAO = new MovimentoContaCorrenteDAO();
+        movimentoDAO.inserir(correnteCliente, movimento);
+        
         correnteDAO.atualizar(correnteCliente);
         correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
         this.txtSaldo.setText( correnteCliente.getSaldo().toString());

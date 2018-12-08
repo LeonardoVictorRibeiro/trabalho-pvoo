@@ -224,6 +224,11 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
     private void btnSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacarActionPerformed
         BigDecimal valor = new BigDecimal(txtValor.getText());
         poupancaCliente.sacar(valor);
+        //correnteCliente.depositar(valor);
+        
+        //ContaPoupancaTransaction transacao = new ContaPoupancaTransaction();
+        
+        
         poupancaDAO.atualizar(poupancaCliente);
         poupancaCliente = poupancaDAO.encontrarContaCliente(logado.getLogado(), clienteDAO);
         this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
