@@ -40,6 +40,7 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
         initComponents();
         this.txtNumero.setText(String.valueOf(poupancaCliente.getId() ) );
         this.txtSaldo.setText(poupancaCliente.getSaldo().toString());
+        this.btnSacar.setEnabled(false);
     }
 
     /**

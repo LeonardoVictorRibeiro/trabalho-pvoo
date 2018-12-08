@@ -5,6 +5,8 @@
  */
 package mvc.view.adm;
 
+import mvc.controller.Login;
+import mvc.model.Calendario;
 import mvc.view.TelaLogin;
 import mvc.view.adm.cdb.TelaCDBConsultarEditar;
 import mvc.view.adm.clientes.TelaEditarClientes;
@@ -19,6 +21,8 @@ import mvc.view.adm.poupanca.TelaConsultarDepositos;
  * @author leonardo
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+    private Login logado = new Login();
+    private Calendario calendario = new Calendario();
 
     /**
      * Creates new form TelaPrincipal
@@ -55,7 +59,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Banco - Administrador");
+        setTitle("Banco de investimentos -  " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
 
         menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
         menuArquivo.setText("Arquivo");

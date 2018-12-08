@@ -20,31 +20,31 @@ import mvc.model.ClienteDAO;
  * @author leonardo
  */
 public class TelaEditarClientes extends javax.swing.JFrame {
+
     ClienteDAO clienteDAO = new ClienteDAO();
     Calendario calendario = new Calendario();
-    
 
     /**
      * Creates new form TelaEditarClientes
      */
     public TelaEditarClientes() {
         initComponents();
-        DefaultTableModel dtmClientes = (DefaultTableModel)jTClientes.getModel();
+        DefaultTableModel dtmClientes = (DefaultTableModel) jTClientes.getModel();
         jTClientes.setRowSorter(new TableRowSorter(dtmClientes));
-     
+
         atualizarTabela();
     }
-    
-    public void atualizarTabela(){
-        DefaultTableModel dtmClientes = (DefaultTableModel)jTClientes.getModel();
+
+    public void atualizarTabela() {
+        DefaultTableModel dtmClientes = (DefaultTableModel) jTClientes.getModel();
         dtmClientes.setNumRows(0);
         List<Cliente> clientes = clienteDAO.listar();
-        
+
         try {
             for (Cliente cliente : clientes) {
                 dtmClientes.addRow(
                         new Object[]{
-                            cliente.getId(), cliente.getNome(), cliente.getCpf(), 
+                            cliente.getId(), cliente.getNome(), cliente.getCpf(),
                             cliente.getDataNasc(), cliente.getSenha()
                         }
                 );
@@ -53,7 +53,7 @@ public class TelaEditarClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Nenhum usuário cadastrado no banco.");
             throw new RuntimeException(e);
         }
-        
+
     }
 
     /**
@@ -180,6 +180,16 @@ public class TelaEditarClientes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTClientesMouseClicked(evt);
+            }
+        });
+        jTClientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTClientesKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTClientes);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -231,7 +241,7 @@ public class TelaEditarClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        
+
         try {
             String nome = txtNome.getText();
             String cpf = txtCPF.getText();
@@ -244,19 +254,45 @@ public class TelaEditarClientes extends javax.swing.JFrame {
             txtCPF.setText("");
             txtNasc.setText("");
             txtSenha.setText("");
-            
+
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(rootPane, "Formato de data incorreto. Tente novamente com um formato válido(dd/MM/yyyy).");
             throw new RuntimeException(e);
         }
-                
+
         atualizarTabela();
-        
+
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        
+
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jTClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTClientesKeyReleased
+
+        if (jTClientes.getSelectedRow() != -1) {
+
+            txtID.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 0).toString());
+            txtNome.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 1).toString());
+            txtCPF.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 2).toString());
+            txtNasc.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 3).toString());
+            txtSenha.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 4).toString());
+
+        }
+    }//GEN-LAST:event_jTClientesKeyReleased
+
+    private void jTClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTClientesMouseClicked
+        
+        if (jTClientes.getSelectedRow() != -1) {
+
+            txtID.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 0).toString());
+            txtNome.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 1).toString());
+            txtCPF.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 2).toString());
+            txtNasc.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 3).toString());
+            txtSenha.setText(jTClientes.getValueAt(jTClientes.getSelectedRow(), 4).toString());
+
+        }
+    }//GEN-LAST:event_jTClientesMouseClicked
 
     /**
      * @param args the command line arguments

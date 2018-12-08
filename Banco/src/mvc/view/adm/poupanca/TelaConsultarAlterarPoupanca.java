@@ -140,6 +140,11 @@ public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTPoupanca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTPoupancaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTPoupanca);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -189,6 +194,18 @@ public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTPoupancaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTPoupancaMouseClicked
+         
+        if (jTPoupanca.getSelectedRow() != -1) {
+
+            txtNumero.setText(jTPoupanca.getValueAt(jTPoupanca.getSelectedRow(), 0).toString());
+            txtCliente.setText(jTPoupanca.getValueAt(jTPoupanca.getSelectedRow(), 1).toString());
+            txtSaldo.setText(jTPoupanca.getValueAt(jTPoupanca.getSelectedRow(), 2).toString());
+
+        }
+
+    }//GEN-LAST:event_jTPoupancaMouseClicked
 
     /**
      * @param args the command line arguments

@@ -143,6 +143,11 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTFundo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTFundoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTFundo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -204,6 +209,18 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
         atualizarTabela();
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void jTFundoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFundoMouseClicked
+        
+        if (jTFundo.getSelectedRow() != -1) {
+
+            txtID.setText(jTFundo.getValueAt(jTFundo.getSelectedRow(), 0).toString());
+            txtNome.setText(jTFundo.getValueAt(jTFundo.getSelectedRow(), 1).toString());
+            txtSaldo.setText(jTFundo.getValueAt(jTFundo.getSelectedRow(), 2).toString());
+
+        }
+
+    }//GEN-LAST:event_jTFundoMouseClicked
 
     /**
      * @param args the command line arguments

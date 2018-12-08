@@ -145,6 +145,11 @@ public class TelaConsultarAlterarCorrente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTContaCorrente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTContaCorrenteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTContaCorrente);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -197,6 +202,18 @@ public class TelaConsultarAlterarCorrente extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTContaCorrenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTContaCorrenteMouseClicked
+        
+        if (jTContaCorrente.getSelectedRow() != -1) {
+
+            txtNumero.setText(jTContaCorrente.getValueAt(jTContaCorrente.getSelectedRow(), 0).toString());
+            txtCliente.setText(jTContaCorrente.getValueAt(jTContaCorrente.getSelectedRow(), 1).toString());
+            txtSaldo.setText(jTContaCorrente.getValueAt(jTContaCorrente.getSelectedRow(), 2).toString());
+            
+
+        }
+    }//GEN-LAST:event_jTContaCorrenteMouseClicked
 
     /**
      * @param args the command line arguments

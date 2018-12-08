@@ -10,9 +10,8 @@ import mvc.view.cliente.poupanca.TelaSaqueDepositoCP;
 import mvc.view.cliente.corrente.TelaConsultarExtratoCorrente;
 import mvc.view.cliente.corrente.TelaSaqueDepositoCC;
 import mvc.controller.Login;
+import mvc.model.Calendario;
 import mvc.model.ClienteDAO;
-import mvc.model.ContaCorrente;
-import mvc.model.ContaCorrenteDAO;
 import mvc.view.TelaLogin;
 
 /**
@@ -22,8 +21,7 @@ import mvc.view.TelaLogin;
 public class TelaPrincipal extends javax.swing.JFrame {
     private Login logado = new Login();
     private ClienteDAO clienteDAO = new ClienteDAO();
-    private ContaCorrenteDAO correnteDAO = new ContaCorrenteDAO();
-    private ContaCorrente correnteCliente = correnteDAO.encontrarConta(logado.getLogado(), clienteDAO);
+    Calendario calendario = new Calendario();
     
 
     /**
@@ -57,7 +55,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Banco de Investimentos - Cliente");
+        setTitle("Banco de investimentos - " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
         setResizable(false);
 
         menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
@@ -161,6 +159,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void menuArquivoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoSairActionPerformed
         this.dispose();
+        this.logado.deslogar();
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_menuArquivoSairActionPerformed
 

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -117,6 +118,9 @@ public class ContaCorrenteDAO {
                 }
             } 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Usuário ou conta não encontrados. Erro: " + e );
             throw new RuntimeException(e);
         }
  

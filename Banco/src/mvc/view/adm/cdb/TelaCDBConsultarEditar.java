@@ -130,6 +130,11 @@ public class TelaCDBConsultarEditar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTCDB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTCDBMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTCDB);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -195,6 +200,19 @@ public class TelaCDBConsultarEditar extends javax.swing.JFrame {
        
        atualizarTabela();
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jTCDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTCDBMouseClicked
+        
+
+        if (jTCDB.getSelectedRow() != -1) {
+
+            txtID.setText(jTCDB.getValueAt(jTCDB.getSelectedRow(), 0).toString());
+            txtNome.setText(jTCDB.getValueAt(jTCDB.getSelectedRow(), 1).toString());
+            txtSaldo.setText(jTCDB.getValueAt(jTCDB.getSelectedRow(), 2).toString());
+
+        }
+        
+    }//GEN-LAST:event_jTCDBMouseClicked
 
     /**
      * @param args the command line arguments
