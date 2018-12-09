@@ -11,7 +11,6 @@ import mvc.controller.Login;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
-import mvc.model.Movimentacoes;
 import mvc.model.MovimentoContaCorrente;
 import mvc.model.MovimentoContaCorrenteDAO;
 

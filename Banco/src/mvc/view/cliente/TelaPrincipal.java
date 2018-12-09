@@ -13,6 +13,7 @@ import mvc.controller.Login;
 import mvc.model.Calendario;
 import mvc.model.ClienteDAO;
 import mvc.view.TelaLogin;
+import mvc.view.cliente.cdb.TelaCDBInvestir;
 
 /**
  *
@@ -51,6 +52,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuPoupancaSaqueDeposito = new javax.swing.JMenuItem();
         menuPoupancaExtrato = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuCDBInvestir = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -121,6 +123,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenu4);
 
         jMenu5.setText("CDB");
+
+        jMenuCDBInvestir.setText("Investir");
+        jMenuCDBInvestir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCDBInvestirActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuCDBInvestir);
+
         jMenu1.add(jMenu5);
 
         jMenu6.setText("Fundos");
@@ -171,6 +182,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new TelaConsultarDepositosPoupanca().setVisible(true);
     }//GEN-LAST:event_menuPoupancaExtratoActionPerformed
 
+    private void jMenuCDBInvestirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCDBInvestirActionPerformed
+        new TelaCDBInvestir().setVisible(true);
+    }//GEN-LAST:event_jMenuCDBInvestirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -213,6 +228,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuCDBInvestir;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
     private javax.swing.JMenu menuCC;

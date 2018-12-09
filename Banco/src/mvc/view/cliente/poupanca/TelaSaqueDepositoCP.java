@@ -60,8 +60,6 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
-        txtPeriodoDias = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         btnSacar = new javax.swing.JButton();
         btnDepositar = new javax.swing.JButton();
 
@@ -117,8 +115,6 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Período");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -128,22 +124,16 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPeriodoDias, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPeriodoDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         btnSacar.setText("Sacar");
@@ -187,7 +177,7 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSacar)
                     .addComponent(btnDepositar))
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,12 +192,11 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
         
         try {
             BigDecimal valor = new BigDecimal(txtValor.getText());
-            int peridoInvestimento = Integer.parseInt(txtPeriodoDias.getText());
 
             poupancaCliente.depositar(valor);
             correnteCliente.sacar(valor);
             ContaPoupancaTransaction transacao = new ContaPoupancaTransaction();
-            ContaPoupancaDeposito contaDeposito = new ContaPoupancaDeposito(poupancaCliente, valor, calendario.getData(), calendario.getData().plusDays(peridoInvestimento));
+            ContaPoupancaDeposito contaDeposito = new ContaPoupancaDeposito(poupancaCliente, valor, calendario.getData(), calendario.getData().plusDays(360));
             MovimentoContaCorrente movimentoCorrente = new MovimentoContaCorrente(correnteCliente, 1, "Depósito para a poupança", valor, calendario.getData());
             transacao.depositar(contaDeposito, correnteCliente, movimentoCorrente);
             
@@ -276,11 +265,9 @@ public class TelaSaqueDepositoCP extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtNumero;
-    private javax.swing.JTextField txtPeriodoDias;
     private javax.swing.JTextField txtSaldo;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables

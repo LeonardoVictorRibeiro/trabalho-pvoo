@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +23,8 @@ public class FundoDAO {
     private static final String INSERIR = "insert into fundo " + "(nome, saldoTotal)" + " values(?,?)";
     private static final String SELECT = "select * from fundo where idFundo = ?";
     private static final String SELECT_ALL = "select * from fundo";
+    private static final String DELETAR = "delete from fundo where idFundo = ?";
+    private static final String ATUALIZAR = "update fundo set nome = ?, saldoTotal = ? where idFundo = ? ";
     
     public void inserir(Fundo fundo){
         
@@ -85,5 +88,44 @@ public class FundoDAO {
         }
         
         return null;
+    }
+    
+    
+    public void excluir(Fundo f){
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(DELETAR)){
+            
+            stmt.setLong(1, f.getId());
+            
+            stmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir. Erro: " + e);
+            throw new RuntimeException(e);
+        }
+        
+        
+    }
+    
+    public void atualizar( Fundo f){
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(ATUALIZAR)){
+            stmt.setString(1, f.getNome());
+            stmt.setBigDecimal(2, f.getSaldototal());
+            stmt.setLong(3, f.getId());
+            
+            stmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar!");
+            throw new RuntimeException(e);
+        }
+        
     }
 }

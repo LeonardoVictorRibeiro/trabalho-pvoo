@@ -45,6 +45,10 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             throw new RuntimeException(e);
         }
+        
+        txtID.setText("");
+        txtNome.setText("");
+        txtSaldo.setText("");
     }
     
     /**
@@ -82,6 +86,8 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
         jLabel3.setText("Saldo");
 
         txtID.setEditable(false);
+
+        txtSaldo.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,8 +130,18 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jTFundo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -201,9 +217,9 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
         String nome = txtNome.getText();
-        BigDecimal saldo = new BigDecimal(txtSaldo.getText());
+        //BigDecimal saldo = new BigDecimal(txtSaldo.getText());
         
-        Fundo fundo = new Fundo(nome, saldo);
+        Fundo fundo = new Fundo(nome, BigDecimal.ZERO);
         fundoDAO.inserir(fundo);
         
         atualizarTabela();
@@ -221,6 +237,26 @@ public class TelaFundoConsultarEditar extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTFundoMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+       long id = Long.parseLong(txtID.getText());
+        
+       fundoDAO.excluir( new Fundo(id) );
+       
+       atualizarTabela();
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        long id = Long.parseLong(txtID.getText());
+        String nome = txtNome.getText();
+        BigDecimal saldo = new BigDecimal( txtSaldo.getText() );
+        fundoDAO.atualizar( new Fundo(id, nome, saldo));
+        
+        atualizarTabela();
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
