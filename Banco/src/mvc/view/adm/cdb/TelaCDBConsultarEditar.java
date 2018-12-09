@@ -5,6 +5,7 @@
  */
 package mvc.view.adm.cdb;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mvc.model.CDB;
@@ -113,6 +114,11 @@ public class TelaCDBConsultarEditar extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jTCDB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -195,10 +201,16 @@ public class TelaCDBConsultarEditar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       long id = Long.parseLong( txtID.getText() );
        String nome = txtNome.getText();
-       CDB cdb = new CDB(nome);
+       BigDecimal saldoTotal = new BigDecimal( txtSaldo.getText() );
+       
+       CDB cdb = new CDB(id, nome, saldoTotal);
+       
+       cdbDAO.atualizar(cdb);
        
        atualizarTabela();
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jTCDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTCDBMouseClicked
@@ -213,6 +225,16 @@ public class TelaCDBConsultarEditar extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jTCDBMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        long id = Integer.parseInt(txtID.getText());
+        String nome = txtNome.getText();
+        CDB cdb = new CDB(id, nome);
+
+        cdbDAO.deletar(cdb);
+
+        atualizarTabela();
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

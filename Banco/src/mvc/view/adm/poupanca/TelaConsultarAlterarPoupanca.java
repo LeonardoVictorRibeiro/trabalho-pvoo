@@ -5,9 +5,11 @@
  */
 package mvc.view.adm.poupanca;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import mvc.model.Cliente;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaPoupanca;
 import mvc.model.ContaPoupancaDAO;
@@ -19,7 +21,8 @@ import mvc.model.ContaPoupancaDAO;
 public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
     ContaPoupancaDAO contaDAO = new ContaPoupancaDAO();
     ClienteDAO clienteDAO = new ClienteDAO();
-    NumberFormat nf = new java.text.DecimalFormat("¤ #,###,##0.00");
+    //NumberFormat nf = new java.text.DecimalFormat("¤ #,###,##0.00");
+   
 
     /**
      * Creates new form TelaConsultarAlterarPoupanca
@@ -36,17 +39,17 @@ public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
         
         List<ContaPoupanca> contas = contaDAO.listar(clienteDAO);
         
-        try {
-            for (ContaPoupanca conta : contas) {
-                dtmPoupanca.addRow(
-                        new Object[]{
-                            conta.getId(), conta.getTitular().getId(), nf.format(conta.getSaldo())
-                        }
-                );     
-            }
-        } catch (NullPointerException e) {
-            throw new RuntimeException(e);
+ 
+        for (ContaPoupanca conta : contas) {
+            dtmPoupanca.addRow(
+                    new Object[]{
+                        conta.getId(), conta.getTitular().getId(), conta.getSaldo()
+                    }
+            );     
         }
+        
+        
+       
     }
 
     /**
@@ -85,6 +88,8 @@ public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
 
         txtNumero.setEditable(false);
 
+        txtSaldo.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -119,10 +124,25 @@ public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
         );
 
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jTPoupanca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,6 +226,42 @@ public class TelaConsultarAlterarPoupanca extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTPoupancaMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        long id = Long.parseLong(txtNumero.getText());
+        
+        contaDAO.deletar( new ContaPoupanca(id));
+        atualizarTabela();
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        long id = Long.parseLong(txtNumero.getText());
+        long idCliente = Long.parseLong(txtCliente.getText());
+        BigDecimal saldo = new BigDecimal(txtSaldo.getText());
+        
+        Cliente titular = clienteDAO.buscar( new Cliente(idCliente));
+        
+        
+        contaDAO.atualizar( new ContaPoupanca(id, titular, saldo));
+        
+        atualizarTabela();
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        
+        long idCliente = Long.parseLong(txtCliente.getText());
+        
+        Cliente titular = clienteDAO.buscar( new Cliente(idCliente) );
+        
+        ContaPoupanca conta = new ContaPoupanca(titular, BigDecimal.ZERO);
+        
+        contaDAO.inserir(conta);
+        
+        atualizarTabela();
+
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments

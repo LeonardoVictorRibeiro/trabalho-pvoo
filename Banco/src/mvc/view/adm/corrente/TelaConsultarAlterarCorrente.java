@@ -5,10 +5,12 @@
  */
 package mvc.view.adm.corrente;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import mvc.model.Calendario;
+import mvc.model.Cliente;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
@@ -41,15 +43,17 @@ public class TelaConsultarAlterarCorrente extends javax.swing.JFrame {
         
         List<ContaCorrente> contas = contaDAO.listar(clienteDAO);
         
-        try {
-            for (ContaCorrente conta : contas) {
-                dtmCorrente.addRow(
-                        new Object[]{ conta.getId(), conta.getTitular().getId(), conta.getSaldo()}
-                );
-            }
-        } catch (NullPointerException e) {
-            throw new RuntimeException(e);
+     
+        for (ContaCorrente conta : contas) {
+            dtmCorrente.addRow(
+                    new Object[]{ conta.getId(), conta.getTitular().getId(), conta.getSaldo()}
+            );
         }
+        
+        txtCliente.setText("");
+        txtNumero.setText("");
+        txtSaldo.setText("");
+        
         
         
     }
@@ -124,10 +128,25 @@ public class TelaConsultarAlterarCorrente extends javax.swing.JFrame {
         );
 
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jTContaCorrente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,6 +233,41 @@ public class TelaConsultarAlterarCorrente extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jTContaCorrenteMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        long id = Long.parseLong(txtNumero.getText());
+        long idCliente = Long.parseLong(txtCliente.getText());
+        BigDecimal saldo = new BigDecimal(txtSaldo.getText());
+        
+        Cliente titular = clienteDAO.buscar( new Cliente(idCliente) );
+        
+        ContaCorrente conta = new ContaCorrente(id, titular, saldo);
+                
+        contaDAO.atualizar(conta);
+        
+        atualizarTabela();
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        long id = Integer.parseInt(txtNumero.getText());
+        
+        contaDAO.deletar( new ContaCorrente(id) );
+        
+        atualizarTabela();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        long idCliente = Long.parseLong(txtCliente.getText());
+        BigDecimal saldo = new BigDecimal( txtSaldo.getText() );
+        
+        Cliente cliente = clienteDAO.buscar( new Cliente( idCliente ));
+        ContaCorrente conta = new ContaCorrente(cliente, saldo);
+        
+        contaDAO.inserir(conta);
+        
+        atualizarTabela();
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,8 +38,11 @@ public class ClienteDAO {
             stmt.setInt(4, novo.getSenha());
 
             stmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível cadastrar.");
             throw new RuntimeException(e);
         }
 
@@ -84,8 +88,10 @@ public class ClienteDAO {
                 stmt.setLong(5, clienteASerAlterado.getId());
                 
                 stmt.execute();
-            
+                
+                JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar!");
             throw new RuntimeException(e);
         }
         

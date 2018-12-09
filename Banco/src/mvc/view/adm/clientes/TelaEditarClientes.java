@@ -40,19 +40,22 @@ public class TelaEditarClientes extends javax.swing.JFrame {
         dtmClientes.setNumRows(0);
         List<Cliente> clientes = clienteDAO.listar();
 
-        try {
-            for (Cliente cliente : clientes) {
-                dtmClientes.addRow(
-                        new Object[]{
-                            cliente.getId(), cliente.getNome(), cliente.getCpf(),
-                            cliente.getDataNasc(), cliente.getSenha()
-                        }
-                );
-            }
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(rootPane, "Nenhum usuário cadastrado no banco.");
-            throw new RuntimeException(e);
+
+        for (Cliente cliente : clientes) {
+            dtmClientes.addRow(
+                    new Object[]{
+                        cliente.getId(), cliente.getNome(), cliente.getCpf(),
+                        cliente.getDataNasc(), cliente.getSenha()
+                    }
+            );
         }
+        
+        txtID.setText("");
+        txtNome.setText("");
+        txtCPF.setText("");
+        txtNasc.setText("");
+        txtSenha.setText("");
+       
 
     }
 
@@ -163,6 +166,11 @@ public class TelaEditarClientes extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jTClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -265,7 +273,16 @@ public class TelaEditarClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
+        long id = Long.parseLong(txtID.getText());
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        LocalDate nasc = LocalDate.parse(txtNasc.getText());
+        int senha = Integer.parseInt(txtSenha.getText());
+        
+        Cliente cliente = new Cliente(id, nome, cpf, nasc, senha);
+        
+        clienteDAO.atualizar(cliente);
+        atualizarTabela();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jTClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTClientesKeyReleased
@@ -293,6 +310,17 @@ public class TelaEditarClientes extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jTClientesMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+        long id = Long.parseLong(txtID.getText());
+        
+        Cliente cliente = new Cliente(id);
+        
+        clienteDAO.deletar(cliente);
+        atualizarTabela();
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

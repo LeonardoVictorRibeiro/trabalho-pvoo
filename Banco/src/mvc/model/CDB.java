@@ -24,6 +24,12 @@ public class CDB {
         this.nome = nome;
         this.saldoTotal = new BigDecimal("0.0");
     }
+    
+    public CDB(long id, String nome){
+        this.id = id;
+        this.nome = nome;
+    }
+    
     public CDB(long id, String nome, BigDecimal saldo){
         this.id = id;
         this.nome = nome;

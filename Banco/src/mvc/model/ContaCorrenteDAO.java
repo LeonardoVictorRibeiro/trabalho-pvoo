@@ -29,11 +29,6 @@ public class ContaCorrenteDAO {
     private static final String DELETE = "delete from conta_corrente where idContaCorrente = ?";
 
 
-    public ContaCorrenteDAO() {
-        
-
-    }
-
     public boolean inserir(ContaCorrente nova) {
         
         try (Connection connection = new ConnectionFactory().getConnection();

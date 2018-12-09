@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,7 @@ public class ContaPoupancaDAO {
 
     }
 
-    public boolean inserir(ContaPoupanca nova) {
+    public void inserir(ContaPoupanca nova) {
 
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(INSERT)) {
@@ -39,8 +40,12 @@ public class ContaPoupancaDAO {
             stmt.setBigDecimal(2, nova.getSaldo());
 
             stmt.execute();
-            return true;
+            JOptionPane.showMessageDialog(null, "Cadastrada com sucesso!");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível cadastrar! Erro: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch (NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Não foi possível cadastrar! Erro: " + e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -120,8 +125,9 @@ public class ContaPoupancaDAO {
         return null;
     }
 
-    public boolean atualizar(ContaPoupanca conta) {
+    public void atualizar(ContaPoupanca conta) {
 
+        
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(UPDATE)) {
             stmt.setLong(1, conta.getTitular().getId());
@@ -129,9 +135,10 @@ public class ContaPoupancaDAO {
             stmt.setLong(3, conta.getId());
 
             stmt.execute();
-            return true;
+            JOptionPane.showMessageDialog(null, "Atualizada com sucesso!");
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar!");
             throw new RuntimeException(e);
         }
 

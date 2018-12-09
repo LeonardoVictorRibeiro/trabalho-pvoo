@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +23,8 @@ public class CDBDAO {
     private static final String INSERIR = "insert into cdb" + "(nome, saldoTotal)" + "values(?,?)";
     private static final String LISTAR = "select * from cdb";
     private static final String SELECT = "select * from cdb where idCDB = ?";
+    private static final String DELETAR = "delete from cdb where idCDB = ?";
+    private static final String ALTERAR = "update cdb set nome = ?, saldoTotal = ? where idCDB = ?";
     
     public boolean inserir(CDB novo){
         
@@ -85,6 +88,40 @@ public class CDBDAO {
             throw new RuntimeException(e);
         }
         return cdb;
+    }
+    
+    public void deletar(CDB cdb){
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(DELETAR)){
+            
+            stmt.setLong(1, cdb.getId());
+            
+            stmt.execute();
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
+    
+    public void atualizar(CDB cdb){
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(ALTERAR)){
+            
+            stmt.setString(1, cdb.getNome());
+            stmt.setBigDecimal(2, cdb.getSaldoTotal());
+            stmt.setLong(3, cdb.getId());
+            
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar!");
+            throw new RuntimeException(e);
+        }
+        
+        
     }
     
 }

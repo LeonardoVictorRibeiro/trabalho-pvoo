@@ -8,7 +8,9 @@ package mvc.view.adm.corrente;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
+import mvc.model.ContaCorrenteDAO;
 import mvc.model.MovimentoContaCorrente;
 import mvc.model.MovimentoContaCorrenteDAO;
 
@@ -28,10 +30,27 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
     public TelaMovimentacoes() {
         initComponents();
         DefaultTableModel dtmMovimentacoes = (DefaultTableModel)jTCCMovimentacoes.getModel();
+  
+        dtmMovimentacoes.setNumRows(0);
+        ContaCorrenteDAO contaDAO = new ContaCorrenteDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        List<MovimentoContaCorrente> movimentos = movimentacoesDAO.listarMovimentosDeTodasContas(contaDAO, clienteDAO);
+        
+
+        for (MovimentoContaCorrente movimento : movimentos) {
+            dtmMovimentacoes.addRow(
+                    new Object[]{
+                        movimento.getId(), movimento.getConta().getId(), movimento.getDescricao(),
+                        movimento.getValor(), movimento.getData()
+                    }
+            );
+        }
         
         
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,19 +219,14 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
         
         List<MovimentoContaCorrente> movimentos = movimentacoesDAO.listarMovimentosDeUmaConta(conta);
         
-        try {
-            for (MovimentoContaCorrente movimento : movimentos) {
-                dtmMovimentacoes.addRow(
-                        new Object[]{
-                            movimento.getId(), movimento.getConta().getId(), movimento.getDescricao(),
-                            movimento.getValor(), movimento.getData()
-                        }
-                );
-            }
-            
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(rootPane, "Nenhuma movimentação encontrada");
-            throw new RuntimeException(e);
+
+        for (MovimentoContaCorrente movimento : movimentos) {
+            dtmMovimentacoes.addRow(
+                    new Object[]{
+                        movimento.getId(), movimento.getConta().getId(), movimento.getDescricao(),
+                        movimento.getValor(), movimento.getData()
+                    }
+            );
         }
 
     }
