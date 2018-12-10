@@ -8,31 +8,31 @@ package mvc.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-
 /**
  *
  * @author Leonardo
  */
 public class ContaCorrente {
+
     private long id;
     private BigDecimal saldo = new BigDecimal("0");
     private Cliente titular;
-   
-    public ContaCorrente(long id, Cliente titular, BigDecimal valor){
+
+    public ContaCorrente(long id, Cliente titular, BigDecimal valor) {
         this.id = id;
         this.titular = titular;
         this.saldo = saldo.add(valor);
     }
-    
-    public ContaCorrente(Cliente titular, BigDecimal valor){
+
+    public ContaCorrente(Cliente titular, BigDecimal valor) {
         this.titular = titular;
         this.saldo = saldo.add(valor);
     }
-    
-    public ContaCorrente(long id){
+
+    public ContaCorrente(long id) {
         this.id = id;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -40,8 +40,8 @@ public class ContaCorrente {
     public void setId(long id) {
         this.id = id;
     }
-    
-    public boolean setSaldo(BigDecimal quantia){
+
+    public boolean setSaldo(BigDecimal quantia) {
         this.saldo = quantia;
         return true;
     }
@@ -53,32 +53,18 @@ public class ContaCorrente {
     public void depositar(BigDecimal valor) {
         this.saldo = saldo.add(valor);
     }
-    
-    public boolean adicionaJuros(){
-        
-        return false;
+
+    public void pagarManutencao() {
+        BigDecimal taxaManutencao = new BigDecimal("20");
+        saldo = saldo.subtract(taxaManutencao);
     }
-    
-    public boolean pagarManutencao(LocalDate dataAtual){
-        
-        if(dataAtual.getDayOfMonth() == 15){
-            BigDecimal taxaManutencao = new BigDecimal("20");
-            this.saldo = saldo.subtract(taxaManutencao);
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * Além de realizar o saque, também salva a data, operação e valor em um array de Extratos
-     * @param BigDecimal valor
-     * @param LocalDate hoje 
-     */
-    public void sacar(BigDecimal valor){
-        
+
+    public void sacar(BigDecimal valor) {
+
         this.saldo = saldo.subtract(valor);
     }
-    public void transferirCP(ContaPoupanca cp, BigDecimal valor, LocalDate hoje){
+
+    public void transferirCP(ContaPoupanca cp, BigDecimal valor, LocalDate hoje) {
         this.saldo = saldo.subtract(valor);
     }
 
@@ -90,20 +76,12 @@ public class ContaCorrente {
         this.titular = titular;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 59 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
-
-   
-    /**
-     * Compara o número de duas contas
-     * @return true ou false
-     */
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -128,11 +106,4 @@ public class ContaCorrente {
         return "ContaCorrente{" + "id=" + id + ", saldo=" + saldo + ", titular=" + titular + '}';
     }
 
-  
-
-    
-    
-    
-    
-    
 }

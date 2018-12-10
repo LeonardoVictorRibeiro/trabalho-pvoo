@@ -8,6 +8,7 @@ package mvc.model;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,30 @@ public class ContaPoupancaDepositoDAO {
     
     private static final String LISTAR_TUDO = "select * from conta_poupanca_deposito";
     private static final String LISTAR_POR_CONTA = "select * from conta_poupanca_deposito where idContaPoupanca = ?";
+    private static final String ATUALIZAR_DEPOSITO = "update conta_poupanca_deposito set idContaPoupanca = ?, saldo = ?, dataInicio = ?, dataTermino = ?, aniversario = ?, status = ? where idDeposito = ?";
+    
+    
+    public void atualizar(ContaPoupancaDeposito deposito){
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(ATUALIZAR_DEPOSITO)){
+            
+            stmt.setLong(1, deposito.getConta().getId());
+            stmt.setBigDecimal(2, deposito.getSaldo());
+            stmt.setDate(3, Date.valueOf(deposito.getDataInicio()));
+            stmt.setDate(4, Date.valueOf(deposito.getDataTermino()));
+            stmt.setDate(5, Date.valueOf(deposito.getAniversario()));
+            stmt.setBoolean(6, deposito.getStatusBoolean());
+            stmt.setLong(7, deposito.getId());
+            
+            stmt.execute();
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
+    
     
     public List<ContaPoupancaDeposito> listarDepositosDeUmaConta(ContaPoupanca conta) {
 

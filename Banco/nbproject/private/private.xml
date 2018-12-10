@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/model/ContaPoupancaDAO.java</file>
-            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/model/CDBDAO.java</file>
+            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/model/FundoDAO.java</file>
+            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/view/adm/fundos/TelaFundoConsultarEditar.java</file>
+            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/model/ContaCorrenteDAO.java</file>
             <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/view/TelaLogin.java</file>
-            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/view/adm/poupanca/TelaConsultarAlterarPoupanca.java</file>
+            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/view/adm/fundos/TelaMovimentacoes.java</file>
+            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/model/Fundo.java</file>
+            <file>file:/home/leonardo/Desktop/Projetos/trabalho-pvoo/Banco/src/mvc/view/cliente/TelaPrincipal.java</file>
         </group>
     </open-files>
 </project-private>

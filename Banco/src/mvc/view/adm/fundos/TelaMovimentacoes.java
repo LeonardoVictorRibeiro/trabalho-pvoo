@@ -5,6 +5,11 @@
  */
 package mvc.view.adm.fundos;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import mvc.model.Fundo;
+import mvc.model.FundoDAO;
+
 /**
  *
  * @author leonardo
@@ -37,9 +42,10 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
         btnPesquisar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTFundo = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administrador - Fundos - Movimentações");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar por Fundo"));
 
@@ -54,6 +60,11 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
         txtSaldo.setEditable(false);
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,15 +102,23 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTFundo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Número", "Nome", "Saldo"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTFundo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -134,7 +153,21 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        
+        long id = Long.parseLong(txtID.getText());
+        
+        FundoDAO fundoDAO = new FundoDAO();
+        
+        fundoDAO.buscar( new Fundo(id));
+        
+        atualizarTabela();
+        
+        
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,9 +212,36 @@ public class TelaMovimentacoes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTFundo;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables
+
+    private void atualizarTabela() {
+        
+        DefaultTableModel dtmFundos = (DefaultTableModel)jTFundo.getModel();
+        dtmFundos.setNumRows(0);
+        
+        FundoDAO fundoDAO = new FundoDAO();
+        List<Fundo> fundos = fundoDAO.listar();
+        
+        for (Fundo fundo : fundos) {
+            
+            dtmFundos.addRow(
+                    new Object[]{
+                        fundo.getId(), fundo.getNome(), fundo.getSaldototal()
+                    }
+            );
+        }
+        
+        txtID.setText("");
+        txtNome.setText("");
+        txtSaldo.setText("");
+        
+        
+        
+        
+        
+    }
 }

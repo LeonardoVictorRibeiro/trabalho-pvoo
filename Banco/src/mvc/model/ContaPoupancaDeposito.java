@@ -96,9 +96,19 @@ public class ContaPoupancaDeposito {
             return "Vencido";
         }
     }
+    
+    public boolean getStatusBoolean(){
+        return status;
+    }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+    
+    public void adicionarJuros(){
+        BigDecimal juros = new BigDecimal("1.10");
+        saldo = saldo.add(juros);
     }
 
     @Override

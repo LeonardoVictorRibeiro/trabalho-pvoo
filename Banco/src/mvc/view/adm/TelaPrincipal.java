@@ -5,8 +5,10 @@
  */
 package mvc.view.adm;
 
+import javax.swing.JOptionPane;
 import mvc.controller.Login;
 import mvc.model.Calendario;
+import mvc.model.Taxa;
 import mvc.view.TelaLogin;
 import mvc.view.adm.cdb.TelaCDBConsultarEditar;
 import mvc.view.adm.clientes.TelaEditarClientes;
@@ -23,6 +25,7 @@ import mvc.view.adm.poupanca.TelaConsultarDepositos;
 public class TelaPrincipal extends javax.swing.JFrame {
     private Login logado = new Login();
     private Calendario calendario = new Calendario();
+    private Taxa taxas = new Taxa();
 
     /**
      * Creates new form TelaPrincipal
@@ -42,6 +45,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
+        menuAvancaTempo = new javax.swing.JMenuItem();
         menuArquivoSair = new javax.swing.JMenuItem();
         menuClientes = new javax.swing.JMenu();
         menuClientesEditar = new javax.swing.JMenuItem();
@@ -63,6 +67,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
         menuArquivo.setText("Arquivo");
+
+        menuAvancaTempo.setText("Avançar data");
+        menuAvancaTempo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAvancaTempoActionPerformed(evt);
+            }
+        });
+        menuArquivo.add(menuAvancaTempo);
 
         menuArquivoSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disconnect.png"))); // NOI18N
         menuArquivoSair.setText("Sair");
@@ -219,6 +231,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new TelaConsultarDepositos().setVisible(true);
     }//GEN-LAST:event_menuCPConsultarDepositosActionPerformed
 
+    private void menuAvancaTempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAvancaTempoActionPerformed
+        long dias = Long.parseLong(JOptionPane.showInputDialog("Quantidade de dias: "));
+        calendario.setData(dias);
+
+        this.setTitle("Banco de investimentos -  " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
+        taxas.verificaSePaga(calendario.getData());
+        
+
+    }//GEN-LAST:event_menuAvancaTempoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,6 +275,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu4;
@@ -261,6 +284,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
+    private javax.swing.JMenuItem menuAvancaTempo;
     private javax.swing.JMenuItem menuCCMovimentacoes;
     private javax.swing.JMenu menuCDB;
     private javax.swing.JMenuItem menuCDBEditar;

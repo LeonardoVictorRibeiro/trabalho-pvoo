@@ -54,10 +54,6 @@ public class ContaPoupanca {
         this.saldo = saldo.add(valor);
     }
 
-    public boolean adicionaJuros() {
-
-        return false;
-    }
 
     public void sacar(BigDecimal valor) {
 

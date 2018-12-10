@@ -34,9 +34,9 @@ public class Calendario {
     }
     
     
-    public boolean setData(long novaData){
-        if(this.data.plusDays(novaData).compareTo(dataFinal) <= 0){
-            this.data = data.plusDays(novaData);
+    public boolean setData(long qtdDias){
+        if(this.data.plusDays(qtdDias).compareTo(dataFinal) <= 0){
+            this.data = data.plusDays(qtdDias);
             return true;
         }
         return false;
