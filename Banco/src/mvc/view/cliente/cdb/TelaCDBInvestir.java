@@ -5,14 +5,20 @@
  */
 package mvc.view.cliente.cdb;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mvc.controller.Login;
 import mvc.model.CDB;
 import mvc.model.CDBDAO;
+import mvc.model.CDBMovimento;
+import mvc.model.CDBTransaction;
+import mvc.model.Calendario;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
+import mvc.model.MovimentoContaCorrente;
 
 /**
  *
@@ -23,6 +29,7 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
     ContaCorrenteDAO contaDAO = new ContaCorrenteDAO();
     ClienteDAO clienteDAO = new ClienteDAO();
     ContaCorrente conta = contaDAO.encontrarConta(logado.getLogado(), clienteDAO);
+    Calendario calendario = new Calendario();
     
 
     /**
@@ -51,7 +58,7 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
         txtQta = new javax.swing.JTextField();
         btnInvestir = new javax.swing.JButton();
         txtNumero = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        txtSaldoCorrente = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTCDB = new javax.swing.JTable();
@@ -72,6 +79,11 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
         jLabel4.setText("Quantia");
 
         btnInvestir.setText("Investir");
+        btnInvestir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInvestirActionPerformed(evt);
+            }
+        });
 
         txtNumero.setEditable(false);
 
@@ -116,7 +128,7 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel5.setText("Saldo na conta corrente: " + "R$" + conta.getSaldo());
+        txtSaldoCorrente.setText("Saldo na conta corrente: " + "R$" + conta.getSaldo());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -127,7 +139,7 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(txtSaldoCorrente)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -135,7 +147,7 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jLabel5)
+                .addComponent(txtSaldoCorrente)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -210,6 +222,33 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTCDBMouseClicked
 
+    private void btnInvestirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvestirActionPerformed
+        CDBTransaction transacaoCDB = new CDBTransaction();
+        
+        //Uso o cdbDAO para buscar a conta
+        CDBDAO cdbDAO = new CDBDAO();
+
+        //Encontro o cdb
+        CDB cdb = cdbDAO.buscar( new CDB(Long.parseLong(txtNumero.getText())));
+
+        //Pego os campos
+        BigDecimal quantia = new BigDecimal(txtQta.getText());
+        
+        //Retiro o valro da conta corrente
+        conta.sacar(quantia);
+       
+        //Crio uma variável para armazenar as informações do movimento do cdb
+        CDBMovimento movimento = new CDBMovimento(cdb, logado.getLogado(), quantia, calendario.getData(), calendario.getData().plusMonths(1));
+        //Crio uma variável para armazenar as informações do movimento da cc
+        MovimentoContaCorrente movCorrente = new MovimentoContaCorrente(conta, 3, "Investimento - CDB", quantia, calendario.getData());
+        
+        //Realiza todas as atualizações nas tabelas
+        transacaoCDB.atualizar(cdb, conta, movimento, movCorrente);
+
+        txtSaldoCorrente.setText("Saldo na conta corrente: " + "R$" + conta.getSaldo());
+        
+    }//GEN-LAST:event_btnInvestirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -274,7 +313,6 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -283,5 +321,6 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtQta;
+    private javax.swing.JLabel txtSaldoCorrente;
     // End of variables declaration//GEN-END:variables
 }

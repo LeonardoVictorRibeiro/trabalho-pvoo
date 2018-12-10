@@ -10,12 +10,14 @@ import javax.swing.table.DefaultTableModel;
 import mvc.controller.Login;
 import mvc.model.CDBMovimento;
 import mvc.model.CDBMovimentoDAO;
+import mvc.model.CDBTransaction;
 
 /**
  *
  * @author leonardo
  */
 public class TelaCDBExtrato extends javax.swing.JFrame {
+    
     
     Login logado = new Login();
 
