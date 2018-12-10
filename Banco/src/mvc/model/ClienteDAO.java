@@ -108,8 +108,9 @@ public class ClienteDAO {
             
             stmt.execute();
             
-            
+        JOptionPane.showMessageDialog(null, "Excluido com sucesso!");   
         }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar!");
             throw new RuntimeException(e);
         }
         

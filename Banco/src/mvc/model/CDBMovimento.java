@@ -31,6 +31,17 @@ private boolean status;
         this.status = true;
         
     }
+    
+    public CDBMovimento(long id, CDB cdb, Cliente cliente, BigDecimal saldo, LocalDate dataInicio,LocalDate dataTermino) {
+        this.id = id;
+        this.cdb = cdb;
+        this.cliente = cliente;
+        this.saldo = saldo;
+        this.dataInicio = dataInicio;
+        this.dataTermino = dataTermino;
+        this.status = true;
+        
+    }
 
 
 

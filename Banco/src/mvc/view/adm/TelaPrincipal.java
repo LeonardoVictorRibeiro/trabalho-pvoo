@@ -68,6 +68,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
         menuArquivo.setText("Arquivo");
 
+        menuAvancaTempo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/time_add.png"))); // NOI18N
         menuAvancaTempo.setText("Avançar data");
         menuAvancaTempo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +114,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCorrente.add(menuCorrenteEditar);
 
+        menuCCMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
         menuCCMovimentacoes.setText("Movimentações");
         menuCCMovimentacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +137,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuPoupanca.add(menuPoupancaAlterar);
 
+        menuCPConsultarDepositos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
         menuCPConsultarDepositos.setText("Consultar depósitos");
         menuCPConsultarDepositos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +239,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         calendario.setData(dias);
 
         this.setTitle("Banco de investimentos -  " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
+        System.out.println("Data antes de verificar se paga: " + calendario.getDataFormatada());
         taxas.verificaSePaga(calendario.getData());
         
 

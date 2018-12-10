@@ -25,22 +25,30 @@ public class ContaPoupancaDepositoDAO {
     private static final String LISTAR_TUDO = "select * from conta_poupanca_deposito";
     private static final String LISTAR_POR_CONTA = "select * from conta_poupanca_deposito where idContaPoupanca = ?";
     private static final String ATUALIZAR_DEPOSITO = "update conta_poupanca_deposito set idContaPoupanca = ?, saldo = ?, dataInicio = ?, dataTermino = ?, aniversario = ?, status = ? where idDeposito = ?";
+    private static final String ATUALIZA_CONTA_P = "update conta_poupanca set idCliente = ?, saldo = ? where idConta_Poupanca = ?";
     
     
-    public void atualizar(ContaPoupancaDeposito deposito){
+    public void atualizar(ContaPoupancaDeposito deposito, ContaPoupanca conta){
         
         try (Connection connection = new ConnectionFactory().getConnection();
-                PreparedStatement stmt = connection.prepareStatement(ATUALIZAR_DEPOSITO)){
+                PreparedStatement stmtADeposito = connection.prepareStatement(ATUALIZAR_DEPOSITO);
+                PreparedStatement  stmtACP = connection.prepareStatement(ATUALIZA_CONTA_P)){
             
-            stmt.setLong(1, deposito.getConta().getId());
-            stmt.setBigDecimal(2, deposito.getSaldo());
-            stmt.setDate(3, Date.valueOf(deposito.getDataInicio()));
-            stmt.setDate(4, Date.valueOf(deposito.getDataTermino()));
-            stmt.setDate(5, Date.valueOf(deposito.getAniversario()));
-            stmt.setBoolean(6, deposito.getStatusBoolean());
-            stmt.setLong(7, deposito.getId());
+            stmtADeposito.setLong(1, deposito.getConta().getId());
+            stmtADeposito.setBigDecimal(2, deposito.getSaldo());
+            stmtADeposito.setDate(3, Date.valueOf(deposito.getDataInicio()));
+            stmtADeposito.setDate(4, Date.valueOf(deposito.getDataTermino()));
+            stmtADeposito.setDate(5, Date.valueOf(deposito.getAniversario()));
+            stmtADeposito.setBoolean(6, deposito.getStatusBoolean());
+            stmtADeposito.setLong(7, deposito.getId());
             
-            stmt.execute();
+            stmtADeposito.execute();
+            
+            stmtACP.setLong(1, conta.getTitular().getId());
+            stmtACP.setBigDecimal(2, conta.getSaldo());
+            stmtACP.setLong(3, conta.getId());
+            
+            stmtACP.execute();
             
         } catch (SQLException e) {
             throw new RuntimeException(e);

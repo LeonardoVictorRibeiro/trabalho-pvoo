@@ -5,17 +5,26 @@
  */
 package mvc.view.cliente.cdb;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import mvc.controller.Login;
+import mvc.model.CDBMovimento;
+import mvc.model.CDBMovimentoDAO;
+
 /**
  *
  * @author leonardo
  */
 public class TelaCDBExtrato extends javax.swing.JFrame {
+    
+    Login logado = new Login();
 
     /**
      * Creates new form TelaCDBExtrato
      */
     public TelaCDBExtrato() {
         initComponents();
+        atualizarTabela();
     }
 
     /**
@@ -29,22 +38,28 @@ public class TelaCDBExtrato extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTCDB = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Banco - CDB Extrato");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTCDB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "CDB", "Quantia", "DT_Inicio", "DT_fim", "Status"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTCDB);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,10 +126,31 @@ public class TelaCDBExtrato extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void atualizarTabela(){
+        
+        DefaultTableModel dtmMovimentos = (DefaultTableModel)jTCDB.getModel();
+        
+        CDBMovimentoDAO movimentoDAO = new CDBMovimentoDAO(); 
+        List<CDBMovimento> movimentos = movimentoDAO.listarID(logado.getLogado());
+        
+        for (CDBMovimento movimento : movimentos) {
+            dtmMovimentos.addRow(
+                    new Object[]{
+                        movimento.getId(), movimento.getCdb().getNome(), movimento.getSaldo(),
+                            movimento.getDataInicio(), movimento.getDataTermino(), movimento.getStatus()
+                    }
+            );
+            
+        }
+        
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTCDB;
     // End of variables declaration//GEN-END:variables
 }

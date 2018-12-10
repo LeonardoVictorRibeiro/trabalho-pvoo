@@ -131,9 +131,11 @@ public class ContaCorrenteDAO {
             stmt.setLong(3, conta.getId());
             
             stmt.execute();
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
             return true;
             
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar.");
             throw new RuntimeException(e);
         }
 
@@ -147,11 +149,13 @@ public class ContaCorrenteDAO {
             stmt.setLong(1, conta.getId());
             
             stmt.execute();
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
             return true;
             
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir.");
             throw new RuntimeException(e);
-        }
+        } 
     }
 
 

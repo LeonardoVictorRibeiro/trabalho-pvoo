@@ -5,7 +5,11 @@
  */
 package mvc.view.cliente.cdb;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import mvc.controller.Login;
+import mvc.model.CDB;
+import mvc.model.CDBDAO;
 import mvc.model.ClienteDAO;
 import mvc.model.ContaCorrente;
 import mvc.model.ContaCorrenteDAO;
@@ -26,6 +30,7 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
      */
     public TelaCDBInvestir() {
         initComponents();
+        atualizarTabela();
     }
 
     /**
@@ -41,15 +46,15 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtQta = new javax.swing.JTextField();
+        btnInvestir = new javax.swing.JButton();
+        txtNumero = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTCDB = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente - CDB - Investir");
@@ -62,13 +67,13 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
 
         jLabel2.setText("Nome");
 
-        jTextField2.setEditable(false);
+        txtNome.setEditable(false);
 
         jLabel4.setText("Quantia");
 
-        jButton1.setText("Investir");
+        btnInvestir.setText("Investir");
 
-        jTextField3.setEditable(false);
+        txtNumero.setEditable(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -80,18 +85,18 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                        .addComponent(txtQta, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3)))
+                        .addComponent(txtNumero)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInvestir))
                 .addGap(45, 45, 45))
         );
         jPanel3Layout.setVerticalGroup(
@@ -100,14 +105,14 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtQta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInvestir))
                 .addContainerGap())
         );
 
@@ -136,18 +141,28 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTCDB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Número", "Nome"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTCDB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTCDBMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTCDB);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -185,6 +200,16 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTCDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTCDBMouseClicked
+        
+        if(jTCDB.getSelectedRow() != -1){
+            txtNumero.setText(jTCDB.getValueAt(jTCDB.getSelectedRow(), 0).toString());
+            txtNome.setText(jTCDB.getValueAt(jTCDB.getSelectedRow(), 1).toString());
+        }
+
+
+    }//GEN-LAST:event_jTCDBMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -219,9 +244,33 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void atualizarTabela(){
+        
+        DefaultTableModel dtmCDB = (DefaultTableModel)jTCDB.getModel();
+        dtmCDB.setNumRows(0);
+        
+        CDBDAO cdbDAO = new CDBDAO();
+        
+        List<CDB> cdbs = cdbDAO.listar();
+        
+        for (CDB cdb : cdbs) {
+            dtmCDB.addRow(
+                    new Object[]{
+                        cdb.getId() ,cdb.getNome()
+                    }
+            );
+        }
+        
+        txtNome.setText("");
+        txtNumero.setText("");
+        txtQta.setText("");
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnInvestir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -230,9 +279,9 @@ public class TelaCDBInvestir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable jTCDB;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtQta;
     // End of variables declaration//GEN-END:variables
 }

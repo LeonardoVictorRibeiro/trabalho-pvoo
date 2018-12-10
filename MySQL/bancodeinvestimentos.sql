@@ -120,11 +120,11 @@ CREATE TABLE `bancodeinvestimentos`.`fundo_movimento` (
 
 
 
-INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('LEONARDO', '11111111111', '1991/07/06', 12345);
-INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('ANDRÉ', '11111111111', '1996/01/01', 12346);
-INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('PEDRO', '22222222222', '1997/05/07', 12347);
-INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('MARIA', '33333333333', '2000/09/12', 12348);
-INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('JORGE', '44444444444', '1989/03/23', 12349);
+INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('Administrador', '1111', '1991/07/06', 1111);
+INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('Leonardo', '2222', '1996/01/01', 2222);
+INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('Diego', '3333', '1997/05/07', 3333);
+INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('Maria', '4444', '2000/09/12', 4444);
+INSERT INTO clientes(NOME, CPF, DATANASC, SENHA) VALUES('Ana', '5555', '1989/03/23', 5555);
 
 INSERT INTO conta_corrente(SALDO, IDCLIENTE) values(0, 1);
 INSERT INTO conta_corrente(SALDO, IDCLIENTE) values(0, 2);
@@ -138,26 +138,10 @@ INSERT INTO conta_poupanca(IDCLIENTE, SALDO) VALUES(3, 0);
 INSERT INTO conta_poupanca(IDCLIENTE, SALDO) VALUES(4, 0);
 INSERT INTO conta_poupanca(IDCLIENTE, SALDO) VALUES(5, 0);
 
-INSERT INTO cdb(nome, saldoTotal) VALUES('CDB ADS', 0.00);
-INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EC', 0.00);
-INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EM', 0.00);
-INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EAD', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB ADS 95% CDI', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EC 100% CDI', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EM 105% CDI', 0.00);
+INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EAD 110% CDI', 0.00);
 
-
-
-update conta_corrente set saldo = 1000.00 where idContaCorrente = 1;
-insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(1,1,"Deposito",1000.00,"2018/11/1");
-
-update conta_corrente set saldo = 5000.00 where idContaCorrente = 2;
-insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(2,1,"Deposito",5000.00,"2018/11/1");
-
-update conta_corrente set saldo = 7000.00 where idContaCorrente = 3;
-insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(3,1,"Deposito",7000.00,"2018/11/1");
-
-update conta_corrente set saldo = 10000.00 where idContaCorrente = 4;
-insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(4,1,"Deposito",10000.00,"2018/11/1");
-
-update conta_corrente set saldo = 12000.00 where idContaCorrente = 5;
-insert into movimento_conta(idContaCorrente, tipo_movimento, descricao, valor, data) values(5,1,"Deposito",12000.00,"2018/11/1");
 
 

@@ -108,7 +108,7 @@ public class ContaPoupancaDeposito {
     
     public void adicionarJuros(){
         BigDecimal juros = new BigDecimal("1.10");
-        saldo = saldo.add(juros);
+        saldo = saldo.multiply(juros);
     }
 
     @Override

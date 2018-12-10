@@ -5,6 +5,7 @@
  */
 package mvc.view.cliente;
 
+import javax.swing.JOptionPane;
 import mvc.view.cliente.poupanca.TelaConsultarDepositosPoupanca;
 import mvc.view.cliente.poupanca.TelaSaqueDepositoCP;
 import mvc.view.cliente.corrente.TelaConsultarExtratoCorrente;
@@ -13,6 +14,7 @@ import mvc.controller.Login;
 import mvc.model.Calendario;
 import mvc.model.ClienteDAO;
 import mvc.view.TelaLogin;
+import mvc.view.cliente.cdb.TelaCDBExtrato;
 import mvc.view.cliente.cdb.TelaCDBInvestir;
 
 /**
@@ -43,6 +45,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
+        menuArqSobre = new javax.swing.JMenuItem();
         menuArquivoSair = new javax.swing.JMenuItem();
         menuCC = new javax.swing.JMenu();
         menuCCSaqueDep = new javax.swing.JMenuItem();
@@ -53,8 +56,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuPoupancaExtrato = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuCDBInvestir = new javax.swing.JMenuItem();
+        menuCDBExtrato = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Banco de investimentos - " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
@@ -62,6 +66,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menuArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/page_white_text.png"))); // NOI18N
         menuArquivo.setText("Arquivo");
+
+        menuArqSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png"))); // NOI18N
+        menuArqSobre.setText("Sobre");
+        menuArqSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuArqSobreActionPerformed(evt);
+            }
+        });
+        menuArquivo.add(menuArqSobre);
 
         menuArquivoSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disconnect.png"))); // NOI18N
         menuArquivoSair.setText("Sair");
@@ -100,9 +113,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins.png"))); // NOI18N
         jMenu1.setText("Investimentos");
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money.png"))); // NOI18N
         jMenu4.setText("Poupança");
 
-        menuPoupancaSaqueDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coins_add.png"))); // NOI18N
+        menuPoupancaSaqueDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money_add.png"))); // NOI18N
         menuPoupancaSaqueDeposito.setText("Saque / Deposito");
         menuPoupancaSaqueDeposito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,7 +125,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(menuPoupancaSaqueDeposito);
 
-        menuPoupancaExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_refresh.png"))); // NOI18N
+        menuPoupancaExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
         menuPoupancaExtrato.setText("Consultar Extrato");
         menuPoupancaExtrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,8 +136,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu4);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money.png"))); // NOI18N
         jMenu5.setText("CDB");
 
+        jMenuCDBInvestir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money_add.png"))); // NOI18N
         jMenuCDBInvestir.setText("Investir");
         jMenuCDBInvestir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,16 +148,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuCDBInvestir);
 
+        menuCDBExtrato.setText("Extrato");
+        menuCDBExtrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCDBExtratoActionPerformed(evt);
+            }
+        });
+        jMenu5.add(menuCDBExtrato);
+
         jMenu1.add(jMenu5);
 
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money.png"))); // NOI18N
         jMenu6.setText("Fundos");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money_add.png"))); // NOI18N
+        jMenuItem1.setText("Investir");
+        jMenu6.add(jMenuItem1);
+
         jMenu1.add(jMenu6);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png"))); // NOI18N
-        jMenu3.setText("Sobre");
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -186,6 +212,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new TelaCDBInvestir().setVisible(true);
     }//GEN-LAST:event_jMenuCDBInvestirActionPerformed
 
+    private void menuArqSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArqSobreActionPerformed
+        JOptionPane.showMessageDialog(null, "Desenvolvido por Leonardo Victor Ribeiro 2018");
+    }//GEN-LAST:event_menuArqSobreActionPerformed
+
+    private void menuCDBExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCDBExtratoActionPerformed
+        new TelaCDBExtrato().setVisible(true);
+    }//GEN-LAST:event_menuCDBExtratoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,17 +257,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuCDBInvestir;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuArqSobre;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
     private javax.swing.JMenu menuCC;
     private javax.swing.JMenuItem menuCCExtrato;
     private javax.swing.JMenuItem menuCCSaqueDep;
+    private javax.swing.JMenuItem menuCDBExtrato;
     private javax.swing.JMenuItem menuPoupancaExtrato;
     private javax.swing.JMenuItem menuPoupancaSaqueDeposito;
     // End of variables declaration//GEN-END:variables

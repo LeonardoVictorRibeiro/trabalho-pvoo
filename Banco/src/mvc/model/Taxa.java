@@ -26,11 +26,10 @@ public class Taxa {
     // A taxa de manutenção da conta corrente é cobrada todo dia 15
     private  BigDecimal manutencao = new BigDecimal("20");
 
-    public BigDecimal getManutencao() {
-        return manutencao;
-    }
     
-
+    //Comparo a data atual com a data final
+    
+    
     
     public void verificaSePaga(LocalDate hoje){
         //Pega a data de hoje do sistema        
@@ -42,6 +41,11 @@ public class Taxa {
         List<ContaPoupancaDeposito> depositos = depositoDAO.listar(contaDAO, clienteDAO);
         
         for (ContaPoupancaDeposito deposito : depositos) {
+            //Encontro a conta poupança daquele depósito
+            ContaPoupanca cp = contaDAO.encontrarConta(new ContaPoupanca(deposito.getConta().getId()), clienteDAO);
+            //Altero o saldo da conta
+            cp.setSaldo( cp.getSaldo().subtract(deposito.getSaldo()) );
+            
             
             //Calcula a diferença de dias entre as duas datas
             long difDias = ChronoUnit.DAYS.between(deposito.getAniversario(), hoje);
@@ -61,76 +65,23 @@ public class Taxa {
 
                     //Seto a nova da de aniversário da conta
                     deposito.setAniversario(deposito.getAniversario().plusDays(difDias));
+                    System.out.println("DATA pós: " + deposito.getAniversario());
                 }
 
-            }    
+            }
+            //atualizo o saldo na conta
+            cp.depositar(deposito.getSaldo());
+            
             //atualizo o deposito no banco de dados
-            depositoDAO.atualizar(deposito);
+            depositoDAO.atualizar(deposito, cp);
+            
         }
         
-        
-        //Percorro todos os depósitos
-        //Verifico se devem pagar
-        
-        //Deposito 1. Deve pagar?
-        // Sim. Deve pagar.
-        // Não.
-        //Próximo deposito
-        
-        
-        
-        
-        
-        /*
-        long difDias = ChronoUnit.DAYS.between(aniversarioConta, hoje);
- 
-        if(difDias == 30){
-            //Aplico juros
-        }else{
-            while( difDias > 30){
-                
-                //Subtraio 30 dias da da diferença de dias
-                difDias -= 30;
-                               
-                //Aplico osjuros ao saldo da poupanca
-                saldo = saldo.subtract(manutencao);
-                                
-                //Seto a nova da de aniversário da conta
-                aniversarioConta = aniversarioConta.plusDays(difDias);
-            }
-            
-        } 
-        */
-        
+              
         
     }
     
-    /*
-    public static void adicionarJuros(){
-        BigDecimal saldo = new BigDecimal("100.0");
-        LocalDate hoje = LocalDate.of(2019, 3, 20);
-        LocalDate aniversarioDeposito = LocalDate.of(2018, 12, 10);
-        
-        long difDias = ChronoUnit.DAYS.between(aniversarioDeposito, hoje);
-        
-        
-        if(difDias == 30){
-            //Aplico juros
-        }else{
-            while( difDias > 30){
-                //Subtraio 30 dias da da diferença de dias
-                difDias -= 30;
-                //Aplico osjuros ao saldo da poupanca
-                saldo = saldo.multiply(jurosPoupanca);
-                //Seto a nova da de aniversário da conta
-                aniversarioDeposito = aniversarioDeposito.plusDays(difDias);
-            }
-            
-        }
-    }
-
-     
-*/
+  
 
 }
   
