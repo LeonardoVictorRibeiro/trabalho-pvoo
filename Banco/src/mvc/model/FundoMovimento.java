@@ -68,6 +68,10 @@ public class FundoMovimento {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
+    public void depositar(BigDecimal qta){
+        this.saldo = this.saldo.add(qta);
+    }
 
     @Override
     public int hashCode() {

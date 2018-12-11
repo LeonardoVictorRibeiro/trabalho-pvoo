@@ -16,6 +16,8 @@ import mvc.model.ClienteDAO;
 import mvc.view.TelaLogin;
 import mvc.view.cliente.cdb.TelaCDBExtrato;
 import mvc.view.cliente.cdb.TelaCDBInvestir;
+import mvc.view.cliente.fundos.TelaExtratoFundo;
+import mvc.view.cliente.fundos.TelaInvestirFundo;
 
 /**
  *
@@ -59,6 +61,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCDBExtrato = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        FundosExtrato = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Banco de investimentos - " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
@@ -148,6 +151,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuCDBInvestir);
 
+        menuCDBExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
         menuCDBExtrato.setText("Extrato");
         menuCDBExtrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,7 +167,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money_add.png"))); // NOI18N
         jMenuItem1.setText("Investir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem1);
+
+        FundosExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
+        FundosExtrato.setText("Extrato");
+        FundosExtrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FundosExtratoActionPerformed(evt);
+            }
+        });
+        jMenu6.add(FundosExtrato);
 
         jMenu1.add(jMenu6);
 
@@ -220,6 +238,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new TelaCDBExtrato().setVisible(true);
     }//GEN-LAST:event_menuCDBExtratoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new TelaInvestirFundo().setVisible(true);
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void FundosExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FundosExtratoActionPerformed
+        new TelaExtratoFundo().setVisible(true);
+
+    }//GEN-LAST:event_FundosExtratoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,6 +284,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem FundosExtrato;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;

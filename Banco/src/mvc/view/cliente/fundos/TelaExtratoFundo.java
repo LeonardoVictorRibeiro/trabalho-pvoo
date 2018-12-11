@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.view.cliente.cdb;
+package mvc.view.cliente.fundos;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mvc.controller.Login;
-import mvc.model.CDBMovimento;
-import mvc.model.CDBMovimentoDAO;
-import mvc.model.CDBTransaction;
+import mvc.model.Fundo;
+import mvc.model.FundoDAO;
+import mvc.model.FundoMovimento;
+import mvc.model.FundoMovimentoDAO;
 
 /**
  *
  * @author leonardo
  */
-public class TelaCDBExtrato extends javax.swing.JFrame {
-    
-    
+public class TelaExtratoFundo extends javax.swing.JFrame {
     Login logado = new Login();
 
     /**
-     * Creates new form TelaCDBExtrato
+     * Creates new form TelaExtratoFundo
      */
-    public TelaCDBExtrato() {
+    public TelaExtratoFundo() {
         initComponents();
         atualizarTabela();
     }
@@ -40,38 +39,38 @@ public class TelaCDBExtrato extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTCDB = new javax.swing.JTable();
+        jTFundos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Banco - CDB Extrato");
+        setTitle("Cliente - Fundos Extrato");
 
-        jTCDB.setModel(new javax.swing.table.DefaultTableModel(
+        jTFundos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "CDB", "Quantia", "DT_Inicio", "DT_fim", "Status"
+                "ID_MOVIMENTACOES", "ID_FUNDO", "ID_CLIENTE", "SALDO", "DATA_INVESTIMENTO", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTCDB);
+        jScrollPane1.setViewportView(jTFundos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -112,41 +111,42 @@ public class TelaCDBExtrato extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCDBExtrato.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExtratoFundo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCDBExtrato.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExtratoFundo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCDBExtrato.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExtratoFundo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCDBExtrato.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExtratoFundo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCDBExtrato().setVisible(true);
+                new TelaExtratoFundo().setVisible(true);
             }
         });
     }
     
     public void atualizarTabela(){
         
-        DefaultTableModel dtmMovimentos = (DefaultTableModel)jTCDB.getModel();
+        DefaultTableModel dtmFundos = (DefaultTableModel)jTFundos.getModel();
+        dtmFundos.setNumRows(0);
         
-        CDBMovimentoDAO movimentoDAO = new CDBMovimentoDAO(); 
-        List<CDBMovimento> movimentos = movimentoDAO.listarID(logado.getLogado());
+        FundoMovimentoDAO movimentacoesDAO = new FundoMovimentoDAO();
+        List<FundoMovimento> movimentacoes = movimentacoesDAO.select(logado.getLogado());
         
-        for (CDBMovimento movimento : movimentos) {
-            dtmMovimentos.addRow(
+        
+        for (FundoMovimento movimentacao : movimentacoes) {
+            
+            dtmFundos.addRow(
                     new Object[]{
-                        movimento.getId(), movimento.getCdb().getNome(), movimento.getSaldo(),
-                            movimento.getDataInicio(), movimento.getDataTermino(), movimento.getStatus()
+                        movimentacao.getId(), movimentacao.getFundo().getId(), movimentacao.getCliente().getId(),
+                            movimentacao.getSaldo(), movimentacao.getDatainicio(), movimentacao.isStatus()
                     }
             );
-            
         }
-        
         
         
     }
@@ -154,6 +154,6 @@ public class TelaCDBExtrato extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTCDB;
+    private javax.swing.JTable jTFundos;
     // End of variables declaration//GEN-END:variables
 }

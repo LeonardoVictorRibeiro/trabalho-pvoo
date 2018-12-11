@@ -55,7 +55,7 @@ public class ContaCorrente {
     }
 
     public void pagarManutencao() {
-        BigDecimal taxaManutencao = new BigDecimal("20");
+        BigDecimal taxaManutencao = new BigDecimal("15");
         saldo = saldo.subtract(taxaManutencao);
     }
 

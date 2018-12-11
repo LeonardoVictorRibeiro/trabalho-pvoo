@@ -143,5 +143,10 @@ INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EC 100% CDI', 0.00);
 INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EM 105% CDI', 0.00);
 INSERT INTO cdb(nome, saldoTotal) VALUES('CDB EAD 110% CDI', 0.00);
 
+INSERT INTO fundo(nome, saldoTotal) VALUES('Fundo 1 99%', 0.00);
+INSERT INTO fundo(nome, saldoTotal) VALUES('Fundo 2 96%', 0.00);
+INSERT INTO fundo(nome, saldoTotal) VALUES('Fundo 3 93%', 0.00);
+
+
 
 

@@ -11,6 +11,7 @@ import mvc.model.Calendario;
 import mvc.model.Taxa;
 import mvc.view.TelaLogin;
 import mvc.view.adm.cdb.TelaCDBConsultarEditar;
+import mvc.view.adm.cdb.TelaCDBMovimentacoes;
 import mvc.view.adm.clientes.TelaEditarClientes;
 import mvc.view.adm.corrente.TelaConsultarAlterarCorrente;
 import mvc.view.adm.corrente.TelaMovimentacoes;
@@ -57,7 +58,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCPConsultarDepositos = new javax.swing.JMenuItem();
         menuCDB = new javax.swing.JMenu();
         menuCDBEditar = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        cdbMovimentacoes = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuFundosEditar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -160,9 +161,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCDB.add(menuCDBEditar);
 
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_refresh.png"))); // NOI18N
-        jMenuItem6.setText("Movimentações");
-        menuCDB.add(jMenuItem6);
+        cdbMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_refresh.png"))); // NOI18N
+        cdbMovimentacoes.setText("Movimentações");
+        cdbMovimentacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cdbMovimentacoesActionPerformed(evt);
+            }
+        });
+        menuCDB.add(cdbMovimentacoes);
 
         jMenuBar1.add(menuCDB);
 
@@ -239,11 +245,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         calendario.setData(dias);
 
         this.setTitle("Banco de investimentos -  " + logado.getLogado().getNome() + " - " + calendario.getDataFormatada());
-        System.out.println("Data antes de verificar se paga: " + calendario.getDataFormatada());
+  
         taxas.verificaSePaga(calendario.getData());
+        taxas.pagarManutencao(calendario.getData());
         
 
     }//GEN-LAST:event_menuAvancaTempoActionPerformed
+
+    private void cdbMovimentacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cdbMovimentacoesActionPerformed
+
+        new TelaCDBMovimentacoes().setVisible(true);
+
+    }//GEN-LAST:event_cdbMovimentacoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,10 +295,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem cdbMovimentacoes;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoSair;
     private javax.swing.JMenuItem menuAvancaTempo;

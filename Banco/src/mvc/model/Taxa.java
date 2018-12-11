@@ -65,7 +65,7 @@ public class Taxa {
 
                     //Seto a nova da de aniversário da conta
                     deposito.setAniversario(deposito.getAniversario().plusDays(difDias));
-                    System.out.println("DATA pós: " + deposito.getAniversario());
+                    
                 }
 
             }
@@ -78,6 +78,24 @@ public class Taxa {
         }
         
               
+        
+    }
+    
+    public void pagarManutencao(LocalDate hoje){
+        ContaCorrenteDAO contaDAO = new ContaCorrenteDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        List<ContaCorrente> contas = contaDAO.listar(clienteDAO);
+        
+        for (ContaCorrente conta : contas) {
+            
+            if(hoje.getDayOfMonth() == 15){
+                conta.pagarManutencao();
+                
+            }
+            
+            contaDAO.atualizar(conta);   
+            
+        }
         
     }
     

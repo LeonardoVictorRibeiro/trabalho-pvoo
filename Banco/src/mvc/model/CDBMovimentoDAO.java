@@ -21,6 +21,7 @@ import java.util.List;
 public class CDBMovimentoDAO {
     
     private static final String LISTAR_ID = "select * from cdb_movimento where idCliente = ?";
+    private static final String LISTAR_CDB = "select * from cdb_movimento where idCDB = ?";
     
     public List<CDBMovimento> listarID(Cliente c){
         
@@ -36,6 +37,7 @@ public class CDBMovimentoDAO {
                 while(rs.next()){
                     
                     long idMovimento = rs.getLong(1);
+                    
                     long idCDB = rs.getLong(2);
                     //CDB cdb;
                     long idCliente = rs.getLong(3);
@@ -48,7 +50,7 @@ public class CDBMovimentoDAO {
                     Cliente cliente = clienteDAO.buscar( new Cliente(idCliente) );
                     
                     CDB cdb = cdbDAO.buscar( new CDB(idCDB) );
-                                        
+                    
                     CDBMovimento movimento = new CDBMovimento(idMovimento, cdb, cliente, saldo, dataInicio, dataInicio);
                     movimentos.add(movimento);
                     
@@ -66,5 +68,41 @@ public class CDBMovimentoDAO {
         
     }
     
+    public List<CDBMovimento> listarPorCDB(CDB cdb){
+        List<CDBMovimento> movimentos = new ArrayList();
+        
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(LISTAR_CDB)){
+            stmt.setLong(1, cdb.getId());
+            
+            try (ResultSet rs = stmt.executeQuery()){
+                
+                while(rs.next()){
+                    long idCDBMovimento = rs.getLong("idCDB_Movimento");
+                    long idCDB = rs.getLong("idCDB");
+                    long idCliente = rs.getLong("idCliente");
+                    BigDecimal saldo = rs.getBigDecimal("saldo");
+                    LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
+                    LocalDate dataTermino = rs.getDate("dataTermino").toLocalDate();
+                    boolean status = rs.getBoolean("status");
+                    
+                    
+                    Cliente cliente = new ClienteDAO().buscar( new Cliente(idCliente));
+                    
+                    CDBMovimento movimento = new CDBMovimento(idCDBMovimento, cdb, cliente, saldo, dataInicio, dataTermino);
+                    movimentos.add(movimento);
+                }
+                
+                return movimentos;
+                
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
   
 }
